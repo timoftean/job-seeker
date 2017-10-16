@@ -37,3 +37,7 @@ npm-debug.log
 #ngrok
 ngrok
 .idea/
+
+#gradle
+gradle
+.gradle

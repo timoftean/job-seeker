@@ -1,0 +1,49 @@
+group 'colectiv'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springVersion = '4.3.6.RELEASE'
+    springDataVersion = '1.10.6.RELEASE'
+    hibernateVersion = '5.2.6.Final'
+    mySqlVersion = '5.1.38'
+    commonsDbcpVersion = '1.4'
+    jacksonDatabindVersion = '2.8.6'
+    javaxServeletApiVersion = '3.1.0'
+    slf4jVersion = '1.7.21'
+    log4jVersion = '2.5'
+    lombokVersion = '1.16.12'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.springframework', name: 'spring-context', version: "$springVersion"
+    compile group: 'org.springframework', name: 'spring-context-support', version: "$springVersion"
+    compile group: 'org.springframework', name: 'spring-orm', version: "$springVersion"
+    compile group: 'org.springframework', name: 'spring-jdbc', version: "$springVersion"
+    compile group: 'org.springframework', name: 'spring-webmvc', version: "$springVersion"
+
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: "$springDataVersion"
+
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: "$javaxServeletApiVersion"
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jacksonDatabindVersion"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jacksonDatabindVersion"
+
+    compile group: 'mysql', name: 'mysql-connector-java', version:"$mySqlVersion"
+    compile group: 'org.hibernate', name: 'hibernate-core', version:"$hibernateVersion"
+
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: "$slf4jVersion"
+
+    compile group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
+}
