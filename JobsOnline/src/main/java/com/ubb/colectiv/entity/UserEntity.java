@@ -1,10 +1,18 @@
 package com.ubb.colectiv.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
@@ -18,7 +26,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -33,6 +41,6 @@ public class UserEntity {
     private String password;
 
     @Column(name = "active", nullable = false)
-    private boolean active;
+    private Boolean active;
 }
 

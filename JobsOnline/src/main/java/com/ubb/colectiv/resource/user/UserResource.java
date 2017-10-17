@@ -1,6 +1,5 @@
 package com.ubb.colectiv.resource.user;
 
-import com.ubb.colectiv.entity.UserEntity;
 import com.ubb.colectiv.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ public class UserResource {
     UserService userService;
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public UserEntity getUserById() {
+    public UserInfo getUserById() {
         return userService.getUserById(1);
     }
 }
