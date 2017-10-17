@@ -27,7 +27,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan("com.ubb.colectiv.model");
+        sessionFactory.setPackagesToScan("com.ubb.colectiv.entity");
 
         sessionFactory.setHibernateProperties(getHibernateProperties());
 
