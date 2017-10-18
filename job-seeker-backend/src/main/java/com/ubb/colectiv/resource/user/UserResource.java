@@ -14,7 +14,6 @@ public class UserResource {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public UserInfo getUserById() {
-        //return UserInfo.builder().id(1).name("aaa").surname("gggg").build();
         return userService.getUserById(1);
     }
 }
