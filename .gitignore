@@ -1,34 +1,15 @@
-./idea
-*.java.hsp
-*.sonarj
-*.sw*
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+
+# testing
+coverage
+
+# production
+build
+
+# misc
 .DS_Store
-bin
-build.sh
-integration-repo
-ivy-cache
-jxl.log
-jmx.log
-derby.log
-spring-test/test-output/
-argfile*
-pom.xml
-activemq-data/
-
-classes/
-/build
-buildSrc/build
-/spring-*/build
-/src/asciidoc/build
-target/
-
-# Eclipse artifacts, including WTP generated manifests
-.classpath
-.project
-spring-*/src/main/java/META-INF/MANIFEST.MF
-
-# IDEA artifacts and output dirs
-*.iml
-*.ipr
-*.iws
-.idea
+.env
+npm-debug.log
