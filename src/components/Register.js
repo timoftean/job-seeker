@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { auth } from '../helpers/auth'
+import { Auth } from '../controllers/Auth'
 
 function setErrorMsg(error) {
   return {
@@ -8,11 +8,16 @@ function setErrorMsg(error) {
 }
 
 export default class Register extends Component {
-  state = { registerError: null }
+  constructor(props) {
+    super(props)
+	  this.state = { registerError: null }
+    
+	  this.authenticate = new Auth().authenticate
+  }
   
   handleSubmit = (e) => {
     e.preventDefault()
-    auth(this.email.value, this.pw.value)
+    this.authenticate(this.email.value, this.pw.value)
       .catch(e => this.setState(setErrorMsg(e)))
   }
   

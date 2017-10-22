@@ -5,7 +5,7 @@ import Login from './Login'
 import Register from './Register'
 import Home from './Home'
 import Dashboard from './protected/Dashboard'
-import { logout } from '../helpers/auth'
+import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
@@ -54,6 +54,9 @@ export default class App extends Component {
     this.removeListener()
   }
   render() {
+    const auth = new Auth()
+    const logout = auth.logout
+    
     return this.state.loading === true ? <h1>Loading</h1> : (
       <BrowserRouter>
         <div>

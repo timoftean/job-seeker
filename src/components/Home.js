@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { fetchUser } from '../helpers/api'
+import { User } from '../controllers/User'
 
 export default class Home extends Component {
   componentDidMount() {
-    fetchUser().then(user => console.log(user))
+    const user = new User().getCurrentUser()
   }
 
   render () {
