@@ -14,7 +14,6 @@ import {
   MenuItem
 } from 'react-mdl'
 
-
 export default class Profile extends Component {
   render () {
     return (
@@ -26,7 +25,11 @@ export default class Profile extends Component {
               <IconButton name="more_vert" id="demo-menu-lower-left" />
               <Menu target="demo-menu-lower-left">
                 <MenuItem>Edit Profile</MenuItem>
-                <MenuItem>Create provider profile</MenuItem>
+                <MenuItem>
+					<Link to="/ProviderForm" >
+						<Button colored>Show Jobs</Button>
+					</Link>
+				</MenuItem>
                 <MenuItem>Post Job</MenuItem>
               </Menu>
             </div>
