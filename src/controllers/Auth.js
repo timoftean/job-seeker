@@ -3,9 +3,6 @@ import { User } from './User'
 
 export class Auth {
 	
-	constructor(){
-	}
-	
 	authenticate  = (email, pw) => {
 		const user = new User()
 		return firebaseAuth().createUserWithEmailAndPassword(email, pw)

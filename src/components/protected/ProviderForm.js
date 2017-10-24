@@ -2,12 +2,6 @@ import React, { Component } from 'react'
 import { Auth } from '../../controllers/Auth'
 import { Textfield } from 'react-mdl'
 
-function setErrorMsg(error) {
-  return {
-    registerError: error.message
-  }
-}
-
 export default class ProviderForm extends Component {
   constructor(props) {
     super(props)

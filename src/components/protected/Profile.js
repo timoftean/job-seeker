@@ -6,10 +6,7 @@ import {
 	CardText,
 	CardActions,
 	Button,
-	CardMenu,
 	IconButton,
-	List,
-	ListItem,
   Menu,
   MenuItem
 } from 'react-mdl'

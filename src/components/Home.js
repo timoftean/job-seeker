@@ -3,7 +3,6 @@ import { User } from '../controllers/User'
 
 export default class Home extends Component {
   componentDidMount() {
-    const user = new User().getCurrentUser()
   }
 
   render () {
