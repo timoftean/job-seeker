@@ -33,7 +33,7 @@ export class Provider {
 		return db.ref().update(updates);
 	}
 	
-	getAllProviders =async () => {
+	getAllProviders = async () => {
 		//fetch all data from providers "table"
 		let providers = await db.ref(`providers`).once('value')
 		return providers.val()

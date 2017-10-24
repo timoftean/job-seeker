@@ -18,8 +18,7 @@ export default class ProviderForm extends Component {
   
   handleSubmit = (e) => {
     e.preventDefault()
-    this.authenticate(this.email.value, this.pw.value)
-      .catch(e => this.setState(setErrorMsg(e)))
+    console.log("toDO: ", this.category, this.location, this.noHours, this.availability, this.description);
   }
   
   render () {
@@ -28,16 +27,19 @@ export default class ProviderForm extends Component {
         <h1>Provider Form</h1>
         <form onSubmit={this.handleSubmit}>
 		  <Textfield
+		    ref={(category) => this.category = category}
 			onChange={() => {}}
 			label="Category"
 			style={{width: '200px'}}
 		  />
 		  <Textfield
+		    ref={(location) => this.location = location}
 			onChange={() => {}}
 			label="Location"
 			style={{width: '200px'}}
 		  />
 		  <Textfield
+		    ref={(noHours) => this.noHours = noHours}
 		    onChange={() => {}}
 		    pattern="[0-9]*(\.[0-9]+)?"
 		    error="Invalid input!"
@@ -45,16 +47,18 @@ export default class ProviderForm extends Component {
 		    style={{width: '200px'}}
 		  />
 		  <Textfield
+		    ref={(availability) => this.availability = availability}
 		    onChange={() => {}}
 		    pattern="[0-2][0-9]:[0-5][0-9] - [0-2][0-9]:[0-5][0-9]"
 		    error="Invalid input!"
 		    label="Time slot (13:00 - 22:00)"
 		    style={{width: '200px'}}
 		  />
-		  <Textfield
+		  <Textfield 
+		    ref={(description) => this.description = description}
 			onChange={() => {}}
 			label="Description"
-			style={{width: '600px'}}
+			style={{width: '400px'}}
 		  />
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
