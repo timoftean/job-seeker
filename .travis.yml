@@ -8,6 +8,7 @@ script:
   - npm run build
   - npm test
 install:
+- npm install -g react-scripts
 - npm install -g firebase-tools
 after_success:
 - firebase deploy  - project return-to-sleep - token $FIREBASE_TOKEN.
