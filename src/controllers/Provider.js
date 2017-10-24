@@ -1,13 +1,13 @@
 import { db } from '../config/constants'
 import { User } from './User'
 
-export class Job {
+export class Provider {
 	
 	constructor() {
 		this.user = new User()
 	}
 	
-	async saveProvider(job) {
+	saveProvider = async (job) => {
 		//fetch the logged user
 		const user = await this.user.getCurrentUser()
 		
@@ -33,11 +33,9 @@ export class Job {
 		return db.ref().update(updates);
 	}
 	
-	async getAllProviders() {
+	getAllProviders =async () => {
 		//fetch all data from providers "table"
-		let providers = await db.ref(`providers`).once('value').then((p) => {
-			return p.val() || {}
-		});
-		return providers
+		let providers = await db.ref(`providers`).once('value')
+		return providers.val()
 	}
 }

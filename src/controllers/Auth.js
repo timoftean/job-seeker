@@ -6,21 +6,21 @@ export class Auth {
 	constructor(){
 	}
 	
-	authenticate (email, pw) {
+	authenticate  = (email, pw) => {
 		const user = new User()
 		return firebaseAuth().createUserWithEmailAndPassword(email, pw)
 			.then(user.saveCurrentUser)
 	}
 	
-	logout () {
+	logout = () => {
 		return firebaseAuth().signOut()
 	}
 	
-	login (email, pw) {
+	login = (email, pw) => {
 		return firebaseAuth().signInWithEmailAndPassword(email, pw)
 	}
 	
-	resetPassword (email) {
+	resetPassword = (email) => {
 		return firebaseAuth().sendPasswordResetEmail(email)
 	}
 	

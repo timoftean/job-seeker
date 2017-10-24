@@ -5,7 +5,7 @@ export class Job {
 	constructor() {
 		this.user = new User()
 	}
-	async saveJob(job) {
+	saveJob = async (job) => {
 		//fetch the logged user
 		const user = await this.user.getCurrentUser()
 		
@@ -32,11 +32,9 @@ export class Job {
 		return db.ref().update(updates);
 	}
 	
-	async getAllJobs() {
+	getAllJobs = async () => {
 		//fetch all data from jobs "table"
-		let jobs = await db.ref(`jobs`).once('value').then((jobs) => {
-			return jobs.val() || []
-		});
-		return jobs
+		let jobs = await db.ref(`jobs`).once('value')
+		return jobs.val()
 	}
 }
