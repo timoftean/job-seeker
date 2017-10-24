@@ -48,7 +48,6 @@ export default class Profile extends Component {
             <Link to="/jobs" >
               <Button colored>Show Jobs</Button>
             </Link>
-            <div className="mdl-layout-spacer"></div>
             <Link to="/providers" >
               <Button colored>Show Providers</Button>
             </Link>
