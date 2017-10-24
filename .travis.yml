@@ -5,6 +5,7 @@ cache:
   directories:
     - node_modules
 script:
+  - unset CI
   - npm run build
   - npm test
 install:

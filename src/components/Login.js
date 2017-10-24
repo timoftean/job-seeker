@@ -20,6 +20,7 @@ export default class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.login(this.email.value, this.pw.value)
+      .then(() => this.props.history.push('/profile'))
       .catch((error) => {
           this.setState(setErrorMsg('Invalid username/password.'))
         })
