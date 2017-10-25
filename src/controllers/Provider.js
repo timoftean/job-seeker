@@ -22,13 +22,14 @@ export class Provider {
 		};
 		
 		//get from firebase the id for the provider you want to add
-		const newProviderKey = db.ref().child('jobs').push().key;
+		const newProviderKey = db.ref().child('jobs').push().key
 		
-		var updates = {};
-		//add the job to the new id
-		updates['/providers/' + newProviderKey] = providerData;
+		var updates = {}
+		updates['users/' + uid + 'infos/isProvider'] = 1
+		//add the provider to the new id
+		updates['/providers/' + newProviderKey] = providerData
 		//add the same job to the logged in user id
-		updates['/user-providers/' + uid + '/' + newProviderKey] = providerData;
+		updates['/user-providers/' + uid + '/' + newProviderKey] = providerData
 		//post data to firebase
 		return db.ref().update(updates);
 	}

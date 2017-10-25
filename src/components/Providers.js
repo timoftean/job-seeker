@@ -22,7 +22,6 @@ export default class Providers extends Component {
 	}
 
 	async componentDidMount() {
-		this.provider.saveProvider()
 		//fetch providers from firebase and put them on state to acces them when rendering
 		this.setState({
 			providers: await this.provider.getAllProviders()
