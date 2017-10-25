@@ -18,6 +18,7 @@ export default class Register extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.authenticate(this.email.value, this.pw.value)
+      .then(() => this.props.history.push('/profile'))
       .catch(e => this.setState(setErrorMsg(e)))
   }
   
