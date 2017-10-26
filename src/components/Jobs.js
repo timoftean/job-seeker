@@ -33,9 +33,9 @@ export default class Jobs extends Component {
 		return (
 			<ListItem key={key}>
 				<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
-					<CardTitle style={{height: '100px'}}>{job.author}</CardTitle>
+					<CardTitle style={{height: '100px'}}>{job.title}</CardTitle>
 					<CardText>
-						{job.body}
+						{job.description}
 					</CardText>
 					<CardActions border>
 						<Button colored>Attend</Button>
