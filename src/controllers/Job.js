@@ -1,12 +1,12 @@
-import { db } from '../config/constants'
-import { User } from './User'
+import {db} from '../config/constants'
+import {User} from './User'
 
 export class Job {
   constructor() {
     this.user = new User()
   }
 
-async saveJob(title, description, category, location, numHours, timeInterval, price) {
+  async saveJob(title, description, category, location, numHours, timeInterval, price) {
     //fetch the logged user
     const user = await this.user.getCurrentUser();
 
