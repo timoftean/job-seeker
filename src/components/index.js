@@ -4,6 +4,7 @@ import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './Login'
 import Register from './Register'
 import Home from './Home'
+import AddJob from './AddJob'
 import Jobs from './Jobs'
 import Providers from './Providers'
 import ProviderForm from './protected/ProviderForm'
@@ -57,7 +58,7 @@ export default class App extends Component {
   render() {
     const auth = new Auth()
     const logout = auth.logout
-    
+
     return this.state.loading === true ? <h1>Loading</h1> : (
       <BrowserRouter>
         <div>
@@ -103,6 +104,7 @@ export default class App extends Component {
                 <PublicRoute authed={this.state.authed} path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />
 				        <PublicRoute authed={this.state.authed} path='/ProviderForm' component={ProviderForm} />
+                <PrivateRoute authed={this.state.authed} path='/add-job' component={AddJob} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
