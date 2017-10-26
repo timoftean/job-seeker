@@ -52,7 +52,7 @@ export default class AddJob extends Component {
   render() {
     return (
       <div className="col-sm-6 col-sm-offset-3">
-        <h1>Provider Form</h1>
+        <h1>Add a job!</h1>
         <form onSubmit={this.handleSubmit}>
           <Textfield
             onChange={e => this.setState({title: e.target.value})}
