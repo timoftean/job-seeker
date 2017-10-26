@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Job} from '../controllers/Job'
+import {Job} from '../../controllers/Job'
 import {Textfield} from 'react-mdl'
 
 function setErrorMsg(error) {
@@ -41,6 +41,9 @@ export default class AddJob extends Component {
     const price = this.state.price;
 
     this.jobController.saveJob(title, description, category, location, numHours, timeInterval, price)
+      .then(() => {
+        this.props.history.push('/profile')
+      })
       .catch(e => this.setState(setErrorMsg(e)));
   };
 

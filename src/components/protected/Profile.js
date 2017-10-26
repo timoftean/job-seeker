@@ -26,7 +26,9 @@ export default class Profile extends Component {
                 <MenuItem>
                   <Link to="/ProviderForm">Create provider profile</Link>
                 </MenuItem>
-                <MenuItem>Post Job</MenuItem>
+                <MenuItem>
+                  <Link to="/add-job" >Post Job</Link>
+                </MenuItem>
               </Menu>
             </div>
           </CardTitle>

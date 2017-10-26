@@ -3,14 +3,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './Login'
 import Register from './Register'
-import Home from './Home'
-import AddJob from './AddJob'
+import AddJob from './protected/AddJob'
 import Jobs from './Jobs'
 import Providers from './Providers'
 import ProviderForm from './protected/ProviderForm'
 import Profile from './protected/Profile'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
+import { Spinner } from 'react-mdl'
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   return (
@@ -23,7 +23,7 @@ const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   )
 }
 
-function PublicRoute ({component: Component, authed, ...rest}) {
+function PublicRoute ({component: Component, ...rest}) {
   return (
     <Route
       {...rest}
@@ -59,7 +59,9 @@ export default class App extends Component {
     const auth = new Auth()
     const logout = auth.logout
 
-    return this.state.loading === true ? <h1>Loading</h1> : (
+    return this.state.loading === true
+      ? <Spinner />
+      : (
       <BrowserRouter>
         <div>
           <nav className="navbar navbar-default navbar-static-top">
@@ -69,10 +71,7 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/" className="navbar-brand">Home</Link>
-                </li>
-                <li>
-                  <Link to="/jobs" className="navbar-brand">Jobs</Link>
+                  <Link to="/" className="navbar-brand">Jobs</Link>
                 </li>
                 <li>
                   <Link to="/providers" className="navbar-brand">Providers</Link>
@@ -97,13 +96,12 @@ export default class App extends Component {
           <div className="container">
             <div className="row">
               <Switch>
-                <Route path='/' exact component={Home} />
-                <PublicRoute authed={this.state.authed} path='/jobs' component={Jobs} />
-                <PublicRoute authed={this.state.authed} path='/providers' component={Providers} />
-                <PublicRoute authed={this.state.authed} path='/login' component={Login} />
-                <PublicRoute authed={this.state.authed} path='/register' component={Register} />
+                <Route path='/' exact component={Jobs} />
+                <PublicRoute path='/providers' component={Providers} />
+                <PublicRoute path='/login' component={Login} />
+                <PublicRoute path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />
-				        <PublicRoute authed={this.state.authed} path='/ProviderForm' component={ProviderForm} />
+				        <PrivateRoute authed={this.state.authed} path='/ProviderForm' component={ProviderForm} />
                 <PrivateRoute authed={this.state.authed} path='/add-job' component={AddJob} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
