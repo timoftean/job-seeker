@@ -7,7 +7,7 @@ export class Provider {
 		this.user = new User()
 	}
 	
-	saveProvider = async (job) => {
+	saveProvider = async (provider) => {
 		//fetch the logged user
 		const user = await this.user.getCurrentUser()
 		
@@ -17,12 +17,15 @@ export class Provider {
 		//structure job data
 		const providerData = {
 			uid: uid,
-			body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed ",
-			title: "Lorem Ipsum",
+			category: provider.category,
+			location: provider.location,
+			noHours: provider.noHours,
+			availability: provider.availability,
+			description: provider.description
 		};
 		
 		//get from firebase the id for the provider you want to add
-		const newProviderKey = db.ref().child('jobs').push().key
+		const newProviderKey = db.ref().child('providers').push().key
 		
 		var updates = {}
 		updates['users/' + uid + 'infos/isProvider'] = 1
