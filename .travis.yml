@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - 7
+sudo: false
 cache:
   directories:
     - node_modules
@@ -11,6 +12,7 @@ install:
 - npm install
 - npm install -g react-scripts
 deploy:
+  skip_cleanup: true
   provider: firebase
   token:
     secure: $FIREBASE_TOKEN
