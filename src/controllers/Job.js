@@ -6,7 +6,7 @@ export class Job {
     this.user = new User()
   }
 
-async saveJob(jobTitle, jobDescription) {
+async saveJob(title, description, category, location, numHours, timeInterval, price) {
     //fetch the logged user
     const user = await this.user.getCurrentUser();
 
@@ -16,8 +16,13 @@ async saveJob(jobTitle, jobDescription) {
     //structure job data
     const jobData = {
       uid: uid,
-      title: jobTitle,
-      description: jobDescription
+      title: title,
+      description: description,
+      category: category,
+      location: location,
+      numHours: numHours,
+      timeInterval: timeInterval,
+      price: price
     };
 
     //get from firebase the id for the job you want to add
