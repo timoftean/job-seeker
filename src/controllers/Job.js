@@ -29,6 +29,7 @@ export class Job {
     const newJobKey = db.ref().child('jobs').push().key;
 
     var updates = {};
+	  updates['users/' + uid + '/info/hasPostedJob'] = 1
     //add the job to the new id
     updates['/jobs/' + newJobKey] = jobData;
     //add the same job to the logged in user id
@@ -44,4 +45,13 @@ export class Job {
     });
     return jobs
   }
+	
+	async getUserJobs() {
+    const uid = await this.user.getCurrentUserId()
+		//fetch all data from jobs "table"
+		let jobs = await db.ref(`user-jobs/${uid}`).once('value').then((jobs) => {
+			return jobs.val() || []
+		});
+		return jobs
+	}
 }

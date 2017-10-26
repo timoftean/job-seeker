@@ -33,9 +33,9 @@ export default class Providers extends Component {
 		return (
 			<ListItem key={key}>
 				<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
-					<CardTitle style={{height: '100px'}}>{provider.uid}</CardTitle>
+					<CardTitle style={{height: '100px'}}>{provider.description}</CardTitle>
 					<CardText>
-						{provider.body}
+						{provider.location}
 					</CardText>
 					<CardActions border>
 						<Button colored>Send hire request</Button>

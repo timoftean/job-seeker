@@ -28,7 +28,7 @@ export class Provider {
 		const newProviderKey = db.ref().child('providers').push().key
 		
 		var updates = {}
-		updates['users/' + uid + 'infos/isProvider'] = 1
+		updates['users/' + uid + '/info/isProvider'] = 1
 		//add the provider to the new id
 		updates['/providers/' + newProviderKey] = providerData
 		//add the same job to the logged in user id

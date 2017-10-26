@@ -21,4 +21,8 @@ export class User {
 		console.log("currentUser",userInfo)
 		return userInfo
 	}
+	getCurrentUserId = async () => {
+		const loggedUser = await firebaseAuth().currentUser.uid
+		return loggedUser
+	}
 }
