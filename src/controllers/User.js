@@ -11,6 +11,17 @@ export class User {
 			.then(() => user)
 	}
 	
+	saveUserProfile = async (user) => {
+		const uid = await this.getCurrentUserId()
+		return db.ref().child(`users/${uid}/profile`)
+			.set({
+				location: user.location,
+				firstName: user.firstName,
+				lastName: user.lastName
+			})
+			.then(() => user)
+	}
+	
 	getCurrentUser = async () => {
 		const loggedUser = await firebaseAuth().currentUser
 		let userInfo = {}

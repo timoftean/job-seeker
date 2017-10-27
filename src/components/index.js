@@ -8,6 +8,7 @@ import Jobs from './Jobs'
 import Providers from './Providers'
 import ProviderForm from './protected/ProviderForm'
 import Profile from './protected/Profile'
+import EditUserProfile from './protected/EditUserProfile'
 
 import { Job } from '../controllers/Job'
 import { Auth } from '../controllers/Auth'
@@ -73,7 +74,7 @@ export default class App extends Component {
     return this.state.loading === true
       ? <Spinner />
       : (
-      <BrowserRouter>
+      <BrowserRouter >
         <div>
           <nav className="navbar navbar-default navbar-static-top">
             <div className="container">
@@ -115,6 +116,7 @@ export default class App extends Component {
                 <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />
 				        <PrivateRoute authed={this.state.authed} path='/ProviderForm' component={ProviderForm} />
                 <PrivateRoute authed={this.state.authed} path='/add-job' component={AddJob} />
+                <PrivateRoute authed={this.state.authed} path='/editProfile' component={EditUserProfile} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

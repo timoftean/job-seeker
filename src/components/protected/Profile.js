@@ -16,6 +16,7 @@ import {
 	CardMenu
 } from 'react-mdl'
 import Jobs from '../Jobs'
+import EditUserProfile from './EditUserProfile'
 import { User } from '../../controllers/User'
 import { Job } from '../../controllers/Job'
 
@@ -36,7 +37,7 @@ export default class Profile extends Component {
 		const user = await this.userController.getCurrentUser()
 		const jobs = await this.jobController.getUserJobs()
 		this.setState({
-			user: user.info,
+			user: user,
 			isProvider: user.info.isProvider,
 			hasPostedJob: user.info.hasPostedJob,
 			jobs: jobs
@@ -44,43 +45,42 @@ export default class Profile extends Component {
 	}
 	
 	renderProfileTab = () => {
-	  return (
-      <Card shadow={0} style={{width: '500px', margin: 'auto'}}>
-        <CardTitle style={{height: '100px'}}>
-          Profile
-          <div style={{position: 'relative'}}>
-            <IconButton name="more_vert" id="demo-menu-lower-left" />
-            <Menu target="demo-menu-lower-left">
-              <MenuItem>Edit Profile</MenuItem>
-              <MenuItem>
-                <Link to="/ProviderForm">Create provider profile</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/add-job" >Post Job</Link>
-              </MenuItem>
-            </Menu>
-          </div>
-        </CardTitle>
-        <CardText>
-          <div>
-            <label>Nume </label>
-            <span>Popescu</span>
-          </div>
-          <div>
-            <label>Prenume </label>
-            <span>Andrei</span>
-          </div>
-        </CardText>
-        <CardActions border>
-          <Link to="/add-job" >
-            <Button colored>Posta a job</Button>
-          </Link>
-          <Link to="/ProviderForm" >
-            <Button colored className="pull-right">Create provider profile</Button>
-          </Link>
-        </CardActions>
-      </Card>
-    )
+		console.log("Usr",this.state.user)
+		if (this.state.user.profile) {
+			return (
+				<Card shadow={0} style={{width: '500px', margin: 'auto'}}>
+					<CardTitle style={{height: '100px'}}>
+						Profile
+						<div style={{position: 'relative'}}>
+							<IconButton name="more_vert" id="demo-menu-lower-left"/>
+							<Menu target="demo-menu-lower-left">
+								<MenuItem>
+									<Link to="/editProfile">Edit profile</Link>
+								</MenuItem>
+							</Menu>
+						</div>
+					</CardTitle>
+					<CardText>
+						<div>
+							<span>{this.state.user.profile.firstName} {this.state.user.profile.lastName}</span>
+						</div>
+						<div>
+							<span>{this.state.user.profile.location}</span>
+						</div>
+					</CardText>
+					<CardActions border>
+						<Link to="/add-job">
+							<Button colored>Posta a job</Button>
+						</Link>
+						<Link to="/ProviderForm">
+							<Button colored className="pull-right">Create provider profile</Button>
+						</Link>
+					</CardActions>
+				</Card>
+			)
+		} else {
+			return (<EditUserProfile {...this.props}/>)
+		}
   }
 	
 	renderProviderTab = () => {
