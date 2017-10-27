@@ -5,7 +5,14 @@ export class Job {
   constructor() {
     this.user = new User()
   }
-	
+  
+	async removeJob(jobId) {
+		const user = await this.user.getCurrentUser();
+		const uid = user.info.uid;
+    await db.ref('user-jobs/'+uid+'/'+jobId).remove();
+    return db.ref('jobs/'+jobId).remove();
+  }
+  
 	async editJob(id,title, description, category, location, numHours, timeInterval, price) {
 		//fetch the logged user
 		const user = await this.user.getCurrentUser();

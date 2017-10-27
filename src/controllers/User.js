@@ -18,7 +18,6 @@ export class User {
 			userInfo = await db.ref(`users/${loggedUser.uid}`).once('value')
 			return userInfo.val()
 		}
-		console.log("currentUser",userInfo)
 		return userInfo
 	}
 	getCurrentUserId = async () => {

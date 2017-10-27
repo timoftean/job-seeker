@@ -101,7 +101,6 @@ export default class Profile extends Component {
   }
   
   render () {
-		console.log("currentuser",this.state.isProvider? 'yes':'no')
 	  const isProvider = this.state.isProvider
     return (
       <div>

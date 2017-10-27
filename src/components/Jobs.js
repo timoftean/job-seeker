@@ -14,20 +14,20 @@ import {
 	Icon
 } from 'react-mdl'
 
+import { Job } from '../controllers/Job'
+
 export default class Jobs extends Component {
 	constructor(props) {
 		super(props)
-		console.log("jobsprops",props)
 		this.state={
 			jobs: props.jobs
 		}
+		this.jobController = new Job()
 	}
 	
 	renderJob = (key,job) => {
-		console.log("renderjob",job,key)
 		let url = `/add-job?id=${key}&title=${job.title}&description=${job.description}&category=${job.category}&location=${job.location}`+
 			`&numHours=${job.numHours}&timeInterval=${job.timeInterval}&price=${job.price}`
-		console.log("url",url)
 		return (
 			<ListItem key={key}>
 				<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
@@ -56,8 +56,20 @@ export default class Jobs extends Component {
 		)
 	}
 	
+	deleteJob = async (key) => {
+		return this.jobController.removeJob(key)
+			.then(() => {
+				console.log("Remove succeeded.")
+				this.props.history.push('/profile')
+			})
+			.catch((error) => {
+				console.log("Remove failed: " + error.message)
+			});
+		
+		
+	}
+	
 	render () {
-		console.log("state",this.state.jobs)
 		return (
 			<div>
 				<h1>Jobs</h1>

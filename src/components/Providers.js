@@ -29,7 +29,6 @@ export default class Providers extends Component {
 	}
 
 	renderProvider(key,provider) {
-		console.log("renderprovider",provider,key)
 		return (
 			<ListItem key={key}>
 				<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
@@ -49,7 +48,6 @@ export default class Providers extends Component {
 	}
 
 	render () {
-		console.log("state",this.state.providers)
 		return (
 			<div>
 				<h1>Providers</h1>

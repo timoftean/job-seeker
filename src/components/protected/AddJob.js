@@ -13,7 +13,6 @@ export default class AddJob extends Component {
   constructor(props) {
     super(props);
 	  const query = queryString.parse(props.location.search);
-	  console.log("parsed",query)
     this.state = {
       addJobError: null,
       id: query.id,
@@ -43,7 +42,6 @@ export default class AddJob extends Component {
     const numHours = this.state.numHours;
     const timeInterval = this.state.timeInterval;
     const price = this.state.price;
-    console.log("id",this.state.id)
     if (this.state.id) {
       this.jobController.editJob(this.state.id,title, description, category, location, numHours, timeInterval, price)
 	      .then(() => {

@@ -38,7 +38,6 @@ export default class Login extends Component {
         this.props.history.push('/profile')
 	    })
       .catch((error) => {
-          console.log("Error", error)
           this.setState(setErrorMsg('Invalid username/password.'))
         })
   }
