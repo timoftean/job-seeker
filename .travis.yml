@@ -17,4 +17,4 @@ deploy:
   token:
     secure: $FIREBASE_TOKEN
   on:
-    branch: release
+    branch: master
