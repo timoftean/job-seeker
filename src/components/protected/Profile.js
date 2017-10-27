@@ -11,9 +11,11 @@ import {
   MenuItem,
   Tab,
 	Tabs,
-	List
+	List,
+	ListItem,
+	CardMenu
 } from 'react-mdl'
-
+import Jobs from '../Jobs'
 import { User } from '../../controllers/User'
 import { Job } from '../../controllers/Job'
 
@@ -30,19 +32,19 @@ export default class Profile extends Component {
 		this.jobController = new Job()
 	}
 	
-	componentDidMount() {
-		this.userController.getCurrentUser().then(user =>{
-			this.setState({
-				user: user.info,
-				isProvider: user.info.isProvider,
-				hasPostedJob: user.info.hasPostedJob
-			})
+	async componentDidMount() {
+		const user = await this.userController.getCurrentUser()
+		const jobs = await this.jobController.getUserJobs()
+		this.setState({
+			user: user.info,
+			isProvider: user.info.isProvider,
+			hasPostedJob: user.info.hasPostedJob,
+			jobs: jobs
 		})
 	}
 	
 	renderProfileTab = () => {
 	  return (
-    
       <Card shadow={0} style={{width: '500px', margin: 'auto'}}>
         <CardTitle style={{height: '100px'}}>
           Profile
@@ -81,20 +83,6 @@ export default class Profile extends Component {
     )
   }
 	
-	renderJobsTab = async () => {
-		const jobs = await this.jobController.getUserJobs()
-	  return (
-	    <div>
-		    <List>
-			    {
-				    Object.keys(jobs).map((key) => {
-					    return this.renderJob(key,this.state.jobs[key])
-				    })
-			    }
-		    </List>b</div>
-    )
-  }
-	
 	renderProviderTab = () => {
 	  return (
 	    <div>Provider tab</div>
@@ -106,7 +94,7 @@ export default class Profile extends Component {
       case 1:
         return this.renderProviderTab()
       case 2:
-        return this.renderJobsTab()
+        return  <Jobs jobs={this.state.jobs} from="profile"/>
 		  default:
 			  return this.renderProfileTab()
     }

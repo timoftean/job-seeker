@@ -1,3 +1,4 @@
+const queryString = require('query-string');
 import React, {Component} from 'react'
 import {Job} from '../../controllers/Job'
 import {Textfield} from 'react-mdl'
@@ -11,15 +12,18 @@ function setErrorMsg(error) {
 export default class AddJob extends Component {
   constructor(props) {
     super(props);
+	  const query = queryString.parse(props.location.search);
+	  console.log("parsed",query)
     this.state = {
       addJobError: null,
-      title: '',
-      description: '',
-      category: '',
-      location: '',
-      numHours: '',
-      timeInterval: '',
-      price: ''
+      id: query.id,
+      title: query.title || '',
+      description: query.description || '',
+      category: query.category || '',
+      location: query.location || '',
+      numHours: query.numHours || '',
+      timeInterval: query.timeInterval || '',
+      price: query.price ||  ''
     };
     this.jobController = new Job();
   }
@@ -39,12 +43,21 @@ export default class AddJob extends Component {
     const numHours = this.state.numHours;
     const timeInterval = this.state.timeInterval;
     const price = this.state.price;
-
-    this.jobController.saveJob(title, description, category, location, numHours, timeInterval, price)
-      .then(() => {
-        this.props.history.push('/profile')
-      })
-      .catch(e => this.setState(setErrorMsg(e)));
+    console.log("id",this.state.id)
+    if (this.state.id) {
+      this.jobController.editJob(this.state.id,title, description, category, location, numHours, timeInterval, price)
+	      .then(() => {
+		      this.props.history.push('/profile')
+	      })
+	      .catch(e => this.setState(setErrorMsg(e)));
+    } else {
+	    this.jobController.saveJob(title, description, category, location, numHours, timeInterval, price)
+		    .then(() => {
+			    this.props.history.push('/profile')
+		    })
+		    .catch(e => this.setState(setErrorMsg(e)));
+    }
+    
   };
 
   verifyInput() {
@@ -55,7 +68,6 @@ export default class AddJob extends Component {
   render() {
     return (
       <div className="col-sm-6 col-sm-offset-3">
-        <h1>Add a job!</h1>
         <form onSubmit={this.handleSubmit}>
           <Textfield
             onChange={e => this.setState({title: e.target.value})}
@@ -63,6 +75,7 @@ export default class AddJob extends Component {
             error="Title must not be empty!"
             label="Title"
             style={{width: '200px'}}
+            value={this.state.title}
           />
           <Textfield
             onChange={e => this.setState({description: e.target.value})}
@@ -71,6 +84,7 @@ export default class AddJob extends Component {
             label="Description"
             rows={3}
             style={{width: '200px'}}
+            value={this.state.description}
           />
           <Textfield
             onChange={e => this.setState({category: e.target.value})}
@@ -78,6 +92,7 @@ export default class AddJob extends Component {
             error="Category must not be empty!"
             label="Category"
             style={{width: '200px'}}
+            value={this.state.category}
           />
           <Textfield
             onChange={e => this.setState({location: e.target.value})}
@@ -85,6 +100,7 @@ export default class AddJob extends Component {
             error="Location must not be empty!"
             label="Location"
             style={{width: '200px'}}
+            value={this.state.location}
           />
           <Textfield
             onChange={e => this.setState({numHours: e.target.value})}
@@ -92,6 +108,7 @@ export default class AddJob extends Component {
             error="Invalid number of hours!"
             label="Num. hours/week"
             style={{width: '200px'}}
+            value={this.state.numHours}
           />
           <Textfield
             onChange={e => this.setState({timeInterval: e.target.value})}
@@ -99,6 +116,7 @@ export default class AddJob extends Component {
             error="Invalid time interval!"
             label="Time interval (hh:mm - hh:mm)"
             style={{width: '200px'}}
+            value={this.state.interval}
           />
           <Textfield
             onChange={e => this.setState({price: e.target.value})}
@@ -106,9 +124,10 @@ export default class AddJob extends Component {
             error="Invalid price!"
             label="Price"
             style={{width: '200px'}}
+            value={this.state.price}
           />
 
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </form>
         {
           this.state.addJobError &&

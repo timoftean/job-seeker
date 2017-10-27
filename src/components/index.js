@@ -8,6 +8,8 @@ import Jobs from './Jobs'
 import Providers from './Providers'
 import ProviderForm from './protected/ProviderForm'
 import Profile from './protected/Profile'
+
+import { Job } from '../controllers/Job'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
 import { Spinner } from 'react-mdl'
@@ -33,21 +35,30 @@ function PublicRoute ({component: Component, ...rest}) {
 }
 
 export default class App extends Component {
-  state = {
-    authed: false,
-    loading: true,
+  constructor(props) {
+    super(props)
+	  this.state = {
+		  authed: false,
+		  loading: true,
+      jobs:{}
+	  }
+	  this.jobsController = new Job()
   }
-  componentDidMount () {
-    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+  
+  async componentDidMount () {
+	  const jobs = await this.jobsController.getAllJobs()
+	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authed: true,
           loading: false,
+          jobs: jobs
         })
       } else {
         this.setState({
           authed: false,
-          loading: false
+          loading: false,
+          jobs: jobs
         })
       }
     })
@@ -96,7 +107,8 @@ export default class App extends Component {
           <div className="container">
             <div className="row">
               <Switch>
-                <Route path='/' exact component={Jobs} />
+                <Route path='/' exact
+                       render={(props) => <Jobs {...props} jobs={this.state.jobs} />}/>
                 <PublicRoute path='/providers' component={Providers} />
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />

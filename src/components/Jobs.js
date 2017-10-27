@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Job } from '../controllers/Job'
+import  { Link } from 'react-router-dom'
 import {
 	Card,
 	CardTitle,
@@ -9,27 +9,25 @@ import {
 	CardMenu,
 	IconButton,
 	List,
-	ListItem} from 'react-mdl'
+	ListItem,
+	FABButton,
+	Icon
+} from 'react-mdl'
 
 export default class Jobs extends Component {
 	constructor(props) {
 		super(props)
+		console.log("jobsprops",props)
 		this.state={
-			jobs: []
+			jobs: props.jobs
 		}
-		this.job = new Job()
-		this.renderJob = this.renderJob.bind(this)
 	}
 	
-	async componentDidMount() {
-		//fetch jobs from firebase and put them on state to acces when rendering
-		this.setState({
-			jobs: await this.job.getAllJobs()
-		})
-	}
-	
-	renderJob(key,job) {
+	renderJob = (key,job) => {
 		console.log("renderjob",job,key)
+		let url = `/add-job?id=${key}&title=${job.title}&description=${job.description}&category=${job.category}&location=${job.location}`+
+			`&numHours=${job.numHours}&timeInterval=${job.timeInterval}&price=${job.price}`
+		console.log("url",url)
 		return (
 			<ListItem key={key}>
 				<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
@@ -38,11 +36,21 @@ export default class Jobs extends Component {
 						{job.description}
 					</CardText>
 					<CardActions border>
-						<Button colored>Attend</Button>
+						{
+							this.props.from === "profile"
+								? (
+									<div>
+										<Link to={url} >
+											<Button colored>Edit</Button>
+										</Link>
+										<FABButton onClick={() => this.deleteJob(key)} className="pull-right" colored mini ripple>
+											X
+										</FABButton>
+									</div>
+									)
+								:<Button colored>Attend</Button>
+						}
 					</CardActions>
-					<CardMenu style={{color: '#fff'}}>
-						<IconButton name="share" />
-					</CardMenu>
 				</Card>
 			</ListItem>
 		)

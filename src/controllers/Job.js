@@ -5,7 +5,34 @@ export class Job {
   constructor() {
     this.user = new User()
   }
-
+	
+	async editJob(id,title, description, category, location, numHours, timeInterval, price) {
+		//fetch the logged user
+		const user = await this.user.getCurrentUser();
+		
+		//get his id
+		const uid = user.info.uid;
+		
+		//structure job data
+		const jobData = {
+			title: title,
+			description: description,
+			category: category,
+			location: location,
+			numHours: numHours,
+			timeInterval: timeInterval,
+			price: price
+		};
+		
+		var updates = {};
+		//add the job to the new id
+		updates['/jobs/' + id] = jobData;
+		//add the same job to the logged in user id
+		updates['/user-jobs/' + uid + '/' + id] = jobData;
+		//post data to firebase
+		return db.ref().update(updates);
+	}
+	
   async saveJob(title, description, category, location, numHours, timeInterval, price) {
     //fetch the logged user
     const user = await this.user.getCurrentUser();
