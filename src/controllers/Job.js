@@ -82,7 +82,7 @@ export class Job {
 	
 	async getUserJobs() {
     const uid = await this.user.getCurrentUserId()
-		//fetch all data from jobs "table"
+		
 		let jobs = await db.ref(`user-jobs/${uid}`).once('value').then((jobs) => {
 			return jobs.val() || []
 		});

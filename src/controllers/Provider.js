@@ -42,4 +42,11 @@ export class Provider {
 		let providers = await db.ref(`providers`).once('value')
 		return providers.val()
 	}
+	
+	getUserProviderProfile = async () => {
+		const uid = await this.user.getCurrentUserId()
+		
+		let provider = await db.ref(`user-providers/${uid}`).once('value')
+		return provider.val()
+	}
 }

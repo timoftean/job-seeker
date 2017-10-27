@@ -19,6 +19,7 @@ import Jobs from '../Jobs'
 import EditUserProfile from './EditUserProfile'
 import { User } from '../../controllers/User'
 import { Job } from '../../controllers/Job'
+import { Provider } from '../../controllers/Provider'
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -26,18 +27,23 @@ export default class Profile extends Component {
 		this.state = {
 		  activeTab: 0,
       user: {},
+			providerProfile: {},
 			isProvider:null,
 			hasPostedJob:null
 		};
 		this.userController = new User()
 		this.jobController = new Job()
+		this.providerController = new Provider()
 	}
 	
 	async componentDidMount() {
 		const user = await this.userController.getCurrentUser()
 		const jobs = await this.jobController.getUserJobs()
+		const provider = await this.providerController.getUserProviderProfile()
+		console.log("Provider",provider)
 		this.setState({
 			user: user,
+			providerProfile: provider[Object.keys(provider)[0]],
 			isProvider: user.info.isProvider,
 			hasPostedJob: user.info.hasPostedJob,
 			jobs: jobs
@@ -45,7 +51,6 @@ export default class Profile extends Component {
 	}
 	
 	renderProfileTab = () => {
-		console.log("Usr",this.state.user)
 		if (this.state.user.profile) {
 			return (
 				<Card shadow={0} style={{width: '500px', margin: 'auto'}}>
@@ -85,7 +90,20 @@ export default class Profile extends Component {
 	
 	renderProviderTab = () => {
 	  return (
-	    <div>Provider tab</div>
+		  <ListItem >
+			  <Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
+				  <CardTitle style={{height: '100px'}}>{this.state.providerProfile.description}</CardTitle>
+				  <CardText>
+					  {this.state.providerProfile.location}
+				  </CardText>
+				  <CardActions border>
+					  <Button colored>Edit</Button>
+				  </CardActions>
+				  <CardMenu style={{color: '#fff'}}>
+					  <IconButton name="share" />
+				  </CardMenu>
+			  </Card>
+		  </ListItem>
     )
   }
   
@@ -101,7 +119,7 @@ export default class Profile extends Component {
   }
   
   render () {
-	  const isProvider = this.state.isProvider
+	  console.log("Usr",this.state.user)
     return (
       <div>
         <div className="demo-tabs">
