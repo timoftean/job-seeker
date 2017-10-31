@@ -57,7 +57,7 @@ export class Job {
       numHours: numHours,
       timeInterval: timeInterval,
       price: price
-    };
+    }
 
     //get from firebase the id for the job you want to add
     const newJobKey = db.ref().child('jobs').push().key;

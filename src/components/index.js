@@ -9,7 +9,7 @@ import Providers from './Providers'
 import ProviderForm from './protected/ProviderForm'
 import Profile from './protected/Profile'
 import EditUserProfile from './protected/EditUserProfile'
-
+import Home from './Home'
 import { Job } from '../controllers/Job'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
@@ -86,6 +86,9 @@ export default class App extends Component {
                   <Link to="/" className="navbar-brand">Jobs</Link>
                 </li>
                 <li>
+                  <Link to="/home" className="navbar-brand">Home</Link>
+                </li>
+                <li>
                   <Link to="/providers" className="navbar-brand">Providers</Link>
                 </li>
                 <li>
@@ -111,6 +114,7 @@ export default class App extends Component {
                 <Route path='/' exact
                        render={(props) => <Jobs {...props} jobs={this.state.jobs} />}/>
                 <PublicRoute path='/providers' component={Providers} />
+                <PublicRoute path='/home' component={Home} />
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />

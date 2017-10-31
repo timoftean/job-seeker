@@ -11,7 +11,6 @@ import {
   MenuItem,
   Tab,
 	Tabs,
-	List,
 	ListItem,
 	CardMenu
 } from 'react-mdl'
@@ -29,7 +28,7 @@ export default class Profile extends Component {
       user: {},
 			providerProfile: {},
 			isProvider:null,
-			hasPostedJob:null
+			hasPostedJob:null,
 		};
 		this.userController = new User()
 		this.jobController = new Job()
@@ -43,7 +42,7 @@ export default class Profile extends Component {
 		console.log("Provider",provider)
 		this.setState({
 			user: user,
-			providerProfile: provider[Object.keys(provider)[0]],
+			providerProfile: provider ? provider[Object.keys(provider)[0]] : null,
 			isProvider: user.info.isProvider,
 			hasPostedJob: user.info.hasPostedJob,
 			jobs: jobs
@@ -92,9 +91,9 @@ export default class Profile extends Component {
 	  return (
 		  <ListItem >
 			  <Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
-				  <CardTitle style={{height: '100px'}}>{this.state.providerProfile.description}</CardTitle>
+				  <CardTitle style={{height: '100px'}}>{this.state.providerProfile? this.state.providerProfile.description:null}</CardTitle>
 				  <CardText>
-					  {this.state.providerProfile.location}
+					  {this.state.providerProfile? this.state.providerProfile.location:null}
 				  </CardText>
 				  <CardActions border>
 					  <Button colored>Edit</Button>

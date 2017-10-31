@@ -74,10 +74,11 @@ export default class Jobs extends Component {
 			<div>
 				<h1>Jobs</h1>
 					<List>
-						{
-							Object.keys(this.state.jobs).map((key) => {
+						{this.state.jobs
+							?Object.keys(this.state.jobs).map((key) => {
 								return this.renderJob(key,this.state.jobs[key])
 							})
+							:null
 						}
 					</List>
 			</div>
