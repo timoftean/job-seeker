@@ -3,11 +3,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './auth/Login'
 import Register from './auth/Register'
-import AddJob from './protected/AddJob'
-import Providers from './Providers'
-import ProviderForm from './protected/ProviderForm'
-import Profile from './protected/Profile'
-import EditUserProfile from './protected/EditUserProfile'
+import AddJob from './profile/AddJob'
+import Profile from './profile/Profile'
+import EditUserProfile from './profile/EditUserProfile'
 import PostSection from './post/PostSection'
 
 import { Post } from '../controllers/Post'
@@ -20,8 +18,8 @@ const PrivateRoute  = ({component: Component, authed, ...rest}) => {
     <Route
       {...rest}
       render={(props) => authed === true
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        ? <Component {...props} authed={authed}/>
+        : <Redirect to={{pathname: '/login', props:props ,state: {from: props.location}}} />}
     />
   )
 }
@@ -87,9 +85,6 @@ export default class App extends Component {
                   <Link to="/" className="navbar-brand">Post</Link>
                 </li>
                 <li>
-                  <Link to="/providers" className="navbar-brand">Providers</Link>
-                </li>
-                <li>
                   <Link to="/profile" className="navbar-brand">Profile</Link>
                 </li>
                 <li>
@@ -111,13 +106,11 @@ export default class App extends Component {
               <Switch>
                 <Route path='/' exact
                        render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
-                <PublicRoute path='/providers' component={Providers} />
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
-                {/*<PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />*/}
-				        <PrivateRoute authed={this.state.authed} path='/ProviderForm' component={ProviderForm} />
-                <PrivateRoute authed={this.state.authed} path='/add-post' component={AddJob} />
-                {/*<PrivateRoute authed={this.state.authed} path='/editProfile' component={EditUserProfile} />*/}
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/add-post' component={AddJob} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

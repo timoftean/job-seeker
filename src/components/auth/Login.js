@@ -24,7 +24,7 @@ export default class Login extends Component {
 	handleGoogleLogin = () => {
 		this.loginWithGoogle()
       .then(() => {
-        this.props.history.push('/profile')})
+        this.props.history.push('/')})
 			.catch(function (error) {
 				alert(error);
 				this.setState(error)
@@ -35,7 +35,7 @@ export default class Login extends Component {
     e.preventDefault()
     this.login(this.email.value, this.pw.value)
 	    .then(() => {
-        this.props.history.push('/profile')
+        this.props.history.push('/')
 	    })
       .catch((error) => {
           this.setState(setErrorMsg('Invalid username/password.'))

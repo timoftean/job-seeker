@@ -82,9 +82,7 @@ export class Post {
 	async getUserPosts() {
     const uid = await this.user.getCurrentUserId()
 		
-		let posts = await db.ref(`user-posts/${uid}`).once('value').then((posts) => {
-			return posts.val() || []
-		});
-		return posts
+		let posts = await db.ref(`user-posts/${uid}`).once('value')
+		return posts.val()
 	}
 }

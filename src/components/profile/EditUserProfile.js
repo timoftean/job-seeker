@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Textfield } from 'react-mdl'
+import { User } from '../../controllers/User'
+
 function setErrorMsg(error) {
 	return {
 		registerError: error.message
 	}
 }
-
-import { User } from '../../controllers/User'
 
 export default class EditUserProfile extends Component {
 	constructor(props) {
