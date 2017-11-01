@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Tab, Tabs} from 'react-mdl'
 import PostList from '../post/PostList'
-import EditUserProfile from './EditUserProfile'
+import EditUserProfile from './EditProfileInfos'
 import ProfileInfos from './ProfileInfos'
 import { User } from '../../controllers/User'
 import { Post } from '../../controllers/Post'

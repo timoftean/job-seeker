@@ -1,24 +1,38 @@
 import React, { Component } from 'react'
 import { Textfield } from 'react-mdl'
 import { User } from '../../controllers/User'
-
 function setErrorMsg(error) {
 	return {
 		registerError: error.message
 	}
 }
 
-export default class EditUserProfile extends Component {
+ class EditProfileInfos extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			loaded: false,
 			registerError: null,
 			firstName: '',
 			lastName: '',
-			location: ''
+			phone: ''
 		}
 		this.userController = new User()
 	}
+	
+	componentDidMount() {
+		this.userController.getCurrentUser().then(user => {
+			console.log("user",user)
+			const { phone, lastName, firstName } = user.profile
+			this.setState({
+				firstName: firstName,
+				lastName: lastName,
+				phone: phone,
+				loaded: true
+			})
+		})
+	}
+	
 	
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -29,7 +43,7 @@ export default class EditUserProfile extends Component {
 		}
 		
 		const userProfile = {
-			location: this.state.location,
+			phone: this.state.phone,
 			firstName: this.state.firstName,
 			lastName: this.state.lastName
 		}
@@ -37,17 +51,19 @@ export default class EditUserProfile extends Component {
 		this.userController.saveUserProfile(userProfile)
 			.then(() => {
 				console.log("props",this.props)
-				this.props.history.push('/profile')
+				this.props.history.push('/')
 			})
 			.catch(e => this.setState(setErrorMsg(e)));
 	};
 	
 	verifyInput() {
 		console.log(this.state.firstName , this.state.lastName ,this.state.location)
-		return this.state.firstName && this.state.lastName && this.state.location
+		return this.state.firstName && this.state.lastName && this.state.phone
 	}
 	
 	render () {
+		console.log('state',this.state)
+		if(!this.state.loaded) return null
 		return (
 			<div className="col-sm-6 col-sm-offset-3">
 				<h1>Profile</h1>
@@ -58,6 +74,7 @@ export default class EditUserProfile extends Component {
 						error="First name must not be empty!"
 						label="First Name"
 						style={{width: '200px'}}
+					  value={this.state.firstName}
 					/>
 					<Textfield
 						onChange={e => this.setState({lastName: e.target.value})}
@@ -65,13 +82,15 @@ export default class EditUserProfile extends Component {
 						error="Last name must not be empty!"
 						label="Last name"
 						style={{width: '200px'}}
+						value={this.state.lastName}
 					/>
 					<Textfield
-						onChange={e => this.setState({location: e.target.value})}
-						pattern="([^\s]*)"
-						error="Location must not be empty!"
-						label="Location: e.g. Campia Turzii"
+						onChange={e => this.setState({phone: e.target.value})}
+						pattern="[0-9]*(\.[0-9]+)?"
+						error="Phone must not be empty!"
+						label="phone: e.g. 0755203368"
 						style={{width: '200px'}}
+						value={this.state.phone}
 					/>
 					{
 						this.state.registerError &&
@@ -87,3 +106,5 @@ export default class EditUserProfile extends Component {
 		)
 	}
 }
+
+export default EditProfileInfos

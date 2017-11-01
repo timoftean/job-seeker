@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './auth/Login'
 import Register from './auth/Register'
-import AddJob from './profile/AddJob'
+import AddPost from './post/AddPost'
 import Profile from './profile/Profile'
-import EditUserProfile from './profile/EditUserProfile'
+import EditUserProfile from './profile/EditProfileInfos'
 import PostSection from './post/PostSection'
 
 import { Post } from '../controllers/Post'
@@ -82,7 +82,7 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/" className="navbar-brand">Post</Link>
+                  <Link to="/" className="navbar-brand">Posts</Link>
                 </li>
                 <li>
                   <Link to="/profile" className="navbar-brand">Profile</Link>
@@ -109,7 +109,7 @@ export default class App extends Component {
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/add-post' component={AddJob} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={AddPost} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>

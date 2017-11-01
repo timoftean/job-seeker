@@ -15,7 +15,7 @@ export class User {
 		const uid = await this.getCurrentUserId()
 		return db.ref().child(`users/${uid}/profile`)
 			.set({
-				location: user.location,
+				phone: user.phone,
 				firstName: user.firstName,
 				lastName: user.lastName
 			})
@@ -24,15 +24,15 @@ export class User {
 	
 	getCurrentUser = async () => {
 		const loggedUser = await firebaseAuth().currentUser
-		let userInfo = {}
+		let userInfo
 		if (loggedUser) {
 			userInfo = await db.ref(`users/${loggedUser.uid}`).once('value')
 			return userInfo.val()
 		}
 		return userInfo
 	}
+	
 	getCurrentUserId = async () => {
-		const loggedUser = await firebaseAuth().currentUser.uid
-		return loggedUser
+		return  await firebaseAuth().currentUser.uid
 	}
 }

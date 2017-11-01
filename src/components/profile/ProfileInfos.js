@@ -8,7 +8,7 @@ const ProfileInfos = (props) => {
 	return (
 		<Card shadow={0} style={{width: '500px', margin: 'auto'}}>
 			<CardTitle style={{height: '100px'}}>
-				Profile
+				Edit Infos
 				<div style={{position: 'relative'}}>
 					<IconButton name="more_vert" id="demo-menu-lower-left"/>
 					<Menu target="demo-menu-lower-left">
@@ -23,7 +23,7 @@ const ProfileInfos = (props) => {
 					<span>{user.profile.firstName} {user.profile.lastName}</span>
 				</div>
 				<div>
-					<span>{user.profile.location}</span>
+					<span>{user.profile.phone}</span>
 				</div>
 			</CardText>
 			<CardActions border>
