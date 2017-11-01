@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Textfield } from 'react-mdl'
-import { createHashHistory } from 'history'
 function setErrorMsg(error) {
 	return {
 		registerError: error.message

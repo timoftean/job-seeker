@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Login from './Login'
+import Login from './auth/Login'
 import {User} from '../controllers/User'
 
 class Home extends Component {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Auth } from '../controllers/Auth'
+import { Auth } from '../../controllers/Auth'
 import { Link } from 'react-router-dom'
 import { Button } from 'react-mdl'
-
+/* eslint-disable */
 function setErrorMsg(error) {
   return {
     loginMessage: error

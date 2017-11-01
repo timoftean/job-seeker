@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
-import Login from './Login'
-import Register from './Register'
+import Login from './auth/Login'
+import Register from './auth/Register'
 import AddJob from './protected/AddJob'
-import Jobs from './Jobs'
 import Providers from './Providers'
 import ProviderForm from './protected/ProviderForm'
 import Profile from './protected/Profile'
 import EditUserProfile from './protected/EditUserProfile'
-import Home from './Home'
-import { Job } from '../controllers/Job'
+import PostSection from './post/PostSection'
+
+import { Post } from '../controllers/Post'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
 import { Spinner } from 'react-mdl'
@@ -41,25 +41,26 @@ export default class App extends Component {
 	  this.state = {
 		  authed: false,
 		  loading: true,
-      jobs:{}
+      posts:{}
 	  }
-	  this.jobsController = new Job()
+	  this.postController = new Post()
   }
   
   async componentDidMount () {
-	  const jobs = await this.jobsController.getAllJobs()
+	  const posts = await this.postController.getAllPosts()
+    console.log("p",posts)
 	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authed: true,
           loading: false,
-          jobs: jobs
+          posts
         })
       } else {
         this.setState({
           authed: false,
           loading: false,
-          jobs: jobs
+          posts
         })
       }
     })
@@ -83,10 +84,7 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/" className="navbar-brand">Jobs</Link>
-                </li>
-                <li>
-                  <Link to="/home" className="navbar-brand">Home</Link>
+                  <Link to="/" className="navbar-brand">Post</Link>
                 </li>
                 <li>
                   <Link to="/providers" className="navbar-brand">Providers</Link>
@@ -112,15 +110,14 @@ export default class App extends Component {
             <div className="row">
               <Switch>
                 <Route path='/' exact
-                       render={(props) => <Jobs {...props} jobs={this.state.jobs} />}/>
+                       render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
                 <PublicRoute path='/providers' component={Providers} />
-                <PublicRoute path='/home' component={Home} />
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
-                <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />
+                {/*<PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />*/}
 				        <PrivateRoute authed={this.state.authed} path='/ProviderForm' component={ProviderForm} />
-                <PrivateRoute authed={this.state.authed} path='/add-job' component={AddJob} />
-                <PrivateRoute authed={this.state.authed} path='/editProfile' component={EditUserProfile} />
+                <PrivateRoute authed={this.state.authed} path='/add-post' component={AddJob} />
+                {/*<PrivateRoute authed={this.state.authed} path='/editProfile' component={EditUserProfile} />*/}
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

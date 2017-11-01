@@ -17,7 +17,7 @@ import {
 import Jobs from '../Jobs'
 import EditUserProfile from './EditUserProfile'
 import { User } from '../../controllers/User'
-import { Job } from '../../controllers/Job'
+import { Post } from '../../controllers/Post'
 import { Provider } from '../../controllers/Provider'
 
 export default class Profile extends Component {
@@ -31,7 +31,7 @@ export default class Profile extends Component {
 			hasPostedJob:null,
 		};
 		this.userController = new User()
-		this.jobController = new Job()
+		this.jobController = new Post()
 		this.providerController = new Provider()
 	}
 	
@@ -73,11 +73,8 @@ export default class Profile extends Component {
 						</div>
 					</CardText>
 					<CardActions border>
-						<Link to="/add-job">
-							<Button colored>Posta a job</Button>
-						</Link>
-						<Link to="/ProviderForm">
-							<Button colored className="pull-right">Create provider profile</Button>
+						<Link to="/addPost">
+							<Button colored>Add a post</Button>
 						</Link>
 					</CardActions>
 				</Card>

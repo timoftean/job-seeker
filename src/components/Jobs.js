@@ -6,15 +6,12 @@ import {
 	CardText,
 	CardActions,
 	Button,
-	CardMenu,
-	IconButton,
 	List,
 	ListItem,
 	FABButton,
-	Icon
 } from 'react-mdl'
 
-import { Job } from '../controllers/Job'
+import { Job } from '../controllers/Post'
 
 export default class Jobs extends Component {
 	constructor(props) {
@@ -23,6 +20,17 @@ export default class Jobs extends Component {
 			jobs: props.jobs
 		}
 		this.jobController = new Job()
+	}
+	
+	deleteJob = async (key) => {
+		return this.jobController.removeJob(key)
+			.then(() => {
+				console.log("Remove succeeded.")
+				this.props.history.push('/profile')
+			})
+			.catch((error) => {
+				console.log("Remove failed: " + error.message)
+			});
 	}
 	
 	renderJob = (key,job) => {
@@ -54,19 +62,6 @@ export default class Jobs extends Component {
 				</Card>
 			</ListItem>
 		)
-	}
-	
-	deleteJob = async (key) => {
-		return this.jobController.removeJob(key)
-			.then(() => {
-				console.log("Remove succeeded.")
-				this.props.history.push('/profile')
-			})
-			.catch((error) => {
-				console.log("Remove failed: " + error.message)
-			});
-		
-		
 	}
 	
 	render () {

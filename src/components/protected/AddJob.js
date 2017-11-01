@@ -1,6 +1,6 @@
 const queryString = require('query-string');
 import React, {Component} from 'react'
-import {Job} from '../../controllers/Job'
+import {Job} from '../../controllers/Post'
 import {Textfield} from 'react-mdl'
 
 function setErrorMsg(error) {

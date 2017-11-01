@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Auth } from '../controllers/Auth'
+import { Auth } from '../../controllers/Auth'
 
 function setErrorMsg(error) {
   return {
