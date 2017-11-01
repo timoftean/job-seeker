@@ -1,9 +1,10 @@
 import React from 'react'
-import Link from 'react-router-dom'
-import {Card, CardTitle, CardText, CardActions, Button, FABButton} from 'react-mdl'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import {Card, CardTitle, CardText, CardActions, Button} from 'react-mdl'
 
 const PostItem = (props) => {
-	const { id, post, handleDelete } = props
+	const { id, post } = props
 	console.log("item",post)
 	return(
 		<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
@@ -13,12 +14,9 @@ const PostItem = (props) => {
 			</CardText>
 			<CardActions border>
 				<div>
-					<Link  to={{pathname: '/post/details/'+id, props:{post} }} >
+					<Link  to={{pathname: `/post/details/${id}`, props:{post} }} >
 						<Button colored>Show details</Button>
 					</Link>
-					<FABButton onClick={() => {handleDelete(post.id)}} className="pull-right" colored mini ripple>
-						X
-					</FABButton>
 				</div>
 			</CardActions>
 		</Card>
@@ -26,3 +24,8 @@ const PostItem = (props) => {
 }
 
 export default PostItem
+
+PostItem.propTypes = {
+	post: PropTypes.object,
+	id: PropTypes.string
+}

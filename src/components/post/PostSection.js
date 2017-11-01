@@ -7,7 +7,6 @@ import PostList from './PostList'
 //to the selected filters)
 const PostSection = (props) => {
 	const { posts } = props // const posts = props.posts
-	console.log("postsection",posts)
 	return (
 		<PostList posts={posts} {...props} />
 	)

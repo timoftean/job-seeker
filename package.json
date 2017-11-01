@@ -9,6 +9,7 @@
     "bootstrap": "^3.3.7",
     "firebase": "^3.6.1",
     "history": "^4.7.2",
+    "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
