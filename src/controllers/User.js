@@ -1,4 +1,4 @@
-import { db, firebaseAuth } from '../config/constants'
+import { db, firebaseAuth, storageRef } from '../config/constants'
 
 export class User {
 	
@@ -19,7 +19,23 @@ export class User {
 				firstName: user.firstName,
 				lastName: user.lastName
 			})
-			.then(() => user)
+			.then((user) => user)
+	}
+	
+	setPicturePath = async (path) => {
+		const uid = await this.getCurrentUserId()
+		return db.ref().child(`users/${uid}/picture`)
+			.set({
+				picturePath: `gs://return-to-sleep.appspot.com/${path}`
+			})
+			.then((res) => res)
+	}
+	
+	getPictureUrl = async () => {
+		const uid = await this.getCurrentUserId()
+		const pictureRef = storageRef.child(`images/${uid}/profilePicture.jpg`);
+		// Get the download URL
+		return await pictureRef.getDownloadURL()
 	}
 	
 	getCurrentUser = async () => {
@@ -34,5 +50,13 @@ export class User {
 	
 	getCurrentUserId = async () => {
 		return  await firebaseAuth().currentUser.uid
+	}
+	
+	saveProfilePicture = async (imageString) => {
+		const uid = await this.getCurrentUserId()
+		
+		// Base64 formatted string
+		const ref = storageRef.child(`images/${uid}/profilePicture.jpg`);
+		return await ref.putString(imageString, 'data_url')
 	}
 }

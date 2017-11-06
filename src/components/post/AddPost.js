@@ -77,8 +77,8 @@ export default class AddPost extends Component {
             name="type"
             value={this.state.type}
             onChange={e => this.setState({type: e.target.value})}>
-              <Radio value="provider" ripple> Ofer </Radio>
-              <Radio value="job"> Caut </Radio>
+              <Radio value="provider" ripple> I offer </Radio>
+              <Radio value="job"> I search </Radio>
           </RadioGroup>
           <Textfield
             onChange={e => this.setState({title: e.target.value})}
@@ -116,7 +116,7 @@ export default class AddPost extends Component {
             onChange={e => this.setState({numHours: e.target.value})}
             pattern="[0-9]*(\.[0-9]+)?"
             error="Invalid number of hours!"
-            label="Num. hours/week"
+            label="No. hours/week"
             style={{width: '200px'}}
             value={this.state.numHours}
           />
@@ -124,7 +124,7 @@ export default class AddPost extends Component {
             onChange={e => this.setState({timeInterval: e.target.value})}
             pattern="[0-2][0-9]:[0-5][0-9](\s)*-(\s)*[0-2][0-9]:[0-5][0-9]"
             error="Invalid time interval!"
-            label="Time interval (hh:mm - hh:mm)"
+            label="Interval(hh:mm-hh:mm)"
             style={{width: '200px'}}
             value={this.state.interval}
           />
@@ -136,8 +136,9 @@ export default class AddPost extends Component {
             style={{width: '200px'}}
             value={this.state.price}
           />
-
-          <button type="submit" className="btn btn-primary">Save</button>
+          <div>
+            <button type="submit" className="btn btn-primary">Save</button>
+          </div>
         </form>
         {
           this.state.addPostError &&
