@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import ImageUpload from './ImageUpload'
 import { Card, CardTitle, CardText, Button, CardActions, CardMenu } from 'react-mdl'
 import { User } from '../../controllers/User'
 

@@ -13,8 +13,7 @@ export default class ImageUpload extends Component {
 	
 	// Callback~
 	getFiles = async (files) => {
-		console.log("files",files)
-		const res = await this.userController.saveProfilePicture(files[0].base64)
+		await this.userController.saveProfilePicture(files[0].base64)
 		this.setState({ files: files })
 	}
 	

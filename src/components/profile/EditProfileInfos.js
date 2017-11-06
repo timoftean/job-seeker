@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Textfield } from 'react-mdl'
 import { User } from '../../controllers/User'
+import ImageUpload from './ImageUpload'
+
 function setErrorMsg(error) {
 	return {
 		registerError: error.message
@@ -62,8 +64,8 @@ function setErrorMsg(error) {
 	}
 	
 	render () {
-		console.log('state',this.state)
 		if(!this.state.loaded) return null
+		
 		return (
 			<div className="col-sm-6 col-sm-offset-3">
 				<h1>Profile</h1>
@@ -92,6 +94,11 @@ function setErrorMsg(error) {
 						style={{width: '200px'}}
 						value={this.state.phone}
 					/>
+					<div>
+						<label>Upload a profile picture</label>
+						<ImageUpload/>
+					</div>
+					
 					{
 						this.state.registerError &&
 						<div className="alert alert-danger" role="alert">
@@ -100,7 +107,9 @@ function setErrorMsg(error) {
 							&nbsp;{this.state.registerError}
 						</div>
 					}
-					<button type="submit" className="btn btn-primary">Save</button>
+					<div>
+						<button type="submit" className="btn btn-primary">Save</button>
+					</div>
 				</form>
 			</div>
 		)
