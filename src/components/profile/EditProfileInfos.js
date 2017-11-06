@@ -24,12 +24,10 @@ function setErrorMsg(error) {
 	
 	componentDidMount() {
 		this.userController.getCurrentUser().then(user => {
-			console.log("user",user)
-			const { phone, lastName, firstName } = user.profile
 			this.setState({
-				firstName: firstName,
-				lastName: lastName,
-				phone: phone,
+				firstName: user.firstName || '',
+				lastName: user.lastName || '',
+				phone: user.phone || '',
 				loaded: true
 			})
 		})
