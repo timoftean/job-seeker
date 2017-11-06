@@ -38,7 +38,7 @@ export default class Profile extends Component {
 	  switch (this.state.activeTab) {
       case 1:
         return  this.state.posts
-          ?<PostList post={this.state.posts}/>
+          ?<PostList posts={this.state.posts}/>
 	        :<h2>No posts yet</h2>
 		  default:
 			  return this.state.user.profile

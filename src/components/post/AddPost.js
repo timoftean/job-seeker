@@ -1,30 +1,30 @@
-const queryString = require('query-string');
-import React, {Component} from 'react'
-import {Job} from '../../controllers/Post'
-import {Textfield} from 'react-mdl'
+import React, { Component } from 'react'
+import { Post } from '../../controllers/Post'
+import { Textfield, Radio, RadioGroup } from 'react-mdl'
 
 function setErrorMsg(error) {
   return {
-    addJobError: error.message,
+    addPostError: error.message,
   }
 }
 
-export default class AddJob extends Component {
+export default class AddPost extends Component {
   constructor(props) {
     super(props);
-	  const query = queryString.parse(props.location.search);
+    const post = this.props.post || {}
     this.state = {
-      addJobError: null,
-      id: query.id,
-      title: query.title || '',
-      description: query.description || '',
-      category: query.category || '',
-      location: query.location || '',
-      numHours: query.numHours || '',
-      timeInterval: query.timeInterval || '',
-      price: query.price ||  ''
+      addPostError: null,
+      id: post.id || '',
+      title: post.title || '',
+      description: post.description || '',
+      category: post.category || '',
+      location: post.location || '',
+      numHours: post.numHours || '',
+      timeInterval: post.timeInterval || '',
+      price: post.price ||  '',
+      type: post.type || ''
     };
-    this.jobController = new Job();
+    this.postController = new Post();
   }
 
   handleSubmit = (e) => {
@@ -35,23 +35,28 @@ export default class AddJob extends Component {
       return;
     }
 
-    const title = this.state.title;
-    const description = this.state.description;
-    const category = this.state.category;
-    const location = this.state.location;
-    const numHours = this.state.numHours;
-    const timeInterval = this.state.timeInterval;
-    const price = this.state.price;
+    const post = {
+      title: this.state.title,
+      description: this.state.description,
+      category: this.state.category,
+      location: this.state.location,
+      numHours: this.state.numHours,
+      timeInterval: this.state.timeInterval,
+      price: this.state.price,
+      type: this.state.type
+    };
+    
+    //if id exists, it means the post is edited, otherwise it`s added
     if (this.state.id) {
-      this.jobController.editJob(this.state.id,title, description, category, location, numHours, timeInterval, price)
+      this.postController.editPost(this.state.id, post)
 	      .then(() => {
-		      this.props.history.push('/profile')
+		      this.props.history.push('/')
 	      })
 	      .catch(e => this.setState(setErrorMsg(e)));
     } else {
-	    this.jobController.saveJob(title, description, category, location, numHours, timeInterval, price)
+	    this.postController.savePost(post)
 		    .then(() => {
-			    this.props.history.push('/profile')
+			    this.props.history.push('/')
 		    })
 		    .catch(e => this.setState(setErrorMsg(e)));
     }
@@ -60,13 +65,21 @@ export default class AddJob extends Component {
 
   verifyInput() {
     return this.state.title && this.state.description && this.state.category && this.state.location
-        && this.state.numHours && this.state.timeInterval && this.state.price;
+        && this.state.numHours && this.state.timeInterval && this.state.price && this.state.type
   }
 
   render() {
+    console.log("type",this.state.type)
     return (
       <div className="col-sm-6 col-sm-offset-3">
         <form onSubmit={this.handleSubmit}>
+          <RadioGroup
+            name="type"
+            value={this.state.type}
+            onChange={e => this.setState({type: e.target.value})}>
+              <Radio value="provider" ripple> Ofer </Radio>
+              <Radio value="job"> Caut </Radio>
+          </RadioGroup>
           <Textfield
             onChange={e => this.setState({title: e.target.value})}
             pattern="([^\s]*)"
@@ -77,10 +90,9 @@ export default class AddJob extends Component {
           />
           <Textfield
             onChange={e => this.setState({description: e.target.value})}
-            pattern="([^\s]*)"
+            pattern="^[a-zA-Z0-9_ ]*$"
             error="Description must not be empty!"
             label="Description"
-            rows={3}
             style={{width: '200px'}}
             value={this.state.description}
           />
@@ -94,7 +106,7 @@ export default class AddJob extends Component {
           />
           <Textfield
             onChange={e => this.setState({location: e.target.value})}
-            pattern="([^\s]*)"
+            pattern="([^\s]*[^\s])"
             error="Location must not be empty!"
             label="Location"
             style={{width: '200px'}}
@@ -128,11 +140,11 @@ export default class AddJob extends Component {
           <button type="submit" className="btn btn-primary">Save</button>
         </form>
         {
-          this.state.addJobError &&
+          this.state.addPostError &&
           <div className="alert alert-danger" role="alert">
             <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"/>
             <span className="sr-only">Error:</span>
-            &nbsp;{this.state.addJobError}
+            &nbsp;{this.state.addPostError}
           </div>
         }
       </div>

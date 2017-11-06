@@ -9,7 +9,6 @@ const PostList = (props) => {
 	console.log("postlist",posts)
 	return (
 		<div>
-			<h1>Posts</h1>
 			<List>
 				{Object.keys(posts).map(key => {
 					console.log("key",posts[key], key)

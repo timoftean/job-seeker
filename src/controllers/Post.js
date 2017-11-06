@@ -13,7 +13,7 @@ export class Post {
     return db.ref('posts/'+postId).remove();
   }
   
-	async editPost(post) {
+	async editPost(id,post) {
 		//fetch the logged user
 		const user = await this.user.getCurrentUser();
 		
@@ -21,22 +21,22 @@ export class Post {
 		const uid = user.info.uid;
 		
 		//structure post data
-		const postData = {
-			type: post.title,
-			title: post.title,
-			description: post.description,
-			category: post.category,
-			location: post.location,
-			numHours: post.numHours,
-			timeInterval: post.timeInterval,
-			price: post.price
-		}
+		// const postData = {
+		// 	type: post.type,
+		// 	title: post.title,
+		// 	description: post.description,
+		// 	category: post.category,
+		// 	location: post.location,
+		// 	numHours: post.numHours,
+		// 	timeInterval: post.timeInterval,
+		// 	price: post.price
+		// }
 		
 		var updates = {};
 		//add the post to the new id
-		updates['/posts/' + post.id] = postData
+		updates['/posts/' + post.id] = post
 		//add the same post to the logged in user id
-		updates['/user-posts/' + uid + '/' + post.id] = postData
+		updates['/user-posts/' + uid + '/' + post.id] = post
 		//post data to firebase
 		return db.ref().update(updates)
 	}
@@ -49,16 +49,16 @@ export class Post {
     const uid = user.info.uid;
 
     //structure post data
-	  const postData = {
-		  type: post.title,
-		  title: post.title,
-		  description: post.description,
-		  category: post.category,
-		  location: post.location,
-		  numHours: post.numHours,
-		  timeInterval: post.timeInterval,
-		  price: post.price
-	  }
+    // const postData = {
+		 //  type: post.title,
+		 //  title: post.title,
+		 //  description: post.description,
+		 //  category: post.category,
+		 //  location: post.location,
+		 //  numHours: post.numHours,
+		 //  timeInterval: post.timeInterval,
+		 //  price: post.price
+    // }
 
     //get from firebase the id for the post you want to add
     const newPostKey = db.ref().child('posts').push().key
@@ -66,9 +66,9 @@ export class Post {
     var updates = {}
 	  updates['users/' + uid + '/info/hasPostedPost'] = 1
     //add the post to the new id
-    updates['/posts/' + newPostKey] = postData
+    updates['/posts/' + newPostKey] = post
     //add the same post to the logged in user id
-    updates['/user-posts/' + uid + '/' + newPostKey] = postData
+    updates['/user-posts/' + uid + '/' + newPostKey] = post
     //post data to firebase
     return db.ref().update(updates)
   }
