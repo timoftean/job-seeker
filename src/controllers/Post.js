@@ -7,12 +7,14 @@ export class Post {
   }
   
   getPostById = async (id) => {
-	  let post = await db.ref(`posts`).once('value')
-	  const user = await this.user.getUserById(post.userId)
-	  console.log("post-user",post,user)
+	  const post = await db.ref(`posts/${id}`).once('value')
+	  const loggedInUser = await this.user.getCurrentUserId()
+	  const user = await this.user.getUserById(post.val().userId)
+	  console.log("postbyid",post.val(),user)
 	  return {
   		user,
-		  post
+		  post: post.val(),
+		  loggedInUser
 	  }
 	}
 	
@@ -35,9 +37,9 @@ export class Post {
 	
 		var updates = {};
 		//add the post to the new id
-		updates['/posts/' + post.id] = post
+		updates['/posts/' + id] = post
 		//add the same post to the logged in user id
-		updates['/user-posts/' + uid + '/' + post.id] = post
+		updates['/user-posts/' + uid + '/' + id] = post
 		//post data to firebase
 		return db.ref().update(updates)
 	}

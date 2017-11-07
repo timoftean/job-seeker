@@ -50,14 +50,12 @@ function setErrorMsg(error) {
 		
 		this.userController.saveUserProfile(userProfile)
 			.then(() => {
-				console.log("props",this.props)
 				this.props.history.push('/')
 			})
 			.catch(e => this.setState(setErrorMsg(e)));
 	};
 	
 	verifyInput() {
-		console.log(this.state.firstName , this.state.lastName ,this.state.location)
 		return this.state.firstName && this.state.lastName && this.state.phone
 	}
 	

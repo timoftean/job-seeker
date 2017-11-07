@@ -25,7 +25,6 @@ export default class Profile extends Component {
 	async componentDidMount() {
 		const user = await this.userController.getCurrentUser()
 		const posts = await this.jobController.getUserPosts()
-		console.log('posts',posts)
 		this.setState({
 			user: user,
 			hasPosts: (user.info.hasPosts === 1),
@@ -54,7 +53,6 @@ export default class Profile extends Component {
   render () {
 	  //if user is not authenticated do not show profile
 	  if (!this.props.authed || !this.state.loaded) return null
-	  console.log("Usr",this.state.user)
 
     return (
       <div>

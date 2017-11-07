@@ -6,17 +6,19 @@ import PostItem from './PostItem'
 
 const PostList = (props) => {
 	const { posts } = props
-	console.log("postlist",posts)
 	return (
 		<div>
 			<List>
-				{Object.keys(posts).map(key => {
-					console.log("key",posts[key], key)
-					return (
-						<ListItem key={key}>
-							<PostItem id={key} post={posts[key]} {...props}/>
-						</ListItem>)
-				})}
+				{posts
+					? Object.keys(posts).map(key => {
+							return (
+								<ListItem key={key}>
+									<PostItem id={key} post={posts[key]} {...props}/>
+								</ListItem>)
+						})
+					:<h3>No posts yet</h3>
+				}
+				
 			</List>
 		</div>
 	)

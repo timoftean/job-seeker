@@ -5,12 +5,15 @@ import {Card, CardTitle, CardText, CardActions, Button} from 'react-mdl'
 
 const PostItem = (props) => {
 	const { id, post } = props
-	console.log("item",post)
 	return(
 		<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
 			<CardTitle style={{height: '100px'}}>{post.title}</CardTitle>
 			<CardText>
-				{post.description}
+				{post.type === 'provider'
+					?<div>Type: Offer</div>
+					:<div>Type: Request</div>
+				}
+				<div>{post.description}</div>
 			</CardText>
 			<CardActions border>
 				<div>

@@ -11,7 +11,7 @@ function setErrorMsg(error) {
 export default class AddPost extends Component {
   constructor(props) {
     super(props);
-    const post = this.props.post || {}
+    const post = props.post ? props.post : this.props.location.props.post
     this.state = {
       addPostError: null,
       id: post.id || '',
@@ -69,7 +69,6 @@ export default class AddPost extends Component {
   }
 
   render() {
-    console.log("type",this.state.type)
     return (
       <div className="col-sm-6 col-sm-offset-3">
         <form onSubmit={this.handleSubmit}>

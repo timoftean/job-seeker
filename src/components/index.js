@@ -47,7 +47,6 @@ export default class App extends Component {
   
   async componentDidMount () {
 	  const posts = await this.postController.getAllPosts()
-    console.log("p",posts)
 	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
@@ -112,6 +111,7 @@ export default class App extends Component {
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={AddPost} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={AddPost} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>

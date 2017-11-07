@@ -22,6 +22,12 @@ export class User {
 			.then((user) => user)
 	}
 	
+	getUserByPostId = async (id) => {
+		const post = await db.ref(`posts/${id}`).once('value')
+		const user = await this.getUserById(post.val().userId)
+		return user
+	}
+	
 	getUserById = async (id) => {
 		const userInfo = await db.ref(`users/${id}`).once('value')
 		return userInfo.val()
