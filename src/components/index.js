@@ -108,11 +108,11 @@ export default class App extends Component {
                        render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
+                <PublicRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={AddPost} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={AddPost} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

@@ -11,18 +11,20 @@ function setErrorMsg(error) {
 export default class AddPost extends Component {
   constructor(props) {
     super(props);
-    const post = props.post ? props.post : this.props.location.props.post
+    const { id, title, description, category, location, numHours, timeInterval, price, type } =
+      props.location.props ? props.location.props.post : ''
+    
     this.state = {
       addPostError: null,
-      id: post.id || '',
-      title: post.title || '',
-      description: post.description || '',
-      category: post.category || '',
-      location: post.location || '',
-      numHours: post.numHours || '',
-      timeInterval: post.timeInterval || '',
-      price: post.price ||  '',
-      type: post.type || ''
+      id: id || '',
+      title: title || '',
+      description: description || '',
+      category: category || '',
+      location: location || '',
+      numHours: numHours || '',
+      timeInterval: timeInterval || '',
+      price: price ||  '',
+      type: type || ''
     };
     this.postController = new Post();
   }
@@ -60,7 +62,6 @@ export default class AddPost extends Component {
 		    })
 		    .catch(e => this.setState(setErrorMsg(e)));
     }
-    
   };
 
   verifyInput() {
@@ -125,7 +126,7 @@ export default class AddPost extends Component {
             error="Invalid time interval!"
             label="Interval(hh:mm-hh:mm)"
             style={{width: '200px'}}
-            value={this.state.interval}
+            value={this.state.timeInterval}
           />
           <Textfield
             onChange={e => this.setState({price: e.target.value})}

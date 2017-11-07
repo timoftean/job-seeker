@@ -60,7 +60,8 @@ export class User {
 	}
 	
 	getCurrentUserId = async () => {
-		return  await firebaseAuth().currentUser.uid
+		const user = await firebaseAuth().currentUser
+		return  user ? user.uid : null
 	}
 	
 	saveProfilePicture = async (imageString) => {
