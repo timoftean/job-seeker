@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
-import Login from './Login'
-import Register from './Register'
-import Home from './Home'
-import Jobs from './Jobs'
-import Providers from './Providers'
-import Profile from './protected/Profile'
+import Login from './auth/Login'
+import Register from './auth/Register'
+import AddPost from './post/AddPost'
+import Profile from './profile/Profile'
+import EditUserProfile from './profile/EditProfileInfos'
+import PostSection from './post/PostSection'
+import PostDetails from './post/PostDetails'
+
+import { Post } from '../controllers/Post'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
+import { Spinner } from 'react-mdl'
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
       render={(props) => authed === true
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        ? <Component {...props} authed={authed}/>
+        : <Redirect to={{pathname: '/login', props:props ,state: {from: props.location}}} />}
     />
   )
 }
 
-function PublicRoute ({component: Component, authed, ...rest}) {
+function PublicRoute ({component: Component, ...rest}) {
   return (
     <Route
       {...rest}
@@ -31,21 +35,30 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 }
 
 export default class App extends Component {
-  state = {
-    authed: false,
-    loading: true,
+  constructor(props) {
+    super(props)
+	  this.state = {
+		  authed: false,
+		  loading: true,
+      posts:{}
+	  }
+	  this.postController = new Post()
   }
-  componentDidMount () {
-    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+  
+  async componentDidMount () {
+	  const posts = await this.postController.getAllPosts()
+	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authed: true,
           loading: false,
+          posts
         })
       } else {
         this.setState({
           authed: false,
-          loading: false
+          loading: false,
+          posts
         })
       }
     })
@@ -56,9 +69,11 @@ export default class App extends Component {
   render() {
     const auth = new Auth()
     const logout = auth.logout
-    
-    return this.state.loading === true ? <h1>Loading</h1> : (
-      <BrowserRouter>
+
+    return this.state.loading === true
+      ? <Spinner />
+      : (
+      <BrowserRouter >
         <div>
           <nav className="navbar navbar-default navbar-static-top">
             <div className="container">
@@ -67,13 +82,7 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/" className="navbar-brand">Home</Link>
-                </li>
-                <li>
-                  <Link to="/jobs" className="navbar-brand">Jobs</Link>
-                </li>
-                <li>
-                  <Link to="/providers" className="navbar-brand">Providers</Link>
+                  <Link to="/" className="navbar-brand">Posts</Link>
                 </li>
                 <li>
                   <Link to="/profile" className="navbar-brand">Profile</Link>
@@ -95,12 +104,15 @@ export default class App extends Component {
           <div className="container">
             <div className="row">
               <Switch>
-                <Route path='/' exact component={Home} />
-                <PublicRoute authed={this.state.authed} path='/jobs' component={Jobs} />
-                <PublicRoute authed={this.state.authed} path='/providers' component={Providers} />
-                <PublicRoute authed={this.state.authed} path='/login' component={Login} />
-                <PublicRoute authed={this.state.authed} path='/register' component={Register} />
-                <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />
+                <Route path='/' exact
+                       render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
+                <PublicRoute path='/login' component={Login} />
+                <PublicRoute path='/register' component={Register} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={AddPost} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={AddPost} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

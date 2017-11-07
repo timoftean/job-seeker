@@ -1,26 +1,30 @@
-import { firebaseAuth } from '../config/constants'
+import { firebaseAuth, provider } from '../config/constants'
 import { User } from './User'
 
 export class Auth {
 	
-	constructor(){
+	constructor() {
+		this.user = new User()
 	}
 	
-	authenticate (email, pw) {
-		const user = new User()
+	authenticate = (email, pw) => {
 		return firebaseAuth().createUserWithEmailAndPassword(email, pw)
-			.then(user.saveCurrentUser)
+			.then(this.user.saveCurrentUser)
 	}
 	
-	logout () {
+	loginWithGoogle = () => {
+		return firebaseAuth().signInWithPopup(provider)
+	}
+	
+	logout = () => {
 		return firebaseAuth().signOut()
 	}
 	
-	login (email, pw) {
+	login = (email, pw) => {
 		return firebaseAuth().signInWithEmailAndPassword(email, pw)
 	}
 	
-	resetPassword (email) {
+	resetPassword = (email) => {
 		return firebaseAuth().sendPasswordResetEmail(email)
 	}
 	
