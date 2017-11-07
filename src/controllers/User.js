@@ -22,6 +22,11 @@ export class User {
 			.then((user) => user)
 	}
 	
+	getUserById = async (id) => {
+		const userInfo = await db.ref(`users/${id}`).once('value')
+		return userInfo.val()
+	}
+	
 	setPicturePath = async (path) => {
 		const uid = await this.getCurrentUserId()
 		return db.ref().child(`users/${uid}/picture`)

@@ -6,6 +6,16 @@ export class Post {
     this.user = new User()
   }
   
+  getPostById = async (id) => {
+	  let post = await db.ref(`posts`).once('value')
+	  const user = await this.user.getUserById(post.userId)
+	  console.log("post-user",post,user)
+	  return {
+  		user,
+		  post
+	  }
+	}
+	
 	async removePost(postId) {
 		const user = await this.user.getCurrentUser();
 		const uid = user.info.uid;
@@ -20,18 +30,9 @@ export class Post {
 		//get his id
 		const uid = user.info.uid;
 		
-		//structure post data
-		// const postData = {
-		// 	type: post.type,
-		// 	title: post.title,
-		// 	description: post.description,
-		// 	category: post.category,
-		// 	location: post.location,
-		// 	numHours: post.numHours,
-		// 	timeInterval: post.timeInterval,
-		// 	price: post.price
-		// }
-		
+		//assign the userId on the post
+		Object.assign(post,{userId: uid})
+	
 		var updates = {};
 		//add the post to the new id
 		updates['/posts/' + post.id] = post
@@ -47,18 +48,9 @@ export class Post {
 
     //get his id
     const uid = user.info.uid;
-
-    //structure post data
-    // const postData = {
-		 //  type: post.title,
-		 //  title: post.title,
-		 //  description: post.description,
-		 //  category: post.category,
-		 //  location: post.location,
-		 //  numHours: post.numHours,
-		 //  timeInterval: post.timeInterval,
-		 //  price: post.price
-    // }
+    
+	  //assign the userId on the post
+	  Object.assign(post,{userId: uid})
 
     //get from firebase the id for the post you want to add
     const newPostKey = db.ref().child('posts').push().key

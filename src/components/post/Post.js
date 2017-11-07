@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom'
+import { Card, CardTitle, CardText, FABButton, CardActions} from 'react-mdl'
 //Post is a component which render all data of a Post entity
 //It should be shown after the user clicks "Show details" on a post in the PostSection
 const Post = (props) => {

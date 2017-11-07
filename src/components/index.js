@@ -7,6 +7,7 @@ import AddPost from './post/AddPost'
 import Profile from './profile/Profile'
 import EditUserProfile from './profile/EditProfileInfos'
 import PostSection from './post/PostSection'
+import PostDetails from './post/PostDetails'
 
 import { Post } from '../controllers/Post'
 import { Auth } from '../controllers/Auth'
@@ -111,6 +112,7 @@ export default class App extends Component {
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={AddPost} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

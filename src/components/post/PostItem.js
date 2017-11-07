@@ -14,7 +14,7 @@ const PostItem = (props) => {
 			</CardText>
 			<CardActions border>
 				<div>
-					<Link  to={{pathname: `/post/details/${id}`, props:{post} }} >
+					<Link  to={{pathname: `/post/details/${id}`, props:{post,id} }} >
 						<Button colored>Show details</Button>
 					</Link>
 				</div>
