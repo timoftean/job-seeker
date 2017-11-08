@@ -53,10 +53,10 @@ class PostDetails extends Component {
 		return (
 			<div>
 				{this.state.post.type==='provider'
-					?<Link  to={{pathname: `/provider/hire`, props:{post:this.state.post} }} >
+					?<Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
 						<Button colored>Send hire request</Button>
 					</Link>
-					:<Link  to={{pathname: `/job/apply`, props:{post:this.state.post} }} >
+					:<Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
 						<Button colored>Send application request</Button>
 					</Link>
 				}
