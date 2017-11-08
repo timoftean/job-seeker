@@ -78,4 +78,14 @@ export class Post {
 		let posts = await db.ref(`user-posts/${uid}`).once('value')
 		return posts.val()
 	}
+
+  async addUserToPost(application_details) {
+    const user = await this.user.getCurrentUser();
+    const uid = user.info.uid;
+
+    const updates = {};
+    updates['/post-attendees/' + application_details.post_id + '/' + uid] = application_details.text;
+    updates['/attendee-posts/' + uid + '/' + application_details.post_id] = application_details.text;
+    return db.ref().update(updates);
+  }
 }
