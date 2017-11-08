@@ -37,7 +37,6 @@ function setErrorMsg(error) {
 	
 	handleSubmit = (e) => {
 		e.preventDefault();
-		
 		if (!this.verifyInput()) {
 			this.setState(setErrorMsg({message: "All fields must be completed!"}));
 			return;
@@ -48,10 +47,10 @@ function setErrorMsg(error) {
 			firstName: this.state.firstName,
 			lastName: this.state.lastName
 		}
-		
+		const self = this
 		this.userController.saveUserProfile(userProfile)
 			.then(() => {
-				this.props.history.push('/')
+				self.props.history.push('/')
 			})
 			.catch(e => this.setState(setErrorMsg(e)));
 	};

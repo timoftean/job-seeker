@@ -10,7 +10,6 @@ export class Post {
 	  const post = await db.ref(`posts/${id}`).once('value')
 	  const loggedInUser = await this.user.getCurrentUserId()
 	  const user = await this.user.getUserById(post.val().userId)
-	  console.log("postbyid",post.val(),user)
 	  return {
   		user,
 		  post: post.val(),

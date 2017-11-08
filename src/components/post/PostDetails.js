@@ -66,7 +66,6 @@ class PostDetails extends Component {
 	
 	render() {
 		if (!this.state.loaded) return null
-		console.log("postdetails",this.state)
 		return(
 			<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
 				<CardTitle style={{height: '70px'}}>
