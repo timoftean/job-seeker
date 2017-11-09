@@ -9,7 +9,7 @@ function setErrorMsg(error) {
   }
 }
 
-export default class AddPost extends Component {
+export default class PostForm extends Component {
   constructor(props) {
     super(props);
     const { id, title, description, category, location, numHours, timeInterval, price, type } =
@@ -26,7 +26,6 @@ export default class AddPost extends Component {
       timeInterval: timeInterval || '',
       price: price ||  '',
       type: type || '',
-      category: '',
       categories: []
     };
     this.postController = new Post();

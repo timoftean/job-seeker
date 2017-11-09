@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './auth/Login'
 import Register from './auth/Register'
-import AddPost from './post/AddPost'
+import PostForm from './post/PostForm'
 import Profile from './profile/Profile'
-import EditUserProfile from './profile/EditProfileInfos'
+import EditUserProfile from './profile/ProfileInfosForm'
 import PostSection from './post/PostSection'
 import PostDetails from './post/PostDetails'
 import AttendForm from './post/AttendForm'
@@ -111,9 +111,9 @@ export default class App extends Component {
                 <PublicRoute path='/register' component={Register} />
                 <PublicRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={AddPost} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={PostForm} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={AddPost} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={PostForm} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/provider/hire/:id' component={AttendForm} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/job/apply/:id' component={AttendForm} />
                 <Route render={() => <h3>No Match</h3>} />

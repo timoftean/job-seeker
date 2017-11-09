@@ -24,16 +24,16 @@ function setErrorMsg(error) {
 	
 	componentDidMount() {
 		this.userController.getCurrentUser().then(user => {
-			user = user.profile
+			console.log("User",user)
+			const { firstName, lastName , phone } = user.profile ? user.profile : ''
 			this.setState({
-				firstName: user.firstName || '',
-				lastName: user.lastName || '',
-				phone: user.phone || '',
+				firstName: firstName || '',
+				lastName: lastName || '',
+				phone: phone || '',
 				loaded: true
 			})
 		})
 	}
-	
 	
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -66,30 +66,36 @@ function setErrorMsg(error) {
 			<div className="col-sm-6 col-sm-offset-3">
 				<h1>Profile</h1>
 				<form onSubmit={this.handleSubmit}>
-					<Textfield
-						onChange={e => this.setState({firstName: e.target.value})}
-						pattern="([^\s]*)"
-						error="First name must not be empty!"
-						label="First Name"
-						style={{width: '200px'}}
-					  value={this.state.firstName}
-					/>
-					<Textfield
-						onChange={e => this.setState({lastName: e.target.value})}
-						pattern="([^\s]*)"
-						error="Last name must not be empty!"
-						label="Last name"
-						style={{width: '200px'}}
-						value={this.state.lastName}
-					/>
-					<Textfield
-						onChange={e => this.setState({phone: e.target.value})}
-						pattern="[0-9]*(\.[0-9]+)?"
-						error="Phone must not be empty!"
-						label="phone: e.g. 0755203368"
-						style={{width: '200px'}}
-						value={this.state.phone}
-					/>
+					<div>
+						<Textfield
+							onChange={e => this.setState({firstName: e.target.value})}
+							pattern="([^\s]*)"
+							error="First name must not be empty!"
+							label="First Name"
+							style={{width: '200px'}}
+							value={this.state.firstName}
+						/>
+					</div>
+					<div>
+						<Textfield
+							onChange={e => this.setState({lastName: e.target.value})}
+							pattern="([^\s]*)"
+							error="Last name must not be empty!"
+							label="Last name"
+							style={{width: '200px'}}
+							value={this.state.lastName}
+						/>
+					</div>
+					<div>
+						<Textfield
+							onChange={e => this.setState({phone: e.target.value})}
+							pattern="[0-9]*(\.[0-9]+)?"
+							error="Phone must not be empty!"
+							label="phone: e.g. 0755203368"
+							style={{width: '200px'}}
+							value={this.state.phone}
+						/>
+					</div>
 					<div>
 						<label>Upload a profile picture</label>
 						<ImageUpload/>
