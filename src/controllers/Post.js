@@ -79,6 +79,11 @@ export class Post {
 		return posts.val()
 	}
 
+	async getCategories() {
+		let categories = await db.ref('categories').once('value')
+		return categories.val()
+	}
+
   async addUserToPost(application_details) {
     const user = await this.user.getCurrentUser();
     const uid = user.info.uid;

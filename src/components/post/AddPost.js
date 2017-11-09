@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Post } from '../../controllers/Post'
 import { Textfield, Radio, RadioGroup } from 'react-mdl'
+import { SelectField, Option } from 'react-mdl-selectfield';
 
 function setErrorMsg(error) {
   return {
@@ -24,9 +25,12 @@ export default class AddPost extends Component {
       numHours: numHours || '',
       timeInterval: timeInterval || '',
       price: price ||  '',
-      type: type || ''
+      type: type || '',
+      category: '',
+      categories: []
     };
     this.postController = new Post();
+    this.handleSelectChange = this.handleSelectChange.bind(this)
   }
 
   handleSubmit = (e) => {
@@ -69,7 +73,25 @@ export default class AddPost extends Component {
         && this.state.numHours && this.state.timeInterval && this.state.price && this.state.type
   }
 
+  async componentDidMount() {
+    let categories
+    await this.postController.getCategories().then(data => categories = data)
+    categories = Object.keys(categories).map(function(key) {
+        return categories[key]
+    });
+    this.setState({categories})
+  }
+
+  handleSelectChange(e) {
+    this.setState({category: e})
+  }
+
   render() {
+    const css = `
+    .mdl-textfield {
+        width: 95%;
+    }
+    `
     return (
       <div className="col-sm-6 col-sm-offset-3">
         <form onSubmit={this.handleSubmit}>
@@ -82,10 +104,10 @@ export default class AddPost extends Component {
           </RadioGroup>
           <Textfield
             onChange={e => this.setState({title: e.target.value})}
-            pattern="([^\s]*)"
+            pattern="^[a-zA-Z0-9_ ]*$"
             error="Title must not be empty!"
             label="Title"
-            style={{width: '200px'}}
+            style={{width: '100%'}}
             value={this.state.title}
           />
           <Textfield
@@ -93,23 +115,15 @@ export default class AddPost extends Component {
             pattern="^[a-zA-Z0-9_ ]*$"
             error="Description must not be empty!"
             label="Description"
-            style={{width: '200px'}}
+            style={{width: '100%'}}
             value={this.state.description}
           />
           <Textfield
-            onChange={e => this.setState({category: e.target.value})}
-            pattern="([^\s]*)"
-            error="Category must not be empty!"
-            label="Category"
-            style={{width: '200px'}}
-            value={this.state.category}
-          />
-          <Textfield
             onChange={e => this.setState({location: e.target.value})}
-            pattern="([^\s]*[^\s])"
+            pattern="^[a-zA-Z0-9_ ]*$"
             error="Location must not be empty!"
             label="Location"
-            style={{width: '200px'}}
+            style={{width: '49%', paddingRight: '1%'}}
             value={this.state.location}
           />
           <Textfield
@@ -117,7 +131,7 @@ export default class AddPost extends Component {
             pattern="[0-9]*(\.[0-9]+)?"
             error="Invalid number of hours!"
             label="No. hours/week"
-            style={{width: '200px'}}
+            style={{width: '49%', paddingLeft: '1%'}}
             value={this.state.numHours}
           />
           <Textfield
@@ -125,7 +139,7 @@ export default class AddPost extends Component {
             pattern="[0-2][0-9]:[0-5][0-9](\s)*-(\s)*[0-2][0-9]:[0-5][0-9]"
             error="Invalid time interval!"
             label="Interval(hh:mm-hh:mm)"
-            style={{width: '200px'}}
+            style={{width: '49%', paddingRight: '1%'}}
             value={this.state.timeInterval}
           />
           <Textfield
@@ -133,9 +147,13 @@ export default class AddPost extends Component {
             pattern="[0-9]+"
             error="Invalid price!"
             label="Price"
-            style={{width: '200px'}}
+            style={{width: '49%', paddingLeft: '1%'}}
             value={this.state.price}
           />
+          <style>{css}</style>
+          <SelectField label={'Select me'} value={this.state.category} onChange={this.handleSelectChange} style={{width: '49%'}}>
+            {this.state.categories.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
+          </SelectField>
           <div>
             <button type="submit" className="btn btn-primary">Save</button>
           </div>
