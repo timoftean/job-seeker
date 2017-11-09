@@ -41,7 +41,8 @@ export default class App extends Component {
 	  this.state = {
 		  authed: false,
 		  loading: true,
-      posts:{}
+      posts:{},
+      searchKey: ""
 	  }
 	  this.postController = new Post()
   }
