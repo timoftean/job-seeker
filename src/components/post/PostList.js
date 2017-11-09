@@ -8,7 +8,8 @@ export default class AddPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	posts: props.posts
+    	posts: props.posts,
+    	searchKey: ""
     }
 	  this.postController = new Post()
     this.handleChange = this.handleChange.bind(this)
