@@ -10,9 +10,16 @@ export class Post {
 	  const post = await db.ref(`posts/${id}`).once('value')
 	  const loggedInUser = await this.user.getCurrentUserId()
 	  const user = await this.user.getUserById(post.val().userId)
+    const postAttendees = await db.ref(`post-attendees/${id}`).once('value')
+    const attendees = postAttendees.val() != null 
+      ? await Promise.all(Object.keys(postAttendees.val()).map(key => {
+          return this.user.getUserById(key)
+        }))
+      : []
 	  return {
   		user,
 		  post: post.val(),
+      attendees: attendees,
 		  loggedInUser
 	  }
 	}
@@ -87,5 +94,8 @@ export class Post {
     updates['/post-attendees/' + application_details.post_id + '/' + uid] = application_details.text;
     updates['/attendee-posts/' + uid + '/' + application_details.post_id] = application_details.text;
     return db.ref().update(updates);
+  }
+
+  async getAttendeesList() {
   }
 }

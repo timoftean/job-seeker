@@ -53,12 +53,22 @@ class PostDetails extends Component {
 		return (
 			<div>
 				{this.state.post.type==='provider'
-					?<Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
-						<Button colored>Send hire request</Button>
-					</Link>
-					:<Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
-						<Button colored>Send application request</Button>
-					</Link>
+					?<div>
+            <Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
+              <Button colored>Send hire request</Button>
+            </Link>
+            <Link  to={{pathname: `/provider/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
+              <Button colored>Show attendees list</Button>
+            </Link>
+          </div>
+					:<div>
+            <Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
+              <Button colored>Send application request</Button>
+            </Link>
+            <Link  to={{pathname: `/job/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
+              <Button colored>Show attendees list</Button>
+            </Link>
+          </div>
 				}
 			</div>
 		)
