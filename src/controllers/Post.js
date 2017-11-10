@@ -100,7 +100,4 @@ export class Post {
     updates['/attendee-posts/' + uid + '/' + application_details.post_id] = application_details.text;
     return db.ref().update(updates);
   }
-
-  async getAttendeesList() {
-  }
 }
