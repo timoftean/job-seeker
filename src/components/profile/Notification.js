@@ -20,23 +20,21 @@ export default class Notification extends Component {
 		let posts
 		await this.jobController.getAllPosts().then(data => posts = data)
 		let postsArray = Object.keys(posts).map(function(key) {
-  		if (posts[key].category === "Constructie")
-  			return posts[key]
+  		return {id: key, post: posts[key]}
 		});
 		this.setState({allposts : postsArray})
 
 		let userposts
 		await this.jobController.getUserPosts().then(data => userposts = data)
 		let userPostsArray = Object.keys(userposts).map(function(key) {
-  		if (userposts[key].category === "Constructie")
-  			return userposts[key]
+  		return userposts[key]
 		});
 		this.setState({userposts : userPostsArray})
 		
 		let matchingPosts = []
 		for (var a in postsArray) {
 			for (var u in userPostsArray) {
-				if (postsArray[a].category === userPostsArray[u].category && postsArray[a].userId !== userPostsArray[u].userId) {
+				if (postsArray[a].post.category === userPostsArray[u].category && postsArray[a].post.userId !== userPostsArray[u].userId) {
 					matchingPosts.push(postsArray[a])
 				}
 			}
@@ -64,7 +62,7 @@ export default class Notification extends Component {
     	<div>
 				<List>
 					{ this.state.matchingPosts.map(function(item, i){
-		  			return (<ListItem key={i}><PostItem id={item.id} post={item} /></ListItem>)
+		  			return (<ListItem key={i}><PostItem id={item.id} post={item.post} /></ListItem>)
 					})}
 				</List>
 			</div>
