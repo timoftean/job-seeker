@@ -10,9 +10,16 @@ export class Post {
 	  const post = await db.ref(`posts/${id}`).once('value')
 	  const loggedInUser = await this.user.getCurrentUserId()
 	  const user = await this.user.getUserById(post.val().userId)
+    const postAttendees = await db.ref(`post-attendees/${id}`).once('value')
+    const attendees = postAttendees.val() != null 
+      ? await Promise.all(Object.keys(postAttendees.val()).map(key => {
+          return this.user.getUserById(key)
+        }))
+      : []
 	  return {
   		user,
 		  post: post.val(),
+      attendees: attendees,
 		  loggedInUser
 	  }
 	}
