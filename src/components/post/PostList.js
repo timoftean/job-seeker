@@ -32,7 +32,6 @@ export default class PostList extends Component {
   }
 
 	render() {
-		console.log(this.state)
 		return (
 		<div>
 			<Textfield

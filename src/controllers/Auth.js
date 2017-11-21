@@ -13,7 +13,7 @@ export class Auth {
 	}
 	
 	loginWithGoogle = () => {
-		return firebaseAuth().signInWithPopup(provider)
+		return firebaseAuth().signInWithPopup(provider).then(this.user.saveCurrentUser)
 	}
 	
 	logout = () => {
