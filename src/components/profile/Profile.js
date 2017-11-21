@@ -25,7 +25,6 @@ export default class Profile extends Component {
 	
 	async componentDidMount() {
 		const user = await this.userController.getCurrentUser()
-		console.log("user", user)
 		const posts = await this.jobController.getUserPosts()
 		this.setState({
 			user: user,
