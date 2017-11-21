@@ -4,7 +4,7 @@ import { Post } from '../../controllers/Post'
 
 import PostItem from './PostItem'
 
-export default class AddPost extends Component {
+export default class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {

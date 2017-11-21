@@ -28,7 +28,7 @@ export default class Profile extends Component {
 		const posts = await this.jobController.getUserPosts()
 		this.setState({
 			user: user,
-			hasPosts: (user.info.hasPosts === 1),
+			hasPosts: (user && user.info ? user.info.hasPosts === 1 : false),
 			posts,
 			loaded: true
 		})
