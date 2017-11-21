@@ -84,6 +84,9 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
+                  <Link to="/addPost" className="navbar-brand">Add Post</Link>
+                </li>
+                <li>
                   <Link to="/" className="navbar-brand">Posts</Link>
                 </li>
                 <li>

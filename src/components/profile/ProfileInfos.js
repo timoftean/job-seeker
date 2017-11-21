@@ -41,7 +41,7 @@ class ProfileInfos extends Component {
 		return this.state.pictureUrl !== null
 		?{
 				color: '#fff',
-				height: '200px',
+				height: '300px',
 				background: `url(${this.state.pictureUrl}) center / cover`
 			}
 		:{
@@ -65,11 +65,6 @@ class ProfileInfos extends Component {
 						{user.profile.phone}
 					</div>
 				</CardText>
-				<CardActions border style={{height: '50px'}}>
-					<Link to="/addPost">
-						<Button colored>Add a post</Button>
-					</Link>
-				</CardActions>
 				<CardMenu >
 					<Link to="/editProfile">
 						<i style={{color: 'blue'}} className="material-icons">mode_edit</i>
