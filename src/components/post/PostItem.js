@@ -5,7 +5,6 @@ import {Card, CardTitle, CardText, CardActions, Button} from 'react-mdl'
 
 const PostItem = (props) => {
 	const { id, post } = props
-	console.log(props)
 	return(
 		<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
 			<CardTitle style={{height: '100px'}}>{post.title}</CardTitle>

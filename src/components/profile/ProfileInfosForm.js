@@ -24,7 +24,6 @@ function setErrorMsg(error) {
 	
 	componentDidMount() {
 		this.userController.getCurrentUser().then(user => {
-			console.log("User",user)
 			const { firstName, lastName , phone } = user.profile ? user.profile : ''
 			this.setState({
 				firstName: firstName || '',

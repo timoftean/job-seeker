@@ -2,7 +2,8 @@ import { db, firebaseAuth, storageRef } from '../config/constants'
 
 export class User {
 	
-	saveCurrentUser = (user) => {
+	saveCurrentUser = async () => {
+    const user = await this.getCurrentUser()
 		return db.ref().child(`users/${user.uid}/info`)
 			.set({
 				email: user.email,
@@ -60,10 +61,15 @@ export class User {
 		const loggedUser = await firebaseAuth().currentUser
 		let userInfo
 		if (loggedUser) {
+			console.log("uid", loggedUser)
 			userInfo = await db.ref(`users/${loggedUser.uid}`).once('value')
 			return userInfo.val()
 		}
 		return userInfo
+	}
+	
+	getCurrentUser = async () => {
+    return await firebaseAuth().currentUser
 	}
 	
 	getCurrentUserId = async () => {
