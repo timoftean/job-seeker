@@ -44,9 +44,16 @@ export class User {
 	
 	getPictureUrl = async () => {
 		const uid = await this.getCurrentUserId()
-		const pictureRef = storageRef.child(`images/${uid}/profilePicture.jpg`);
-		// Get the download URL
-		return await pictureRef.getDownloadURL()
+		try{
+			const pictureRef = storageRef.child(`images/${uid}/profilePicture.jpg`);
+			// Get the download URL
+			return await pictureRef.getDownloadURL()
+		}catch(err) {
+			console.log("Err",err)
+			return err
+		}
+		
+		
 	}
 	
 	getCurrentUser = async () => {
@@ -60,7 +67,8 @@ export class User {
 	}
 	
 	getCurrentUserId = async () => {
-		return  await firebaseAuth().currentUser.uid
+		const user = await firebaseAuth().currentUser
+		return  user ? user.uid : null
 	}
 	
 	saveProfilePicture = async (imageString) => {

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import {Tab, Tabs} from 'react-mdl'
+import {Tab, Tabs, List, ListItem} from 'react-mdl'
 import PostList from '../post/PostList'
-import EditUserProfile from './EditProfileInfos'
+import EditUserProfile from './ProfileInfosForm'
 import ProfileInfos from './ProfileInfos'
 import { User } from '../../controllers/User'
 import { Post } from '../../controllers/Post'
+import Notification from './Notification'
 
 
 export default class Profile extends Component {
@@ -13,9 +14,9 @@ export default class Profile extends Component {
 		this.state = {
 		  activeTab: 0,
       user: {},
-			hasPosts:false,
+			hasPosts:null,
 			posts: null,
-			loaded: false
+			loaded: false,
 		}
 		
 		this.userController = new User()
@@ -32,17 +33,19 @@ export default class Profile extends Component {
 			loaded: true
 		})
 	}
-  
+
 	renderTab = () => {
 	  switch (this.state.activeTab) {
       case 1:
         return  this.state.posts
           ?<PostList posts={this.state.posts}/>
 	        :<h2>No posts yet</h2>
+	    case 2:
+	    	return <Notification authed={this.props.authed}/>
 		  default:
 			  return this.state.user.profile
 			    ?<ProfileInfos user={this.state.user} {...this.props} />
-			    :(<EditUserProfile {...this.props}/>)
+			    :<EditUserProfile {...this.props}/>
     }
   }
   
@@ -53,16 +56,16 @@ export default class Profile extends Component {
   render () {
 	  //if user is not authenticated do not show profile
 	  if (!this.props.authed || !this.state.loaded) return null
-
     return (
       <div>
         <div className="demo-tabs">
           <Tabs activeTab={this.state.activeTab} onChange={(tabId)=>{this.setActiveTab(tabId)}} ripple>
             <Tab>Profile</Tab>
-						{this.state.loaded && this.state.hasPosts
+						{this.state.loaded && this.state.hasPosts !== "false"
 							?<Tab>My posts</Tab>
 							:null
 						}
+						<Tab>Notifications</Tab>	
           </Tabs>
           <section>
 	          {this.state.loaded && this.state.user

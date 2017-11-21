@@ -5,7 +5,7 @@ import { User } from '../../controllers/User'
 import { Link } from 'react-router-dom'
 import { Card, CardTitle, CardText, FABButton, CardActions, Button} from 'react-mdl'
 
-class PostDetails extends Component {
+class AttendeesList extends Component {
 	constructor(props) {
 		super(props)
 		const { id } = this.props.match.params
@@ -13,6 +13,7 @@ class PostDetails extends Component {
 			loaded: false,
 			id,
 			post: null,
+      attendees: null,
 			user: null
 		}
 		this.postController = new Post()
@@ -25,6 +26,7 @@ class PostDetails extends Component {
 				this.setState({
 					user: res.user,
 					post: Object.assign(res.post,{id: this.state.id}),
+          attendees: Object.assign(res.attendees,{id: this.state.id}),
 					loggedUserId: res.loggedInUser,
 					loaded:true
 				})
@@ -53,23 +55,16 @@ class PostDetails extends Component {
 		return (
 			<div>
 				{this.state.post.type==='provider'
-					?<div>
-            <Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Send hire request</Button>
-            </Link>
-            <Link  to={{pathname: `/provider/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Show attendees list</Button>
-            </Link>
-          </div>
-					:<div>
-            <Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Send application request</Button>
-            </Link>
-            <Link  to={{pathname: `/job/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Show attendees list</Button>
-            </Link>
-          </div>
+					?<Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
+            <Button colored>Send hire request</Button>
+          </Link>
+					:<Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
+            <Button colored>Send application request</Button>
+          </Link>
 				}
+        <Link  to={{pathname: `/post/details/${this.state.id}`, props:{post:this.state.post} }} >
+          <Button colored>Hide attendees list</Button>
+        </Link>
 			</div>
 		)
 	}
@@ -77,7 +72,7 @@ class PostDetails extends Component {
 	render() {
 		if (!this.state.loaded) return null
 		return(
-			<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
+			<Card shadow={0} style={{width: '512px', margin: 'auto'}}>
 				<CardTitle style={{height: '70px'}}>
 					{this.state.post.type === "provider"
 						?<span>Service I search for: </span>
@@ -86,12 +81,16 @@ class PostDetails extends Component {
 					<span>{this.state.post.title}</span>
 				</CardTitle>
 				<CardText>
-					<div>Posted by: { this.state.user.profile.firstName + " " + this.state.user.profile.lastName } </div>
-					<div>Category: { this.state.post.category }</div>
-					<div>Location: { this.state.post.location }</div>
-					<div>No of hours per week: { this.state.post.numHours }</div>
-					<div>Price(Lei): { this.state.post.price }</div>
-					<div>Interval Time of day: { this.state.post.timeInterval }</div>
+          Attendees: <div>
+          {this.state.attendees.length != 0
+            ? this.state.attendees.map(key => {
+                const email = key.info.email
+                return email+"; "
+              })
+            :<div>No attendees yet</div>
+          }
+          </div>
+
 				</CardText>
 				<CardActions border style={{height: '55px'}}>
 					{this.state.post.userId === this.state.loggedUserId
@@ -104,7 +103,7 @@ class PostDetails extends Component {
 	}
 }
 
-export default PostDetails
+export default AttendeesList
 
 Post.propTypes = {
 	post: PropTypes.object,

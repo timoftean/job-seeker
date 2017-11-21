@@ -16,7 +16,14 @@ class ProfileInfos extends Component {
 	
 	componentDidMount() {
 		this.userController.getPictureUrl()
-			.then(pictureUrl => { this.setState({pictureUrl, loaded: true})})
+			.then(res => {
+				if(res.code && res.code === "storage/object-not-found") {
+					this.setState({loaded: true})
+				} else {
+					this.setState({pictureUrl:res, loaded: true})
+				}
+				
+			})
 			.catch((error) => {
 				switch (error.code) {
 					case 'storage/object_not_found':
@@ -31,21 +38,20 @@ class ProfileInfos extends Component {
 	}
 	
 	getStyle = () => {
-		return this.state.pictureUrl
+		return this.state.pictureUrl !== null
 		?{
 				color: '#fff',
 				height: '200px',
 				background: `url(${this.state.pictureUrl}) center / cover`
 			}
 		:{
-				color: '#fff',
+				color: 'black',
 				height: '70px',
 			}
 	}
 	
 	render() {
 		if (!this.state.loaded) return null
-		
 		const { user } = this.props
 		return (
 			<Card shadow={0} style={{width: '400px',minHeight:'0', margin: 'auto'}}>
