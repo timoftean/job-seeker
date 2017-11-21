@@ -34,7 +34,6 @@ export default class PostForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     if (!this.verifyInput()) {
       this.setState(setErrorMsg({message: "All fields must be completed!"}));
       return;

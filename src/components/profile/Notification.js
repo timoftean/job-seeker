@@ -25,11 +25,17 @@ export default class Notification extends Component {
 		this.setState({allposts : postsArray})
 
 		let userposts
+		let userPostsArray
+
 		await this.jobController.getUserPosts().then(data => userposts = data)
-		let userPostsArray = Object.keys(userposts).map(function(key) {
-  		return userposts[key]
-		});
-		this.setState({userposts : userPostsArray})
+		if (userposts) {
+				userPostsArray = Object.keys(userposts).map(function(key) {
+  			return userposts[key]
+			});
+			this.setState({userposts : userPostsArray})	
+		} else {
+			userposts = []
+		}
 		
 		let matchingPosts = []
 		for (var a in postsArray) {
