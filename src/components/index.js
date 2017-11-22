@@ -15,6 +15,7 @@ import { Post } from '../controllers/Post'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
 import { Spinner } from 'react-mdl'
+import UserPublicProfile from "./profile/UserPublicProfile";
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   return (
@@ -114,6 +115,7 @@ export default class App extends Component {
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
                 <PublicRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
+                <PublicRoute authed={this.state.authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={PostForm} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />

@@ -53,20 +53,20 @@ class PostDetails extends Component {
 	}
 	
 	renderActions = () => {
+    console.log("Post",this.state.post)
 		return (
 			<div>
 				{this.state.post.type==='provider'
-					?<div>
-            <Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
+					? <Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
               <Button colored>Send hire request</Button>
             </Link>
-          </div>
-					:<div>
-            <Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
+					:<Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
               <Button colored>Send application request</Button>
-            </Link>
-          </div>
+          </Link>
 				}
+				<Link to={{pathname: `/user/profile/${this.state.post.userId}`}} className="pull-right">
+					<Button colored>Show user profile</Button>
+				</Link>
 			</div>
 		)
 	}

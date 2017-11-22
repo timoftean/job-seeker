@@ -43,6 +43,17 @@ export class User {
 			})
 			.then((res) => res)
 	}
+  
+  getPictureByUserId = async (id) => {
+    try{
+      const pictureRef = storageRef.child(`images/${id}/profilePicture.jpg`);
+      // Get the download URL
+      return await pictureRef.getDownloadURL()
+    }catch(err) {
+      console.log("Err",err)
+      return err
+    }
+	}
 	
 	getPictureUrl = async () => {
 		const uid = await this.getCurrentUserId()
@@ -54,8 +65,6 @@ export class User {
 			console.log("Err",err)
 			return err
 		}
-		
-		
 	}
 	
 	getCurrentUser = async () => {
