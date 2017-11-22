@@ -143,7 +143,7 @@ function setErrorMsg(error) {
 					{
 						this.state.registerError &&
 						<div className="alert alert-danger" role="alert">
-							<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true" />
 							<span className="sr-only">Error:</span>
 							&nbsp;{this.state.registerError}
 						</div>
