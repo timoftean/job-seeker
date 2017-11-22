@@ -13,12 +13,18 @@ export class User {
 	}
 	
 	saveUserProfile = async (user) => {
-		const uid = await this.getCurrentUserId()
+		const uid = await this.getCurrentUserId();
+        let categories = { };
+        let array= ["it", "constructie"];
+        array.map( (item, index) => {
+            categories[index] = item
+        });
 		return db.ref().child(`users/${uid}/profile`)
 			.set({
 				phone: user.phone,
 				firstName: user.firstName,
-				lastName: user.lastName
+				lastName: user.lastName,
+                categories : categories
 			})
 			.then((user) => user)
 	}
@@ -83,4 +89,9 @@ export class User {
 		const ref = storageRef.child(`images/${uid}/profilePicture.jpg`);
 		return await ref.putString(imageString, 'data_url')
 	}
+
+    async getCategories() {
+        let categories = await db.ref('categories').once('value');
+        return categories.val()
+    }
 }
