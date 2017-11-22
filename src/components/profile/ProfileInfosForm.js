@@ -4,6 +4,7 @@ import {User} from '../../controllers/User'
 import ImageUpload from './ImageUpload'
 import Select from 'react-select';
 import {Option} from "react-mdl-selectfield";
+import 'react-select/dist/react-select.css';
 
 function setErrorMsg(error) {
 	return {
@@ -20,36 +21,41 @@ function setErrorMsg(error) {
 			firstName: '',
 			lastName: '',
 			phone: '',
-            categories: []
+			categories: [],
+			selectedCategories: [],
+      value: []
 		}
 		this.userController = new User()
 	}
-
-     async componentDidMount() {
-		this.userController.getCurrentUser().then(user => {
-			const { firstName, lastName , phone , categories } = user.profile ? user.profile : ''
-			this.setState({
-				firstName: firstName || '',
-				lastName: lastName || '',
-				phone: phone || '',
-                categories : categories || [],
-				loaded: true
-			})
-		});
-
-        let categories;
-        await this.userController.getCategories().then(data => categories = data)
-        categories = Object.keys(categories).map(function(key) {
-            return categories[key]
-        });
-        this.setState({categories})
+	
+	async componentDidMount() {
+		//fetch data using await (the code will run as a being sync)
+		const user = await this.userController.getCurrentUser().then(user => user)
+    const { firstName, lastName , phone} = user.profile ? user.profile : ''
+		const categories = await this.userController.getCategories().then(data => data)
+    let categoriesArray = []
+		
+		//map categories object to an array of objects as the Select need to receive
+		Object.keys(categories).map( key => {
+			let obj = {}
+			obj['value'] = key
+			obj['label'] = categories[key]
+			categoriesArray.push( obj )
+		})
+		
+    this.setState({
+      firstName: firstName || '',
+      lastName: lastName || '',
+      phone: phone || '',
+      categories : categoriesArray || [],
+      loaded: true
+    })
 	}
 
-     handleSelectChange(e) {
-	    //this.state.categories.push(e);
-	    //this.setState({category: e})
-         console.log('Selected: ', e);
-     }
+	 handleSelectChange = (value) => {
+     console.log('Selected: ', value);
+		 this.setState({selectedCategories: value, value})
+	 }
 
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -73,20 +79,15 @@ function setErrorMsg(error) {
 	};
 	
 	verifyInput() {
-		return this.state.firstName && this.state.lastName && this.state.phone && this.state.categories
+		return this.state.firstName && this.state.lastName && this.state.phone
 	}
-
-
-
+	
 	render () {
 		if(!this.state.loaded) return null;
-
-        // var Select = require('react-select');
-
-        var options = [
-            { value: 'one', label: 'One' },
-            { value: 'two', label: 'Two' }
-        ];
+		var options = [
+				{ value: 'one', label: 'One' },
+				{ value: 'two', label: 'Two' }
+		];
 		return (
 			<div className="col-sm-6 col-sm-offset-3">
 				<h1>Profile</h1>
@@ -121,13 +122,16 @@ function setErrorMsg(error) {
 							value={this.state.phone}
 						/>
 					</div>
-                    {/*<Select*/}
-                        {/*name="form-field-name"*/}
-                        {/*label={'Select preferred categories'}*/}
-                        {/*value="one"*/}
-                        {/*options={this.state.categories}*/}
-                        {/*onChange={this.handleSelectChange}*/}
-                    {/*/>*/}
+					<div>
+						<Select
+							multi={true}
+							name="form-field-name"
+							value={this.state.value}
+							label='Select preferred categories'
+							options={this.state.categories}
+							onChange={this.handleSelectChange}
+						/>
+					</div>
 					<Select label={'Select preferred categories'} value="one" options={this.state.category} onChange={this.handleSelectChange} style={{width: '49%'}}>
                         {this.state.categories.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
 					</Select>
