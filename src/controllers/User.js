@@ -16,8 +16,8 @@ export class User {
 	saveUserProfile = async (user) => {
 		const uid = await this.getCurrentUserId();
         let categories = { };
-        let array= ["it", "constructie"];
-        array.map( (item, index) => {
+        let selectedCategories = user.categories;
+        selectedCategories.map( (item, index) => {
             categories[index] = item
         });
 		return db.ref().child(`users/${uid}/profile`)

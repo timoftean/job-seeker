@@ -26,8 +26,10 @@ function setErrorMsg(error) {
       value: []
 		}
 		this.userController = new User()
-	}
-	
+        //this.handleSelectChange = this.handleSelectChange.bind(this)
+
+    }
+
 	async componentDidMount() {
 		//fetch data using await (the code will run as a being sync)
 		const user = await this.userController.getCurrentUser().then(user => user)
@@ -68,7 +70,7 @@ function setErrorMsg(error) {
 			phone: this.state.phone,
 			firstName: this.state.firstName,
 			lastName: this.state.lastName,
-			categories: this.state.categories
+			categories: this.state.selectedCategories
 		}
 		const self = this
 		this.userController.saveUserProfile(userProfile)
@@ -79,15 +81,12 @@ function setErrorMsg(error) {
 	};
 	
 	verifyInput() {
-		return this.state.firstName && this.state.lastName && this.state.phone
+		return this.state.firstName && this.state.lastName && this.state.phone && this.state.selectedCategories
 	}
 	
 	render () {
 		if(!this.state.loaded) return null;
-		var options = [
-				{ value: 'one', label: 'One' },
-				{ value: 'two', label: 'Two' }
-		];
+
 		return (
 			<div className="col-sm-6 col-sm-offset-3">
 				<h1>Profile</h1>
@@ -132,9 +131,7 @@ function setErrorMsg(error) {
 							onChange={this.handleSelectChange}
 						/>
 					</div>
-					<Select label={'Select preferred categories'} value="one" options={this.state.category} onChange={this.handleSelectChange} style={{width: '49%'}}>
-                        {this.state.categories.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
-					</Select>
+
 					<div>
 						<label>Upload a profile picture</label>
 						<ImageUpload/>
