@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { Post } from '../../controllers/Post'
 import { User } from '../../controllers/User'
-import { Link } from 'react-router-dom'
-import { Card, CardTitle, CardText, FABButton, CardActions, Button} from 'react-mdl'
+import { Card, CardTitle, CardText, CardActions, Button} from 'react-mdl'
 
 class AttendeesList extends Component {
 	constructor(props) {
@@ -33,72 +32,50 @@ class AttendeesList extends Component {
 			})
 	}
 	
-	handleDelete = async () => {
-		await this.postController.removePost(this.state.id)
-		this.props.history.push('/')
-	}
-	
-	renderLoggedUserActions = () => {
+	renderUser = (user) => {
+		const { firstName, lastName } = user.profile
+		const { uid, email } = user.info
 		return (
-			<div>
-				<Link  to={{pathname: `/editPost`, props:{post:this.state.post} }} >
-					<Button colored>Edit Post</Button>
-				</Link>
-				<FABButton onClick={this.handleDelete} className="pull-right" colored mini ripple>
-					X
-				</FABButton>
-			</div>
-		)
-	}
-	
-	renderActions = () => {
-		return (
-			<div>
-				{this.state.post.type==='provider'
-					?<Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
-            <Button colored>Send hire request</Button>
-          </Link>
-					:<Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
-            <Button colored>Send application request</Button>
-          </Link>
-				}
-        <Link  to={{pathname: `/post/details/${this.state.id}`, props:{post:this.state.post} }} >
-          <Button colored>Hide attendees list</Button>
-        </Link>
-			</div>
-		)
+			<Card key={ uid } shadow={0} style={{width: '512px', minHeight:'70px', margin: 'auto'}}>
+				<CardTitle style={{height: '50px'}}>
+					<h5>Name: { firstName } { lastName } </h5>
+				</CardTitle>
+				<CardText>
+					<label>email: &nbsp;</label>
+					{ email }
+				</CardText>
+				<CardActions border>
+					<Button colored>Accept</Button>
+					<Button colored className="pull-right">Decline</Button>
+				</CardActions>
+			</Card>
+    )
 	}
 	
 	render() {
 		if (!this.state.loaded) return null
+		const { post, loggedUserId, attendees } = this.state
 		return(
-			<Card shadow={0} style={{width: '512px', margin: 'auto'}}>
-				<CardTitle style={{height: '70px'}}>
-					{this.state.post.type === "provider"
-						?<span>Service I search for: </span>
-						:<span>Service I can do: </span>
-					}
-					<span>{this.state.post.title}</span>
-				</CardTitle>
-				<CardText>
-          Attendees: <div>
-          {this.state.attendees.length != 0
-            ? this.state.attendees.map(key => {
-                const email = key.info.email
-                return email+"; "
-              })
-            :<div>No attendees yet</div>
-          }
-          </div>
-
-				</CardText>
-				<CardActions border style={{height: '55px'}}>
-					{this.state.post.userId === this.state.loggedUserId
-						? this.renderLoggedUserActions()
-						: this.renderActions()
-					}
-				</CardActions>
-			</Card>
+			<div>
+        {post.userId === loggedUserId
+          ? <Card style={{width: '700px', margin: 'auto'}}>
+						<CardText>
+							<div>
+              {attendees.length !== 0
+                ? <div>
+									<h5>For the post <b>{ post.title }</b> you received requests from the following users</h5>
+									{attendees.map( user => {
+										return this.renderUser(user)
+									})}
+								</div>
+                :<h4>You did not receive any requests</h4>
+              }
+						</div>
+						</CardText>
+					</Card>
+          : <h1>ACCESS DENIED</h1>
+        }
+			</div>
 		)
 	}
 }

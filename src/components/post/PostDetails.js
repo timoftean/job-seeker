@@ -42,6 +42,9 @@ class PostDetails extends Component {
 				<Link  to={{pathname: `/editPost`, props:{post:this.state.post} }} >
 					<Button colored>Edit Post</Button>
 				</Link>
+				<Link  to={{pathname: `/posts/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
+					<Button colored>Show attendees list</Button>
+				</Link>
 				<FABButton onClick={this.handleDelete} className="pull-right" colored mini ripple>
 					X
 				</FABButton>
@@ -57,16 +60,10 @@ class PostDetails extends Component {
             <Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
               <Button colored>Send hire request</Button>
             </Link>
-            <Link  to={{pathname: `/provider/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Show attendees list</Button>
-            </Link>
           </div>
 					:<div>
             <Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
               <Button colored>Send application request</Button>
-            </Link>
-            <Link  to={{pathname: `/job/attendeesList/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Show attendees list</Button>
             </Link>
           </div>
 				}
