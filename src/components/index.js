@@ -15,6 +15,7 @@ import { Post } from '../controllers/Post'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
 import { Spinner } from 'react-mdl'
+import UserPublicProfile from "./profile/UserPublicProfile";
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   return (
@@ -114,14 +115,14 @@ export default class App extends Component {
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
                 <PublicRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
+                <PublicRoute authed={this.state.authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={PostForm} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={PostForm} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/provider/hire/:id' component={AttendForm} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/provider/attendeesList/:id' component={AttendeesList} />
+                <PrivateRoute authed={this.state.authed} {...this.props} path='/posts/attendeesList/:id' component={AttendeesList} />
                 <PrivateRoute authed={this.state.authed} {...this.props} path='/job/apply/:id' component={AttendForm} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/job/attendeesList/:id' component={AttendeesList} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

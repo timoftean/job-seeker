@@ -65,7 +65,7 @@ export default class Profile extends Component {
 							?<Tab>My posts</Tab>
 							:null
 						}
-						<Tab>Notifications</Tab>	
+						<Tab>From your category</Tab>
           </Tabs>
           <section>
 	          {this.state.loaded && this.state.user
