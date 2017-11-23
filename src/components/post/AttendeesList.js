@@ -13,7 +13,8 @@ class AttendeesList extends Component {
 			id,
 			post: null,
       attendees: null,
-			user: null
+			user: null,
+			statuses: null,
 		}
 		this.postController = new Post()
 		this.userController = new User()
@@ -27,7 +28,8 @@ class AttendeesList extends Component {
 					post: Object.assign(res.post,{id: this.state.id}),
           attendees: Object.assign(res.attendees,{id: this.state.id}),
 					loggedUserId: res.loggedInUser,
-					loaded:true
+					loaded:true,
+					statuses: res.statuses
 				})
 			})
 	}
@@ -47,6 +49,15 @@ class AttendeesList extends Component {
 		user.profile ? lastName = user.profile.lastName : lastName = ''			
 
 		const { uid, email } = user.info
+
+		let status = this.state.statuses.filter(function(index) {
+			for (let x in index) {
+				if (x === uid) {
+					return index
+				}
+			}
+		})[0][uid];
+
 		return (
 			<Card key={ uid } shadow={0} style={{width: '512px', minHeight:'70px', margin: 'auto'}}>
 				<CardTitle style={{height: '50px'}}>
@@ -55,6 +66,9 @@ class AttendeesList extends Component {
 				<CardText>
 					<label>email: &nbsp;</label>
 					{ email }
+					<br/>
+					<label> status: &nbsp;</label>
+					{ status }
 				</CardText>
 				<CardActions border>
 					<Button colored onClick={() => this.handleAccept(user)}>Accept</Button>

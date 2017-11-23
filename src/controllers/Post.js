@@ -16,11 +16,21 @@ export class Post {
           return this.user.getUserById(key)
         }))
       : []
+
+    const statuses = postAttendees.val() !== null
+      ? await Promise.all(Object.keys(postAttendees.val()).map(elem => {
+        let tmp = {}
+        tmp[elem] = postAttendees.child(elem).val().status
+        return tmp;
+      }))
+      : []
+
 	  return {
   		user,
 		  post: post.val(),
       attendees: attendees,
-		  loggedInUser
+		  loggedInUser,
+      statuses,
 	  }
 	}
 	
