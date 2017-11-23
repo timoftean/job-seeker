@@ -32,8 +32,20 @@ class AttendeesList extends Component {
 			})
 	}
 	
-	renderUser = (user) => {
-		const { firstName, lastName } = user.profile
+	handleAccept(user) {
+		this.postController.acceptUserToPost(this.state.post, user)
+	}
+
+	handleReject(user) {
+		this.postController.rejectUserToPost(this.state.post, user)
+	}
+
+	renderUser(user) {
+		let firstName
+		let lastName
+		user.profile ? firstName = user.profile.firstName : firstName = ''
+		user.profile ? lastName = user.profile.lastName : lastName = ''			
+
 		const { uid, email } = user.info
 		return (
 			<Card key={ uid } shadow={0} style={{width: '512px', minHeight:'70px', margin: 'auto'}}>
@@ -45,8 +57,8 @@ class AttendeesList extends Component {
 					{ email }
 				</CardText>
 				<CardActions border>
-					<Button colored>Accept</Button>
-					<Button colored className="pull-right">Decline</Button>
+					<Button colored onClick={() => this.handleAccept(user)}>Accept</Button>
+					<Button colored onClick={() => this.handleReject(user)} className="pull-right">Decline</Button>
 				</CardActions>
 			</Card>
     )
