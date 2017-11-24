@@ -104,4 +104,8 @@ export class User {
         let categories = await db.ref('categories').once('value');
         return categories.val()
     }
+
+  async getAreasOfInterest(uid) {
+  	console.log(uid)
+  }
 }
