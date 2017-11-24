@@ -13,7 +13,8 @@ class AttendeesList extends Component {
 			id,
 			post: null,
       attendees: null,
-			user: null
+			user: null,
+			statuses: null,
 		}
 		this.postController = new Post()
 		this.userController = new User()
@@ -27,14 +28,36 @@ class AttendeesList extends Component {
 					post: Object.assign(res.post,{id: this.state.id}),
           attendees: Object.assign(res.attendees,{id: this.state.id}),
 					loggedUserId: res.loggedInUser,
-					loaded:true
+					loaded:true,
+					statuses: res.statuses
 				})
 			})
 	}
 	
-	renderUser = (user) => {
-		const { firstName, lastName } = user.profile
+	handleAccept(user) {
+		this.postController.acceptUserToPost(this.state.post, user)
+	}
+
+	handleReject(user) {
+		this.postController.rejectUserToPost(this.state.post, user)
+	}
+
+	renderUser(user) {
+		let firstName
+		let lastName
+		user.profile ? firstName = user.profile.firstName : firstName = ''
+		user.profile ? lastName = user.profile.lastName : lastName = ''			
+
 		const { uid, email } = user.info
+
+		let status = this.state.statuses.filter(function(index) {
+			for (let x in index) {
+				if (x === uid) {
+					return index
+				}
+			}
+		})[0][uid];
+
 		return (
 			<Card key={ uid } shadow={0} style={{width: '512px', minHeight:'70px', margin: 'auto'}}>
 				<CardTitle style={{height: '50px'}}>
@@ -43,10 +66,13 @@ class AttendeesList extends Component {
 				<CardText>
 					<label>email: &nbsp;</label>
 					{ email }
+					<br/>
+					<label> status: &nbsp;</label>
+					{ status ? status : '' }
 				</CardText>
 				<CardActions border>
-					<Button colored>Accept</Button>
-					<Button colored className="pull-right">Decline</Button>
+					<Button colored onClick={() => this.handleAccept(user)}>Accept</Button>
+					<Button colored onClick={() => this.handleReject(user)} className="pull-right">Decline</Button>
 				</CardActions>
 			</Card>
     )

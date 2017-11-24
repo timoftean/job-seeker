@@ -16,11 +16,21 @@ export class Post {
           return this.user.getUserById(key)
         }))
       : []
+
+    const statuses = postAttendees.val() !== null
+      ? await Promise.all(Object.keys(postAttendees.val()).map(elem => {
+        let tmp = {}
+        tmp[elem] = postAttendees.child(elem).val().status
+        return tmp;
+      }))
+      : []
+
 	  return {
   		user,
 		  post: post.val(),
       attendees: attendees,
-		  loggedInUser
+		  loggedInUser,
+      statuses,
 	  }
 	}
 	
@@ -99,5 +109,17 @@ export class Post {
     updates['/post-attendees/' + application_details.post_id + '/' + uid] = application_details.text;
     updates['/attendee-posts/' + uid + '/' + application_details.post_id] = application_details.text;
     return db.ref().update(updates);
+  }
+
+  acceptUserToPost(post, user) {
+  	const updates = {};
+    updates['/post-attendees/' + post.id + '/' + user.info.uid + '/status'] = "accepted";    
+  	db.ref().update(updates)
+  }
+
+  rejectUserToPost(post, user) {
+    const updates = {};
+    updates['/post-attendees/' + post.id + '/' + user.info.uid + '/status'] = "rejected";    
+    db.ref().update(updates)
   }
 }
