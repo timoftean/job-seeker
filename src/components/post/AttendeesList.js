@@ -56,7 +56,7 @@ class AttendeesList extends Component {
 					{ email }
 					<br/>
 					<label> status: &nbsp;</label>
-					{ status }
+					{ status ? status : '' }
 				</CardText>
 				<CardActions border>
 					<Button colored>Accept</Button>
