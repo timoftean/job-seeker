@@ -6,7 +6,7 @@ import ProfileInfos from './ProfileInfos'
 import { User } from '../../controllers/User'
 import { Post } from '../../controllers/Post'
 import Notification from './Notification'
-
+import NotifyStatusForJob from './NotifyStatusForJob'
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -42,6 +42,8 @@ export default class Profile extends Component {
 	        :<h2>No posts yet</h2>
 	    case 2:
 	    	return <Notification authed={this.props.authed}/>
+	    case 3:
+	    	return <NotifyStatusForJob authed={this.props.authed}/>
 		  default:
 			  return this.state.user.profile
 			    ?<ProfileInfos user={this.state.user} {...this.props} />
@@ -66,6 +68,7 @@ export default class Profile extends Component {
 							:null
 						}
 						<Tab>From your category</Tab>
+						<Tab>Notifications</Tab>
           </Tabs>
           <section>
 	          {this.state.loaded && this.state.user

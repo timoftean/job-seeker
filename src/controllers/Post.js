@@ -23,6 +23,14 @@ export class Post {
 		  loggedInUser
 	  }
 	}
+
+	async getPostsByHiredUser(userId) {
+		const posts = await db.ref('post-attendees').once('value')
+		const postsValue = posts.val()
+		for (let p in postsValue) {
+			console.log(postsValue[p])
+		}
+	}
 	
 	async removePost(postId) {
 		const user = await this.user.getCurrentUser();
