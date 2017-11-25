@@ -36,10 +36,18 @@ class AttendeesList extends Component {
 	
 	handleAccept(user) {
 		this.postController.acceptUserToPost(this.state.post, user)
+			.then(() => {
+				alert("Request was accepted!")
+				this.props.history.push('/profile')
+			})
 	}
 
 	handleReject(user) {
 		this.postController.rejectUserToPost(this.state.post, user)
+      .then(() => {
+        alert("Request was rejected!")
+        this.props.history.push('/profile')
+      })
 	}
 
 	renderUser(user) {

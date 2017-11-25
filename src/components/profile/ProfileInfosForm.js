@@ -3,7 +3,6 @@ import {Textfield} from 'react-mdl'
 import {User} from '../../controllers/User'
 import ImageUpload from './ImageUpload'
 import Select from 'react-select';
-import {Option} from "react-mdl-selectfield";
 import 'react-select/dist/react-select.css';
 
 function setErrorMsg(error) {

@@ -13,6 +13,7 @@ const PostItem = (props) => {
 					?<div>Type: Offer</div>
 					:<div>Type: Request</div>
 				}
+				<div>Category: {post.category}</div>
 				<div>{post.description}</div>
 			</CardText>
 			<CardActions border>

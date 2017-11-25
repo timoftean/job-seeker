@@ -45,7 +45,7 @@ export default class Notification extends Component {
     			for (let x in elem) {
     				key = x
     			}
-    			let statur = ''
+    			let status = ''
     			for (let y in this.state.postStatuses) {
     				let el = this.state.postStatuses[y][key][this.state.user.info.uid]
     				if (el.status) {
