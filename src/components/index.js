@@ -72,6 +72,7 @@ export default class App extends Component {
   render() {
     const auth = new Auth()
     const logout = auth.logout
+    const { authed } = this.state
 
     return this.state.loading === true
       ? <Spinner />
@@ -86,17 +87,23 @@ export default class App extends Component {
                 </Link>
               </div>
               <ul className="nav navbar-nav pull-right">
-                <li>
-                  <Link to="/addPost" className="navbar-brand">Add Post</Link>
-                </li>
+                {authed
+                  ? <li>
+                    <Link to="/addPost" className="navbar-brand">Add Post</Link>
+                  </li>
+                  :null
+                }
                 <li>
                   <Link to="/" className="navbar-brand">Posts</Link>
                 </li>
+                {authed
+                  ? <li>
+                    <Link to="/profile" className="navbar-brand">Profile</Link>
+                  </li>
+                  :null
+                }
                 <li>
-                  <Link to="/profile" className="navbar-brand">Profile</Link>
-                </li>
-                <li>
-                  {this.state.authed
+                  {authed
                     ? <button
                         style={{border: 'none', background: 'transparent'}}
                         onClick={() => logout() }
@@ -116,15 +123,15 @@ export default class App extends Component {
                        render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
                 <PublicRoute path='/login' component={Login} />
                 <PublicRoute path='/register' component={Register} />
-                <PublicRoute authed={this.state.authed} {...this.props} path='/post/details/:id' component={PostDetails} />
-                <PublicRoute authed={this.state.authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/profile' component={Profile} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/addPost' component={PostForm} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/editProfile' component={EditUserProfile} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/editPost' component={PostForm} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/provider/hire/:id' component={AttendForm} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/posts/attendeesList/:id' component={AttendeesList} />
-                <PrivateRoute authed={this.state.authed} {...this.props} path='/job/apply/:id' component={AttendForm} />
+                <PublicRoute authed={authed} {...this.props} path='/post/details/:id' component={PostDetails} />
+                <PublicRoute authed={authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
+                <PrivateRoute authed={authed} {...this.props} path='/profile' component={Profile} />
+                <PrivateRoute authed={authed} {...this.props} path='/addPost' component={PostForm} />
+                <PrivateRoute authed={authed} {...this.props} path='/editProfile' component={EditUserProfile} />
+                <PrivateRoute authed={authed} {...this.props} path='/editPost' component={PostForm} />
+                <PrivateRoute authed={authed} {...this.props} path='/provider/hire/:id' component={AttendForm} />
+                <PrivateRoute authed={authed} {...this.props} path='/posts/attendeesList/:id' component={AttendeesList} />
+                <PrivateRoute authed={authed} {...this.props} path='/job/apply/:id' component={AttendForm} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
