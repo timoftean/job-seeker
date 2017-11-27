@@ -81,7 +81,9 @@ export default class App extends Component {
           <nav className="navbar navbar-default navbar-static-top">
             <div className="container">
               <div className="navbar-header">
-                <Link to="/" className="navbar-brand">Job Seeker</Link>
+                <Link to="/">
+                  <img src="./logo.jpg" alt="logo" width="256" height="60" />
+                </Link>
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
