@@ -14,6 +14,8 @@ const PostItem = (props) => {
 					:<div>Type: Request</div>
 				}
 				<div>Category: {post.category}</div>
+				<div>Price: {post.price}</div>
+				<div>Number of hours: {post.numHours}</div>
 				<div>{post.description}</div>
 			</CardText>
 			<CardActions border>
