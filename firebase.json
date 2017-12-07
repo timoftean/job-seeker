@@ -1,5 +1,8 @@
 {
   "hosting": {
     "public": "build"
+  },
+  "functions": {
+    "source": "api"
   }
 }

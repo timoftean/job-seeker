@@ -1266,7 +1266,7 @@ describe('Kitchen Sink', function(){
     })
 
     it('Cypress._.method() - call a lodash method', function(){
-      // use the _.chain, _.map, _.take, and _.value functions
+      // use the _.chain, _.map, _.take, and _.value api
       // https://on.cypress.io/_
       cy.request('https://jsonplaceholder.typicode.com/users')
         .then(function(response){

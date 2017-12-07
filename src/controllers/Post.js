@@ -1,4 +1,5 @@
 import {db} from '../config/constants'
+import {apiUrl} from "../config/constants"
 import {User} from './User'
 
 export class Post {
@@ -102,9 +103,8 @@ export class Post {
   }
 
   async getAllPosts() {
-    //fetch all data from posts "table"
-    let posts = await db.ref(`posts`).once('value')
-    return posts.val()
+    const response = await fetch(`${apiUrl}/posts/`)
+    return await response.json()
   }
 	
 	async getUserPosts() {
