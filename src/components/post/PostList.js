@@ -55,7 +55,6 @@ export default class PostList extends Component {
             return categories[key]
         });
         this.setState({categories})
-        console.log(this.state.categories);
     }
 
     createObject = (key, post) => {
@@ -77,11 +76,11 @@ export default class PostList extends Component {
         let posts = await this.postController.getAllPosts();
         let key = this.state.searchKey;
         let selectedCategory = this.state.selectedCategory;
-        let selectedMinNumHours = parseInt(this.state.selectedMinNumHours);
-        let selectedMaxNumHours = parseInt(this.state.selectedMaxNumHours);
+        let selectedMinNumHours = parseInt(this.state.selectedMinNumHours, 10);
+        let selectedMaxNumHours = parseInt(this.state.selectedMaxNumHours, 10);
         let selectedLocation = this.state.selectedLocation;
-        let selectedMinPrice = parseInt(this.state.selectedMinPrice);
-        let selectedMaxPrice = parseInt(this.state.selectedMaxPrice);
+        let selectedMinPrice = parseInt(this.state.selectedMinPrice, 10);
+        let selectedMaxPrice = parseInt(this.state.selectedMaxPrice, 10);
 
         let filteredPosts = [];
         for (const postKey in posts) {
@@ -183,9 +182,9 @@ export default class PostList extends Component {
         let posts = this.state.posts;
         posts.sort((a, b) => {
             if (this.state.sortKey.value === 'price') {
-                return parseInt(a.price) - parseInt(b.price);
+                return parseInt(a.price, 10) - parseInt(b.price, 10);
             }
-            return parseInt(a.numHours) - parseInt(b.numHours);
+            return parseInt(a.numHours, 10) - parseInt(b.numHours, 10);
         });
 
         if (this.state.ascendingSort.value === false) {

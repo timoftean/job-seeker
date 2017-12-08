@@ -4,7 +4,6 @@ export class User {
 	
 	saveCurrentUser = async () => {
     const user = await this.getLoggedUser()
-		console.log("USR", user)
 		return db.ref().child(`users/${user.uid}/info`)
 			.set({
 				email: user.email,
@@ -105,7 +104,4 @@ export class User {
         return categories.val()
     }
 
-  async getAreasOfInterest(uid) {
-  	console.log(uid)
-  }
 }

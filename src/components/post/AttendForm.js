@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Textfield, Snackbar } from 'react-mdl'
 import { Post } from "../../controllers/Post";
-import {provider} from "../../config/constants";
 
 class AttendForm extends Component {
   constructor(props) {

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { Card, CardTitle, CardText, Button, CardActions, CardMenu } from 'react-mdl'
+import { Card, CardTitle, CardText, Button, CardActions } from 'react-mdl'
 import { User } from '../../controllers/User'
 
 class UserPublicProfile extends Component {
@@ -41,6 +39,8 @@ class UserPublicProfile extends Component {
                 console.log("Unauthorized")
                 this.setState({loaded: true})
                 break;
+              default:
+                break;
             }
           })
       })
@@ -60,7 +60,6 @@ class UserPublicProfile extends Component {
   }
   
   render() {
-    console.log()
     if (!this.state.loaded) return null
     const { user } = this.state
     return (

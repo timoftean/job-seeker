@@ -24,8 +24,7 @@ export default class ListFromAreaOfInterest extends Component {
   		return {id: key, post: posts[key]}
 		});
 		this.setState({allposts : postsArray})
-
-		let areasOfInterest
+		
 		const userCategories = await this.userController.getCurrentUser()
 		this.setState({userCategories : userCategories.profile.categories})
 		
@@ -35,6 +34,7 @@ export default class ListFromAreaOfInterest extends Component {
 					return index;
 				}
 			}
+			return null
 		}); 
 		this.setState({matchingPosts})
 	}

@@ -70,6 +70,7 @@ class AttendeesList extends Component {
 					return index
 				}
 			}
+			return null
 		})[0][uid];
 
 		return (

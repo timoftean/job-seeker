@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Tab, Tabs, List, ListItem} from 'react-mdl'
+import {Tab, Tabs} from 'react-mdl'
 import PostList from '../post/PostList'
 import EditUserProfile from './ProfileInfosForm'
 import ProfileInfos from './ProfileInfos'

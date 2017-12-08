@@ -41,6 +41,7 @@ function setErrorMsg(error) {
 			obj['value'] = key
 			obj['label'] = categories[key]
 			categoriesArray.push( obj )
+			return null
 		})
 		
     this.setState({
@@ -53,7 +54,6 @@ function setErrorMsg(error) {
 	}
 
 	 handleSelectChange = (value) => {
-     console.log('Selected: ', value);
 		 this.setState({selectedCategories: value, value})
 	 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Card, CardTitle, CardText, Button, CardActions, CardMenu } from 'react-mdl'
+import { Card, CardTitle, CardText, CardMenu } from 'react-mdl'
 import { User } from '../../controllers/User'
 
 class ProfileInfos extends Component {
@@ -32,6 +32,8 @@ class ProfileInfos extends Component {
 						break;
 					case 'storage/unauthorized':
 						console.log("Unauthorized")
+						break;
+					default:
 						break;
 				}
 			})

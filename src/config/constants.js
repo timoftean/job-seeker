@@ -1,5 +1,10 @@
 import firebase from 'firebase'
 
+const apiUrls = {
+  'development': 'http://localhost:5002/return-to-sleep/us-central1/app',
+  'production': 'https://us-central1-return-to-sleep.cloudfunctions.net/app'
+}
+
 const config = {
 	apiKey: "AIzaSyD0dv0jHJOAx2QsgTAN28vOREmYqxXoFck",
 	authDomain: "return-to-sleep.firebaseapp.com",
@@ -15,11 +20,5 @@ export const db = firebase.database()
 export const firebaseAuth = firebase.auth
 export const storageRef = firebase.storage().ref();
 export const provider = new firebase.auth.GoogleAuthProvider();
-console.log(process.env.NODE_ENV)
-
-const apiUrls = {
-	'development': 'http://localhost:5002/return-to-sleep/us-central1/app',
-	'production': 'https://us-central1-return-to-sleep.cloudfunctions.net/app'
-}
 
 export const apiUrl = apiUrls[process.env.NODE_ENV]
