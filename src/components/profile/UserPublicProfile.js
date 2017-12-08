@@ -60,6 +60,7 @@ class UserPublicProfile extends Component {
   }
   
   render() {
+    console.log()
     if (!this.state.loaded) return null
     const { user } = this.state
     return (
@@ -74,6 +75,13 @@ class UserPublicProfile extends Component {
             {user.info.email}
           </div>
         </CardText>
+        <CardActions>
+          <a href={"mailto:?subject=JobSeeker - New user recommendation! &body=You have a new profile recommendation for: \n\n " + window.location.href}>
+            <Button raised>
+              SHARE! 
+            </Button>
+          </a>
+        </CardActions>
       </Card>
     )
   }
