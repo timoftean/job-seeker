@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Textfield } from 'react-mdl'
+import { Textfield, Snackbar } from 'react-mdl'
 import { Post } from "../../controllers/Post";
 import {provider} from "../../config/constants";
 
@@ -8,7 +8,8 @@ class AttendForm extends Component {
     super(props);
     this.state = {
       post_id : this.props.match.params.id,
-      text: ''
+      text: '',
+      isSnackbarActive: false
     };
 
     this.postController = new Post();
@@ -17,13 +18,19 @@ class AttendForm extends Component {
   handleSubmit = () => {
     const application_details = { post_id : this.state.post_id, text : this.state.text };
     this.postController.addUserToPost(application_details)
-      .then(() => {this.props.history.push('/')})
+      .then(() => {this.setState({isSnackbarActive: true})})
       .catch(e => console.log(e));
   };
+
+  handleTimeoutSnackbar() {
+    this.setState({ isSnackbarActive: false });
+    this.props.history.push('/')
+  }
 
   render() {
     return (
         <div>
+        <Snackbar active={this.state.isSnackbarActive} onTimeout={() => this.handleTimeoutSnackbar()}>Request has been succesfully sent!</Snackbar>
           <form onSubmit={this.handleSubmit}>
             <Textfield
               onChange={e => this.setState({text: e.target.value})}

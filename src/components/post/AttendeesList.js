@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { Post } from '../../controllers/Post'
 import { User } from '../../controllers/User'
-import { Card, CardTitle, CardText, CardActions, Button} from 'react-mdl'
+import { Card, CardTitle, CardText, CardActions, Button, Snackbar} from 'react-mdl'
 
 class AttendeesList extends Component {
 	constructor(props) {
@@ -15,6 +15,7 @@ class AttendeesList extends Component {
       attendees: null,
 			user: null,
 			statuses: null,
+			isSnackbarActive: false
 		}
 		this.postController = new Post()
 		this.userController = new User()
@@ -37,9 +38,14 @@ class AttendeesList extends Component {
 	handleAccept(user) {
 		this.postController.acceptUserToPost(this.state.post, user)
 			.then(() => {
-				alert("Request was accepted!")
-				this.props.history.push('/profile')
+				this.setState({isSnackbarActive: true})
+        setTimeout(() => {  }, 2000)
 			})
+	}
+
+	handleTimeoutSnackbar() {
+		this.setState({ isSnackbarActive: false });
+		this.props.history.push('/profile')
 	}
 
 	handleReject(user) {
@@ -91,6 +97,7 @@ class AttendeesList extends Component {
 		const { post, loggedUserId, attendees } = this.state
 		return(
 			<div>
+				<Snackbar active={this.state.isSnackbarActive} onTimeout={() => this.handleTimeoutSnackbar()}>Candidate accepted!</Snackbar>
         {post.userId === loggedUserId
           ? <Card style={{width: '700px', margin: 'auto'}}>
 						<CardText>
@@ -107,7 +114,7 @@ class AttendeesList extends Component {
 						</div>
 						</CardText>
 					</Card>
-          : <h1>ACCESS DENIED</h1>
+					: <h1>ACCESS DENIED</h1>
         }
 			</div>
 		)
