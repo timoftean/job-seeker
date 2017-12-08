@@ -25,7 +25,6 @@ function setErrorMsg(error) {
       value: []
 		}
 		this.userController = new User()
-        //this.handleSelectChange = this.handleSelectChange.bind(this)
 
     }
 
