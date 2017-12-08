@@ -18,7 +18,7 @@ export class User {
         let categories = { };
         let selectedCategories = user.categories;
         selectedCategories.map( (item, index) => {
-            categories[index] = item
+            return categories[index] = item
         });
 		return db.ref().child(`users/${uid}/profile`)
 			.set({

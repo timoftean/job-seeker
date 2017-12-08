@@ -103,6 +103,7 @@ export class Post {
   }
 
   async getAllPosts() {
+    console.log("APIURL",apiUrl)
     const response = await fetch(`${apiUrl}/posts/`)
     return await response.json()
   }

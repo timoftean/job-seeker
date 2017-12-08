@@ -42,7 +42,6 @@ export default class PostList extends Component {
         };
 
         for (const postKey in posts) {
-            console.log(posts[postKey].location);
             this.state.locations.push(posts[postKey].location);
         }
 

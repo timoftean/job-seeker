@@ -53,7 +53,6 @@ class PostDetails extends Component {
 	}
 	
 	renderActions = () => {
-    console.log("Post",this.state.post)
 		return (
 			<div>
 				{this.state.post.type==='provider'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Tab, Tabs, List, ListItem} from 'react-mdl'
+import {List, ListItem} from 'react-mdl'
 import { User } from '../../controllers/User'
 import { Post } from '../../controllers/Post'
 import PostItem from '../post/PostItem'
