@@ -46,14 +46,10 @@ app.use(cors);
 app.use(cookieParser);
 // app.use(validateFirebaseIdToken);
 
-app.get('/posts', async (req, res) => {
+app.get('/posts', (req, res) => {
   //fetch all data from posts "table"
-  let posts = await db.ref(`posts`).once('value')
-  res.send(posts.val())
+  return db.ref(`posts`).once('value').then(posts => res.send(posts.val()))
 });
-
-
-
 
 // This HTTPS endpoint can only be accessed by your Firebase Users.
 // Requests need to be authorized by providing an `Authorization` HTTP header
