@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
-import {List, ListItem, Textfield, Button} from 'react-mdl'
+import {Button, List, ListItem, Textfield} from 'react-mdl'
 import Select from 'react-select'
 import {Post} from '../../controllers/Post'
-
-import PostItem from './PostItem'
 import {Option, SelectField} from "react-mdl-selectfield";
+import PostItem from "./PostItem";
 
 export default class PostList extends Component {
     constructor(props) {
@@ -13,6 +12,16 @@ export default class PostList extends Component {
         let posts = [];
         for (const postKey in props.posts) {
             posts.push(this.createObject(postKey, props.posts[postKey]));
+        }
+
+        let postsToPrint = [];
+
+        let maxSize;
+        if (posts.length < 10)
+            maxSize = posts.length;
+        else maxSize = 10;
+        for (let key = 0; key < maxSize; key++) {
+            postsToPrint.push(this.createObject(posts[key].key, posts[key]));
         }
 
         this.state = {
@@ -27,7 +36,9 @@ export default class PostList extends Component {
             selectedMaxPrice: "",
             searchKey: "",
             sortKey: "",
-            ascendingSort: true
+            ascendingSort: true,
+            pageCount: 1,
+            postsToPrint: postsToPrint
         };
 
         for (const postKey in posts) {
@@ -39,7 +50,7 @@ export default class PostList extends Component {
     }
 
     async componentDidMount() {
-        let categories
+        let categories;
         await this.postController.getCategories().then(data => categories = data)
         categories = Object.keys(categories).map(function (key) {
             return categories[key]
@@ -65,7 +76,6 @@ export default class PostList extends Component {
 
     async handleChange() {
         let posts = await this.postController.getAllPosts();
-
         let key = this.state.searchKey;
         let selectedCategory = this.state.selectedCategory;
         let selectedMinNumHours = parseInt(this.state.selectedMinNumHours);
@@ -186,6 +196,36 @@ export default class PostList extends Component {
         this.setState({posts: posts});
     };
 
+    handleNextPage() {
+        let currentPage = this.state.pageCount;
+        let start = 10 * currentPage;
+
+        let end = start + 10;
+        if (this.state.posts.length < end)
+            end = this.state.posts.length;
+
+        let postsToPrint = [];
+        for (let key = start; key < end; key++) {
+            postsToPrint.push(this.createObject(this.state.posts[key].key, this.state.posts[key]));
+        }
+
+        this.setState({postsToPrint: postsToPrint});
+        this.setState({pageCount: currentPage + 1})
+    }
+
+    handlePreviousPage() {
+        let previousNrPageStart = this.state.pageCount - 2;
+        let start = 10 * previousNrPageStart;
+        let end = start + 10;
+        let postsToPrint = [];
+        for (let key = start; key < end; key++) {
+            postsToPrint.push(this.createObject(this.state.posts[key].key, this.state.posts[key]));
+        }
+
+        this.setState({postsToPrint: postsToPrint});
+        this.setState({pageCount: previousNrPageStart + 1})
+    }
+
     render() {
         return (
             <div>
@@ -274,8 +314,8 @@ export default class PostList extends Component {
                     />
                 </div>
                 <List>
-                    {this.state.posts
-                        ? this.state.posts.map(post => {
+                    {this.state.postsToPrint
+                        ? this.state.postsToPrint.map(post => {
                             return (
                                 <ListItem key={post.key}>
                                     <PostItem id={post.key} post={post} {...this.props}/>
@@ -285,7 +325,14 @@ export default class PostList extends Component {
                     }
 
                 </List>
+                <Button colored onClick={() => this.handlePreviousPage()}>Previous</Button>
+                <Button colored onClick={() => this.handleNextPage()} className="pull-right">Next</Button>
+
             </div>
+
+
         )
     }
+
+
 }
