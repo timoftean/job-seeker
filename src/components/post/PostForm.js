@@ -153,7 +153,7 @@ export default class PostForm extends Component {
             {this.state.categories.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
           </SelectField>
           <div>
-            <button type="submit" className="btn btn-primary">Save</button>
+            <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Save</button>
           </div>
         </form>
         {

@@ -52,7 +52,7 @@ export default class Login extends Component {
     return (
       <div className="col-sm-6 col-sm-offset-3">
         <div className="mdl-layout-spacer"></div>
-          <img src="./logo.jpg" alt="logo" width="256" height="60" />
+          {/*<img src="./logo.jpg" alt="logo" width="256" height="60" />*/}
         <div className="mdl-layout-spacer"></div>
         <a
           onClick={() => this.handleGoogleLogin()}

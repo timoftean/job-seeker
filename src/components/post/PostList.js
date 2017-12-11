@@ -230,7 +230,7 @@ export default class PostList extends Component {
                 <Textfield
                     onChange={this.handleSearchChange}
                     label="Search"
-                    style={{width: '100%'}}
+                    style={{width: '80%'}}
                 />
                 <div>
                     <SelectField label={'Category'} value={this.state.selectedCategory}
