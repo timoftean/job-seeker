@@ -14,7 +14,7 @@ import AttendeesList from './post/AttendeesList'
 import { Post } from '../controllers/Post'
 import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
-import { Spinner } from 'react-mdl'
+import { Spinner, Footer, FooterSection, FooterLinkList, Layout, Header, Navigation } from 'react-mdl'
 import UserPublicProfile from "./profile/UserPublicProfile";
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
@@ -66,76 +66,102 @@ export default class App extends Component {
       }
     })
   }
+  
   componentWillUnmount () {
     this.removeListener()
   }
-  render() {
-    const auth = new Auth()
-    const logout = auth.logout
+  
+  renderRoutes = () => {
     const { authed } = this.state
-
+    
+    return (
+      <div className="row" style={{marginTop:'100px'}}>
+        <Switch>
+          <Route path='/' exact
+                 render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
+          <PublicRoute path='/login' component={Login} />
+          <PublicRoute path='/register' component={Register} />
+          <PublicRoute authed={authed} {...this.props} path='/post/details/:id' component={PostDetails} />
+          <PublicRoute authed={authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
+          <PrivateRoute authed={authed} {...this.props} path='/profile' component={Profile} />
+          <PrivateRoute authed={authed} {...this.props} path='/addPost' component={PostForm} />
+          <PrivateRoute authed={authed} {...this.props} path='/editProfile' component={EditUserProfile} />
+          <PrivateRoute authed={authed} {...this.props} path='/editPost' component={PostForm} />
+          <PrivateRoute authed={authed} {...this.props} path='/provider/hire/:id' component={AttendForm} />
+          <PrivateRoute authed={authed} {...this.props} path='/posts/attendeesList/:id' component={AttendeesList} />
+          <PrivateRoute authed={authed} {...this.props} path='/job/apply/:id' component={AttendForm} />
+          <Route render={() => <h3>No Match</h3>} />
+        </Switch>
+      </div>
+    )
+  }
+  
+  renderNav = () => {
+    const auth = new Auth()
+    const { logout } = auth
+    const { authed } = this.state
+    
+    return (
+      <div>
+        <Layout >
+          <Header waterfall title="Job Seeker">
+            <Navigation>
+              {authed
+                ? <a>
+                  <Link to="/addPost" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Add Post</Link>
+                </a>
+                :null
+              }
+              <a>
+                <Link to="/" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Posts</Link>
+              </a>
+              {authed
+                ? <a>
+                  <Link to="/profile" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Profile</Link>
+                </a>
+                :null
+              }
+              {authed
+                ? <a><button
+                  style={{border: 'none', background: 'transparent'}}
+                  onClick={() => logout() }
+                  className="mdl-button mdl-js-ripple-effect mdl-button--accent">Logout</button></a>
+                : <span>
+                  <a><Link to="/login" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Login</Link></a>
+                  <a><Link to="/register" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Register</Link></a>
+                </span>}
+            </Navigation>
+          </Header>
+        </Layout>
+      </div>
+      
+    )
+  }
+  
+  renderFooter = () => {
+    return (
+      <Footer size="mini">
+        <FooterSection type="left">
+          <FooterLinkList>
+            <a href="/">© 2017 Job Seeker</a>
+            <a href="/addPost">Add Post</a>
+          </FooterLinkList>
+        </FooterSection>
+      </Footer>
+    )
+  }
+  
+  render() {
     return this.state.loading === true
       ? <Spinner />
-      : (
-      <BrowserRouter >
-        <div>
-          <nav className="navbar navbar-default navbar-static-top">
-            <div className="container">
-              <div className="navbar-header">
-                <Link to="/" className="navbar-brand">Job Seeker</Link>
+      : (<BrowserRouter >
+            <div>
+              { this.renderNav() }
+              <div className="container" style={{minHeight: '700px'}}>
+                { this.renderRoutes() }
               </div>
-              <ul className="nav navbar-nav pull-right">
-                {authed
-                  ? <li>
-                    <Link to="/addPost" className="navbar-brand">Add Post</Link>
-                  </li>
-                  :null
-                }
-                <li>
-                  <Link to="/" className="navbar-brand">Posts</Link>
-                </li>
-                {authed
-                  ? <li>
-                    <Link to="/profile" className="navbar-brand">Profile</Link>
-                  </li>
-                  :null
-                }
-                <li>
-                  {authed
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => logout() }
-                        className="navbar-brand">Logout</button>
-                    : <span>
-                        <Link to="/login" className="navbar-brand">Login</Link>
-                        <Link to="/register" className="navbar-brand">Register</Link>
-                      </span>}
-                </li>
-              </ul>
+              { this.renderFooter() }
             </div>
-          </nav>
-          <div className="container">
-            <div className="row">
-              <Switch>
-                <Route path='/' exact
-                       render={(props) => <PostSection {...props} posts={this.state.posts} />}/>
-                <PublicRoute path='/login' component={Login} />
-                <PublicRoute path='/register' component={Register} />
-                <PublicRoute authed={authed} {...this.props} path='/post/details/:id' component={PostDetails} />
-                <PublicRoute authed={authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
-                <PrivateRoute authed={authed} {...this.props} path='/profile' component={Profile} />
-                <PrivateRoute authed={authed} {...this.props} path='/addPost' component={PostForm} />
-                <PrivateRoute authed={authed} {...this.props} path='/editProfile' component={EditUserProfile} />
-                <PrivateRoute authed={authed} {...this.props} path='/editPost' component={PostForm} />
-                <PrivateRoute authed={authed} {...this.props} path='/provider/hire/:id' component={AttendForm} />
-                <PrivateRoute authed={authed} {...this.props} path='/posts/attendeesList/:id' component={AttendeesList} />
-                <PrivateRoute authed={authed} {...this.props} path='/job/apply/:id' component={AttendForm} />
-                <Route render={() => <h3>No Match</h3>} />
-              </Switch>
-            </div>
-          </div>
-        </div>
-      </BrowserRouter>
-    );
+          </BrowserRouter> )
   }
 }

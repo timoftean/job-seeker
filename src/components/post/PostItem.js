@@ -21,7 +21,7 @@ const PostItem = (props) => {
 			<CardActions border>
 				<div>
 					<Link  to={{pathname: `/post/details/${id}`, props:{post,id} }} >
-						<Button colored>Show details</Button>
+						<Button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Show details</Button>
 					</Link>
 				</div>
 			</CardActions>

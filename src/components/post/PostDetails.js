@@ -57,14 +57,14 @@ class PostDetails extends Component {
 			<div>
 				{this.state.post.type==='provider'
 					? <Link  to={{pathname: `/provider/hire/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Send hire request</Button>
+              <Button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Send hire request</Button>
             </Link>
 					:<Link  to={{pathname: `/job/apply/${this.state.id}`, props:{post:this.state.post} }} >
-              <Button colored>Send application request</Button>
+              <Button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Send application request</Button>
           </Link>
 				}
 				<Link to={{pathname: `/user/profile/${this.state.post.userId}`}} className="pull-right">
-					<Button colored>Show user profile</Button>
+					<Button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Show user profile</Button>
 				</Link>
 			</div>
 		)

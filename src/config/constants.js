@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 
 const apiUrls = {
-  'development': 'http://localhost:5002/return-to-sleep/us-central1/app',
+  'development': 'http://localhost:5000/return-to-sleep/us-central1/app',
   'production': 'https://us-central1-return-to-sleep.cloudfunctions.net/app'
 }
 
