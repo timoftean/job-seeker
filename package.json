@@ -11,6 +11,7 @@
     "concurrently": "^3.5.1",
     "cypress": "^1.1.4",
     "firebase": "^3.6.1",
+    "firebase-functions": "^0.7.3",
     "history": "^4.7.2",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
