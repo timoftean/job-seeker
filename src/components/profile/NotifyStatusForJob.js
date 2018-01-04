@@ -5,7 +5,7 @@ import { Post } from '../../controllers/Post'
 import PostItem from '../post/PostItem'
 
 
-export default class Notification extends Component {
+export default class NotifyStatusForJob extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {

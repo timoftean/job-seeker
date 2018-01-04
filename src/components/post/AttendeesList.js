@@ -74,20 +74,28 @@ class AttendeesList extends Component {
 		})[0][uid];
 
 		return (
-			<Card key={ uid } shadow={0} style={{width: '512px', minHeight:'70px', margin: 'auto'}}>
+			<Card key={ uid } shadow={0} style={{width: '512px', minHeight:'70px', margin: 'auto', marginBottom: '20px'}}>
 				<CardTitle style={{height: '50px'}}>
-					<h5>Name: { firstName } { lastName } </h5>
+					<h5>Attendee: { firstName } { lastName } </h5>
 				</CardTitle>
 				<CardText>
 					<label>email: &nbsp;</label>
 					{ email }
 					<br/>
-					<label> status: &nbsp;</label>
-					{ status ? status : '' }
+					<label> Attendee { status ? status : '' }</label>
+					
 				</CardText>
 				<CardActions border>
-					<Button colored onClick={() => this.handleAccept(user)}>Accept</Button>
-					<Button colored onClick={() => this.handleReject(user)} className="pull-right">Decline</Button>
+					{
+						status === 'rejected'
+						? <Button colored onClick={() => this.handleAccept(user)}>Accept</Button>
+						: status === 'accepted'
+							? <Button colored onClick={() => this.handleReject(user)}>Decline</Button>
+							: <span>
+								<Button colored onClick={() => this.handleAccept(user)}>Accept</Button>
+								<Button colored onClick={() => this.handleReject(user)} className="pull-right">Decline</Button>
+								</span>
+					}
 				</CardActions>
 			</Card>
     )
@@ -100,7 +108,7 @@ class AttendeesList extends Component {
 			<div>
 				<Snackbar active={this.state.isSnackbarActive} onTimeout={() => this.handleTimeoutSnackbar()}>Candidate accepted!</Snackbar>
         {post.userId === loggedUserId
-          ? <Card style={{width: '700px', margin: 'auto'}}>
+          ? <Card style={{width: '700px', margin: 'auto', backgroundColor: 'lightgray'}}>
 						<CardText>
 							<div>
               {attendees.length !== 0

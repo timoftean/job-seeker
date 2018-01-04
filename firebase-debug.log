@@ -1,0 +1,40 @@
+[debug] [2018-01-04T19:08:54.568Z] ----------------------------------------------------------------------
+[debug] [2018-01-04T19:08:54.570Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve --only functions
+[debug] [2018-01-04T19:08:54.571Z] CLI Version:   3.16.0
+[debug] [2018-01-04T19:08:54.571Z] Platform:      darwin
+[debug] [2018-01-04T19:08:54.571Z] Node Version:  v7.7.3
+[debug] [2018-01-04T19:08:54.572Z] Time:          Thu Jan 04 2018 21:08:54 GMT+0200 (EET)
+[debug] [2018-01-04T19:08:54.572Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-01-04T19:08:54.585Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-01-04T19:08:54.585Z] > authorizing via signed-in user
+[debug] [2018-01-04T19:08:54.587Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-01-04T19:08:54.588Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/2bftIUeCK92oEpY3dAI4eKXIFJ7SVMS1ycrdAJBxJmo',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Jan 04 2018 21:08:54 GMT+0200 (EET)
+[debug] [2018-01-04T19:08:54.767Z] <<< HTTP RESPONSE 200
+[debug] [2018-01-04T19:08:54.784Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/return-to-sleep  
+  
+ Thu Jan 04 2018 21:08:54 GMT+0200 (EET)
+[debug] [2018-01-04T19:08:55.558Z] <<< HTTP RESPONSE 200
+[debug] [2018-01-04T19:08:55.559Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/return-to-sleep/tokens  
+  
+ Thu Jan 04 2018 21:08:55 GMT+0200 (EET)
+[debug] [2018-01-04T19:08:56.167Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/macbookpro/Desktop/projects/faculty/job-seeker'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-01-04T19:08:57.859Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/return-to-sleep  
+  
+ Thu Jan 04 2018 21:08:57 GMT+0200 (EET)
+[debug] [2018-01-04T19:08:57.859Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/return-to-sleep/apiKeys  
+  
+ Thu Jan 04 2018 21:08:57 GMT+0200 (EET)
+[debug] [2018-01-04T19:08:58.876Z] <<< HTTP RESPONSE 200
+[debug] [2018-01-04T19:08:59.978Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: app: http://localhost:5000/return-to-sleep/us-central1/app
