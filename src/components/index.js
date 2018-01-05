@@ -88,7 +88,7 @@ export default class App extends Component {
           <PublicRoute path='/register' component={Register} />
           <PublicRoute authed={authed} {...this.props} path='/post/details/:id' component={PostDetails} />
           <PublicRoute authed={authed} {...this.props} path='/user/profile/:id' component={UserPublicProfile} />
-		  <PrivateRoute authed={authed} {...this.props} path='/reviewForm' component={ReviewForm} />
+		  <PrivateRoute authed={authed} {...this.props} path='/reviewForm/:id' component={ReviewForm} />
           <PrivateRoute authed={authed} {...this.props} path='/profile' component={Profile} />
           <PrivateRoute authed={authed} {...this.props} path='/notifications' component={Notification} />
           <PrivateRoute authed={authed} {...this.props} path='/myPostsList' component={MyPostsList} />

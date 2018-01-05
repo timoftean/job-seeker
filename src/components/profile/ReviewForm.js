@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { User } from '../../controllers/User'
 import { Textfield, Radio, RadioGroup } from 'react-mdl'
-import { SelectField, Option } from 'react-mdl-selectfield';
 
 function setErrorMsg(error) {
   return {
@@ -12,11 +11,13 @@ function setErrorMsg(error) {
 export default class ReviewForm extends Component {
   constructor(props) {
     super(props);
+	const { revieweeId } = this.props.match.params;
     const { description, rating } =
       props.location.props ? props.location.props.review : ''
     
     this.state = {
       addReviewError: null,
+	  revieweeId,
       description: description || '',
       rating: rating || ''
     };
@@ -35,8 +36,8 @@ export default class ReviewForm extends Component {
 		rating: this.state.rating
     };
     
-	const uid = 'Pt08tSNnkFVZhswcKb9kzATZPdC3' // not this uid
-    this.userController.setUserReview(review, uid)
+	// const revieweeId = 'Pt08tSNnkFVZhswcKb9kzATZPdC3'
+    this.userController.setUserReview(review, this.state.revieweeId)
 		.then(() => {
 		  this.props.history.push('/')
 		})
@@ -44,7 +45,7 @@ export default class ReviewForm extends Component {
 	};
 
 	verifyInput() {
-		return this.state.description && this.state.rating
+		return this.state.revieweeId && this.state.description && this.state.rating
 	}
 
 	render() {
