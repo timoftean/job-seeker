@@ -240,6 +240,12 @@ export default class PostList extends Component {
                 </div>
 
                 <div>
+                    <Collapsible trigger="TEST2">
+                        <p>AAAAAAA</p>
+                    </Collapsible>
+                </div>
+
+                <div>
                     <SelectField label={'Category'} value={this.state.selectedCategory}
                                  onChange={this.handleCategoryChange}
                                  style={{width: '49%'}}>
