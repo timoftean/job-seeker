@@ -15,6 +15,7 @@ export class User {
 	saveUserProfile = async (user) => {
 		const uid = await this.getCurrentUserId();
         let categories = { };
+		let reviews = await this.getUserReviews();
         let selectedCategories = user.categories;
         selectedCategories.map( (item, index) => {
             return categories[index] = item
@@ -24,7 +25,8 @@ export class User {
 				phone: user.phone,
 				firstName: user.firstName,
 				lastName: user.lastName,
-                categories : categories
+                categories : categories,
+				reviews: reviews
 			})
 			.then((user) => user)
 	}
@@ -89,6 +91,20 @@ export class User {
 	getCurrentUserId = async () => {
 		const user = await firebaseAuth().currentUser
 		return  user ? user.uid : null
+	}
+	
+	async getUserReviews() {
+		const uid = await this.getCurrentUserId()
+		let reviews = await db.ref(`user-reviews/${uid}`).once('value')
+		return reviews.val()
+	}
+	
+	async setUserReview(review, uid) {		
+		const updates = {}
+		const newReviewKey = db.ref().child('/user-reviews/' + uid).push().key
+		updates['/user-reviews/' + uid + '/' + newReviewKey ] = review
+		
+		return db.ref().update(updates)
 	}
 	
 	saveProfilePicture = async (imageString) => {

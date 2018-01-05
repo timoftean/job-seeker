@@ -20,10 +20,13 @@ export default class PostList extends Component {
         let maxSize;
         if (posts.length < 10)
             maxSize = posts.length;
+
         else maxSize = 10;
         for (let key = 0; key < maxSize; key++) {
             postsToPrint.push(this.createObject(posts[key].key, posts[key]));
         }
+
+        let maxPageCount = Math.floor(posts.length / 10 + 1);
 
         this.state = {
             posts: posts,
@@ -39,6 +42,7 @@ export default class PostList extends Component {
             sortKey: "",
             ascendingSort: true,
             pageCount: 1,
+            maxPageCount: maxPageCount,
             postsToPrint: postsToPrint
         };
 
@@ -117,6 +121,22 @@ export default class PostList extends Component {
 
         this.setState({posts: filteredPosts})
         this.sort();
+
+        let postsToPrint = [];
+
+        let maxSize;
+        if (this.state.posts.length < 10)
+            maxSize = this.state.posts.length;
+        else maxSize = 10;
+        for (let key = 0; key < maxSize; key++) {
+            postsToPrint.push(this.createObject(this.state.posts[key].key, this.state.posts[key]));
+        }
+
+        let maxPageCount = Math.floor(this.state.posts.length / 10 + 1);
+
+        this.setState({postsToPrint: postsToPrint});
+        this.setState({pageCount: 1});
+        this.setState({maxPageCount: maxPageCount});
     }
 
     handleSearchChange = (searchKey) => {
@@ -337,8 +357,16 @@ export default class PostList extends Component {
                     }
 
                 </List>
-                <Button colored onClick={() => this.handlePreviousPage()}>Previous</Button>
-                <Button colored onClick={() => this.handleNextPage()} className="pull-right">Next</Button>
+                <div>
+                    {this.state.pageCount > 1 ?
+                        <Button colored onClick={() => this.handlePreviousPage()}>Previous</Button>
+                        : null}
+                </div>
+                <div>
+                    {this.state.pageCount < this.state.maxPageCount ?
+                        <Button colored onClick={() => this.handleNextPage()} className="pull-right">Next</Button>
+                        : null}
+                </div>
 
             </div>
 
