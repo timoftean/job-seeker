@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {Button, List, ListItem, Textfield} from 'react-mdl'
+import {Button, List, ListItem, Textfield,CardText,CardActions,CardTitle} from 'react-mdl'
 import Select from 'react-select'
+import Collapsible from 'react-collapsible'
 import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
 import PostItem from "./PostItem";
@@ -233,6 +234,12 @@ export default class PostList extends Component {
                     style={{width: '80%'}}
                 />
                 <div>
+                    <Collapsible trigger="TEST">
+                        <p>AAAAAAA</p>
+                    </Collapsible>
+                </div>
+
+                <div>
                     <SelectField label={'Category'} value={this.state.selectedCategory}
                                  onChange={this.handleCategoryChange}
                                  style={{width: '49%'}}>
@@ -242,6 +249,7 @@ export default class PostList extends Component {
                     </SelectField>
                     <Button raised colored onClick={this.resetCategory}>Reset Category</Button>
                 </div>
+
                 <div>
                     <Textfield
                         onChange={this.handleMinNumHoursChange}
