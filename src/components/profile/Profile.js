@@ -50,7 +50,7 @@ export default class Profile extends Component {
 					<List>
                     {Object.keys(this.state.reviews).map((reviewKey) => {
 							return (
-                                <ListItem>
+                                <ListItem key={reviewKey}>
                                     <ReviewItem description={this.state.reviews[reviewKey].description} 
 												rating={this.state.reviews[reviewKey].rating}
 												{...this.props}/>
