@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Post } from '../../controllers/Post'
 import { User } from '../../controllers/User'
 import { Card, CardTitle, CardText, CardActions, Button, Snackbar} from 'react-mdl'
+import { Link } from 'react-router-dom'
 
 class AttendeesList extends Component {
 	constructor(props) {
@@ -96,6 +97,9 @@ class AttendeesList extends Component {
 								<Button colored onClick={() => this.handleReject(user)} className="pull-right">Decline</Button>
 								</span>
 					}
+					<Link  to={{pathname: `/reviewForm/${user.info.uid}`}} >
+						<Button colored>Review</Button>
+					</Link>
 				</CardActions>
 			</Card>
     )

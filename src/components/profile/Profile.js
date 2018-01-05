@@ -1,4 +1,5 @@
-import React, { List, ListItem, Component } from 'react'
+import React, { Component } from 'react'
+import { List, ListItem } from 'react-mdl'
 import EditUserProfile from './ProfileInfosForm'
 import ProfileInfos from './ProfileInfos'
 import { User } from '../../controllers/User'
@@ -37,10 +38,6 @@ export default class Profile extends Component {
 		// if user is not authenticated do not show profile
 		if (!this.props.authed || !this.state.loaded) return null
 		
-		Object.keys(this.state.reviews).map( (reviewKey) => {
-			console.log( "key:", reviewKey, " review data:", this.state.reviews[reviewKey] )
-		})
-		
 		return (
 			<div>
 				<div>
@@ -52,10 +49,7 @@ export default class Profile extends Component {
 				<div>
 					<List>
                     {Object.keys(this.state.reviews).map((reviewKey) => {
-							console.log( typeof(reviewKey), reviewKey )
-							console.log( typeof(this.state.reviews[reviewKey].description), this.state.reviews[reviewKey].description )
-							console.log( typeof(this.state.reviews[reviewKey].description), this.state.reviews[reviewKey].rating )
-                            return (
+							return (
                                 <ListItem>
                                     <ReviewItem description={this.state.reviews[reviewKey].description} 
 												rating={this.state.reviews[reviewKey].rating}

@@ -11,7 +11,7 @@ function setErrorMsg(error) {
 export default class ReviewForm extends Component {
   constructor(props) {
     super(props);
-	const { revieweeId } = this.props.match.params;
+	const revieweeId = this.props.match.params.id;
     const { description, rating } =
       props.location.props ? props.location.props.review : ''
     
