@@ -140,6 +140,13 @@ export class Post {
   	const updates = {};
     updates['/post-attendees/' + post.id + '/' + user.info.uid + '/status'] = "accepted";
     updates['/attendee-posts/' + user.info.uid + '/' + post.id + '/status'] = "accepted";
+    const notification = {
+      'jobStatus' : 'accepted',
+      'job' : post,
+      'seen' : false,
+      'userToNotify' : user.info.uid,
+    }
+    db.ref('/notifications').push(notification)
   	return db.ref().update(updates)
   }
 
@@ -147,6 +154,34 @@ export class Post {
     const updates = {};
     updates['/post-attendees/' + post.id + '/' + user.info.uid + '/status'] = "rejected";
     updates['/attendee-posts/' + user.info.uid + '/' + post.id  + '/status'] = "rejected";
+    const notification = {
+      'jobStatus' : 'rejected',
+      'job' : post,
+      'seen' : false,
+      'userToNotify' : user.info.uid,
+    }
+    db.ref('/notifications').push(notification)
     return db.ref().update(updates)
+  }
+
+  async getNotificationsForUser() {
+    let notifications = await db.ref('/notifications').once('value')
+    const uid = await this.user.getCurrentUserId()
+    let array = Object.keys(notifications.val()).map(key => {
+      return {'notification' : notifications.val()[key], 'key' : key}
+    })
+    const notificationsForUser = array.filter((x) => {
+      if (x.notification.userToNotify === uid) return true
+      return false
+    })
+    return notificationsForUser
+  }
+
+  async getNotificationsForUserCount() {
+    let notifications = await this.getNotificationsForUser()
+    let unseen = notifications.filter((x) => {
+      return x.notification.seen === true ? false : true
+    })
+    return unseen.length
   }
 }

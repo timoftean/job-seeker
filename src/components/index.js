@@ -47,6 +47,7 @@ export default class App extends Component {
 		  authed: false,
 		  loading: true,
       posts:{},
+      notificationCount: ''
 	  }
 	  this.postController = new Post()
     this.auth = new Auth()
@@ -69,10 +70,17 @@ export default class App extends Component {
         })
       }
     })
+    this.postController.getNotificationsForUserCount().then((data) => {
+      this.setState({notificationCount: data})
+    })
   }
   
   componentWillUnmount () {
     this.removeListener()
+  }
+
+  updateCount () {
+    console.log("FUUUCK")
   }
   
   renderRoutes = () => {
@@ -127,7 +135,6 @@ export default class App extends Component {
   
   renderNav = () => {
     const { authed } = this.state
-    
     return (
       <div>
         <Layout>
@@ -137,7 +144,16 @@ export default class App extends Component {
                 ? <span>
                   <Link to="/addPost" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
                     <Tooltip label="Add Post">
-                      <Icon name="add" />
+                      <Badge>
+                        <Icon name="add" />
+                      </Badge>
+                    </Tooltip>
+                  </Link>
+                  <Link to="/notifications" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
+                    <Tooltip label="Notifications">
+                      <Badge text={this.state.notificationCount} overlap>
+                        <Icon name='notifications' />
+                      </Badge>
                     </Tooltip>
                   </Link>
                 </span>
@@ -150,7 +166,7 @@ export default class App extends Component {
                   </Tooltip>
                 </Link>
               </span>
-              <span >
+              <span>
                 <Badge>
                   <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-js-ripple-effect mdl-button--accent"/>
                 </Badge>
