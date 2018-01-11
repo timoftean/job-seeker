@@ -55,7 +55,7 @@ export default class App extends Component {
   }
   
   async componentDidMount () {
-	  const posts = await this.postController.getAllPosts()
+	  const posts = await this.postController.getActivePosts();
 	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({

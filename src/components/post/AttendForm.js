@@ -40,7 +40,11 @@ class AttendForm extends Component {
               style={{width: '500px'}}
               value={this.state.text}
             />
-            <Button type="button" onClick={this.handleSubmit}>Send </Button>
+            <Button type="button"
+                    onClick={this.handleSubmit}
+                    style={{marginTop: '10px'}}>
+              Send
+            </Button>
           </form>
         </div>
     );

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, List, ListItem, Textfield,CardText,CardActions,CardTitle} from 'react-mdl'
+import {Button, List, ListItem, Textfield} from 'react-mdl'
 import Select from 'react-select'
 import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
@@ -79,7 +79,7 @@ export default class PostList extends Component {
     };
 
     async handleChange() {
-        let posts = await this.postController.getAllPosts();
+        let posts = await this.postController.getActivePosts();
         let key = this.state.searchKey;
         let selectedCategory = this.state.selectedCategory;
         let selectedMinNumHours = parseInt(this.state.selectedMinNumHours, 10);
