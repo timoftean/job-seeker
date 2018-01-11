@@ -128,7 +128,7 @@ export default class App extends Component {
             <button
               style={{border: 'none', background: 'transparent'}}
               onClick={() => logout() }
-              className="mdl-button mdl-js-ripple-effect mdl-button--accent">Logout</button>
+              className="mdl-button mdl-button--accent">Logout</button>
           </a>
         </MenuItem>
       </div>
@@ -144,25 +144,29 @@ export default class App extends Component {
             <Navigation>
               {authed
                 ? <span>
-                  <Link to="/addPost" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
-                    <Tooltip label="Add Post">
-                      <Badge>
-                        <Icon name="add" />
-                      </Badge>
-                    </Tooltip>
-                  </Link>
-                  <Link to="/notifications" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
-                    <Tooltip label="Notifications">
-                      <Badge text={this.state.notificationCount} overlap>
-                        <Icon name='notifications' />
-                      </Badge>
-                    </Tooltip>
-                  </Link>
+                    <span>
+                      <Link to="/addPost" className="mdl-button mdl-button--accent">
+                        <Tooltip label="Add Post">
+                          <Badge>
+                            <Icon name="add" />
+                          </Badge>
+                        </Tooltip>
+                      </Link>
+                    </span>
+                  <span>
+                    <Link to="/notifications" className="mdl-button mdl-button--accent">
+                      <Tooltip label="Notifications">
+                        <Badge text={this.state.notificationCount} overlap>
+                          <Icon name='notifications' />
+                        </Badge>
+                      </Tooltip>
+                    </Link>
+                  </span>
                 </span>
                 :null
               }
               <span>
-                <Link to="/" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
+                <Link to="/" className="mdl-button mdl-button--accent">
                   <Tooltip label="Home">
                     <Icon name="home" />
                   </Tooltip>
@@ -170,15 +174,15 @@ export default class App extends Component {
               </span>
               <span>
                 <Badge>
-                  <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-js-ripple-effect mdl-button--accent"/>
+                  <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-button--accent"/>
                 </Badge>
                 <Menu target="menu-lower-right" align="right">
                   {
                     authed
                       ? this.renderAuthedMenu()
                       : <div>
-                        <a><Link to="/login" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Login</Link></a>
-                        <a><Link to="/register" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Register</Link></a>
+                        <span><Link to="/login" className="mdl-button mdl-button--accent">Login</Link></span>
+                        <span><Link to="/register" className="mdl-button mdl-button--accent">Register</Link></span>
                       </div>
                       
                   }
