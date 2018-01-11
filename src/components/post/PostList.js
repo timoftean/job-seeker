@@ -79,7 +79,7 @@ export default class PostList extends Component {
     };
 
     async handleChange() {
-        let posts = await this.postController.getAllPosts();
+        let posts = await this.postController.getActivePosts();
         let key = this.state.searchKey;
         let selectedCategory = this.state.selectedCategory;
         let selectedMinNumHours = parseInt(this.state.selectedMinNumHours, 10);
