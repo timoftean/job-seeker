@@ -5,6 +5,7 @@ import Collapsible from 'react-collapsible'
 import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
 import PostItem from "./PostItem";
+import Accordion from 'react-responsive-accordion';
 
 export default class PostList extends Component {
     constructor(props) {
@@ -246,25 +247,13 @@ export default class PostList extends Component {
     }
 
     render() {
-        return (
+        return (        
             <div>
                 <Textfield
                     onChange={this.handleSearchChange}
                     label="Search"
                     style={{width: '80%'}}
                 />
-                <div>
-                    <Collapsible trigger="TEST">
-                        <p>AAAAAAA</p>
-                    </Collapsible>
-                </div>
-
-                <div>
-                    <Collapsible trigger="TEST2">
-                        <p>AAAAAAA</p>
-                    </Collapsible>
-                </div>
-
                 <div>
                     <SelectField label={'Category'} value={this.state.selectedCategory}
                                  onChange={this.handleCategoryChange}
