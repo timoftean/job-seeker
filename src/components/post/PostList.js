@@ -50,7 +50,7 @@ export default class PostList extends Component {
         for (const postKey in posts) {
             this.state.locations.push(posts[postKey].location);
         }
-        this.state.locations.push("");
+        this.state.locations.unshift("");
 
         this.postController = new Post();
     }
@@ -61,7 +61,7 @@ export default class PostList extends Component {
         categories = Object.keys(categories).map(function (key) {
             return categories[key]
         });
-        categories.push("");
+        categories.unshift("");
         this.setState({categories})
     }
 
