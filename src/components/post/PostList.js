@@ -4,6 +4,7 @@ import Select from 'react-select'
 import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
 import PostItem from "./PostItem";
+import Accordion from 'react-responsive-accordion';
 import Collapsible from 'react-collapsible'
 import '../../assets/sass/main.scss'
 
@@ -50,6 +51,7 @@ export default class PostList extends Component {
         for (const postKey in posts) {
             this.state.locations.push(posts[postKey].location);
         }
+        this.state.locations.unshift("");
 
         this.postController = new Post();
     }
@@ -60,6 +62,7 @@ export default class PostList extends Component {
         categories = Object.keys(categories).map(function (key) {
             return categories[key]
         });
+        categories.unshift("");
         this.setState({categories})
     }
 
@@ -187,12 +190,13 @@ export default class PostList extends Component {
     };
 
     resetCategory = () => {
-        this.setState({selectedCategory: ''})
+        console.log("AICI");
+        this.setState({selectedCategory:"AAAA"})
         this.handleChange();
     };
 
     resetLocation = () => {
-        this.setState({selectedLocation: ''})
+        this.setState({selectedLocation:''})
         this.handleChange();
     };
 
@@ -247,126 +251,141 @@ export default class PostList extends Component {
     }
 
     render() {
-        return (
+        return (        
             <div>
-                <Textfield
-                    onChange={this.handleSearchChange}
-                    label="Search"
-                    style={{width: '80%'}}
-                />
+                <div style={{width: '49%', float:'left'}}>
+
+                    <Textfield
+                        onChange={this.handleSearchChange}
+                        label="Search"/>
+
+                    <div>   
+                        <SelectField label={'Category'} value={this.state.selectedCategory}
+                                 onChange={this.handleCategoryChange}>
+                            {this.state.categories.map((cat, idx) => {
+                                return <Option value={cat} key={idx}>{cat}</Option>
+                            })}
+                        </SelectField>
+                    </div>
+
+                    <div>
+                        <Textfield
+                            onChange={this.handleMinNumHoursChange}
+                            pattern="[0-9]*(\.[0-9]+)?"
+                            error="Invalid number of hours!"
+                            label="Minimum no. hours/week"
+                            value={this.state.selectedMinNumHours}
+                        />
+                        <Textfield
+                            onChange={this.handleMaxNumHoursChange}
+                            pattern="[0-9]*(\.[0-9]+)?"
+                            error="Invalid number of hours!"
+                            label="Maximum no. hours/week"
+                            value={this.state.selectedMaxNumHours}
+                        />
+                    </div>
+
+                    <div>
+                        <SelectField label={'Location'} value={this.state.selectedLocation}
+                                     onChange={this.handleLocationChange}
+                                     style={{width: '49%'}}>
+                            {this.state.locations.map((cat, idx) => {
+                                return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>
+                            })}
+                        </SelectField>
+                    </div>
+
+                    <div>
+                        <Textfield
+                            onChange={this.handleMinPriceChange}
+                            pattern="[0-9]+"
+                            error="Invalid price!"
+                            label="Minimum price"
+                            value={this.state.selectedMinPrice}
+                        />
+                        <Textfield
+                            onChange={this.handleMaxPriceChange}
+                            pattern="[0-9]+"
+                            error="Invalid price!"
+                            label="Maximum price"
+                            value={this.state.selectedMaxPrice}
+                        />
+                    </div>
+
+                    <div style={{width: 200}}>
+                        <br/>
+                        <p>
+                            Sort by:
+                        </p>
+                        <Select
+                            clearable={false}
+                            name="sort-key"
+                            value={this.state.sortKey.value}
+                            onChange={this.handleSortKeyChanged}
+                            options={[
+                                {value: 'price', label: 'Price'},
+                                {value: 'hours', label: 'Num. hours'},
+                            ]}
+                        />
+                        <Select
+                            style={{marginTop: 5, marginBottom: 5}}
+                            clearable={false}
+                            name="order-select"
+                            value={this.state.ascendingSort.value}
+                            onChange={this.handleOrderChanged}
+                            options={[
+                                {value: true, label: 'Ascending'},
+                                {value: false, label: 'Descending'},
+                            ]}
+                        />
+                    </div>
+
+//                 <Textfield
+//                     onChange={this.handleSearchChange}
+//                     label="Search"
+//                     style={{width: '80%'}}
+//                 />
     
-                <Collapsible className="Collapsible" trigger="TEST">
-                    <p>AAAAAAA</p>
-                </Collapsible>
+//                 <Collapsible className="Collapsible" trigger="TEST">
+//                     <p>AAAAAAA</p>
+//                 </Collapsible>
            
 
-                <div>
-                    <Collapsible className="Collapsible" trigger="TEST2">
-                        <p>AAAAAAA</p>
-                    </Collapsible>
-                </div>
+//                 <div>
+//                     <Collapsible className="Collapsible" trigger="TEST2">
+//                         <p>AAAAAAA</p>
+//                     </Collapsible>
+//                 </div>
 
-                <div>
-                    <SelectField label={'Category'} value={this.state.selectedCategory}
-                                 onChange={this.handleCategoryChange}
-                                 style={{width: '49%'}}>
-                        {this.state.categories.map((cat, idx) => {
-                            return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>
-                        })}
-                    </SelectField>
-                    <Button raised colored onClick={this.resetCategory}>Reset Category</Button>
-                </div>
+//                 </div>
 
-                <div>
-                    <Textfield
-                        onChange={this.handleMinNumHoursChange}
-                        pattern="[0-9]*(\.[0-9]+)?"
-                        error="Invalid number of hours!"
-                        label="Minimum no. hours/week"
-                        value={this.state.selectedMinNumHours}
-                    />
-                    <Textfield
-                        onChange={this.handleMaxNumHoursChange}
-                        pattern="[0-9]*(\.[0-9]+)?"
-                        error="Invalid number of hours!"
-                        label="Maximum no. hours/week"
-                        value={this.state.selectedMaxNumHours}
-                    />
-                </div>
-                <div>
-                    <SelectField label={'Location'} value={this.state.selectedLocation}
-                                 onChange={this.handleLocationChange}
-                                 style={{width: '49%'}}>
-                        {this.state.locations.map((cat, idx) => {
-                            return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>
-                        })}
-                    </SelectField>
-                    <Button raised colored onClick={this.resetLocation}>Reset Location</Button>
-                </div>
-                <div>
-                    <Textfield
-                        onChange={this.handleMinPriceChange}
-                        pattern="[0-9]+"
-                        error="Invalid price!"
-                        label="Minimum price"
-                        value={this.state.selectedMinPrice}
-                    />
-                    <Textfield
-                        onChange={this.handleMaxPriceChange}
-                        pattern="[0-9]+"
-                        error="Invalid price!"
-                        label="Maximum price"
-                        value={this.state.selectedMaxPrice}
-                    />
-                </div>
-                <div style={{width: 200}}>
-                    <br/>
-                    <p>
-                        Sort by:
-                    </p>
-                    <Select
-                        clearable={false}
-                        name="sort-key"
-                        value={this.state.sortKey.value}
-                        onChange={this.handleSortKeyChanged}
-                        options={[
-                            {value: 'price', label: 'Price'},
-                            {value: 'hours', label: 'Num. hours'},
-                        ]}
-                    />
-                    <Select
-                        style={{marginTop: 5, marginBottom: 5}}
-                        clearable={false}
-                        name="order-select"
-                        value={this.state.ascendingSort.value}
-                        onChange={this.handleOrderChanged}
-                        options={[
-                            {value: true, label: 'Ascending'},
-                            {value: false, label: 'Descending'},
-                        ]}
-                    />
-                </div>
-                <List>
-                    {this.state.postsToPrint
-                        ? this.state.postsToPrint.map(post => {
-                            return (
-                                <ListItem key={post.key}>
-                                    <PostItem id={post.key} post={post} {...this.props}/>
-                                </ListItem>)
-                        })
-                        : <h3>No posts yet</h3>
-                    }
+                <div style={{float:'left'}}>
 
-                </List>
-                <div>
-                    {this.state.pageCount > 1 ?
-                        <Button colored onClick={() => this.handlePreviousPage()}>Previous</Button>
-                        : null}
-                </div>
-                <div>
-                    {this.state.pageCount < this.state.maxPageCount ?
-                        <Button colored onClick={() => this.handleNextPage()} className="pull-right">Next</Button>
-                        : null}
+                    <List>
+                        {this.state.postsToPrint
+                            ? this.state.postsToPrint.map(post => {
+                                return (
+                                    <ListItem key={post.key}>
+                                        <PostItem id={post.key} post={post} {...this.props}/>
+                                    </ListItem>)
+                            })
+                            : <h3>No posts yet</h3>
+                        }
+
+                    </List> 
+
+                    <div>
+                        {this.state.pageCount > 1 ?
+                            <Button colored onClick={() => this.handlePreviousPage()}>Previous</Button>
+                            : null}
+                    </div>
+
+                    <div>
+                        {this.state.pageCount < this.state.maxPageCount ?
+                            <Button colored onClick={() => this.handleNextPage()} className="pull-right">Next</Button>
+                            : null}
+                    </div>
+
                 </div>
 
             </div>
