@@ -10,7 +10,9 @@ export class Post {
   getPostById = async (id) => {
 	  const post = await db.ref(`posts/${id}`).once('value')
 	  const loggedInUser = await this.user.getCurrentUserId()
-	  const user = await this.user.getUserById(post.val().userId)
+	  const user = post.val()
+      ? await this.user.getUserById(post.val().userId)
+      : null
     const postAttendees = await db.ref(`post-attendees/${id}`).once('value')
     const attendees = postAttendees.val() !== null
       ? await Promise.all(Object.keys(postAttendees.val()).map(key => {
@@ -118,9 +120,15 @@ export class Post {
   }
 
   async getAllPosts() {
-    console.log("APIURL",apiUrl);
     const response = await fetch(`${apiUrl}/posts/`);
-    return await response.json();
+    try {
+      let res = await response.json()
+      console.log("RES", res)
+      return res
+    }catch (err) {
+      console.log("err", err)
+    }
+    
   }
 	
 	async getUserPosts() {
@@ -190,9 +198,11 @@ export class Post {
   async getNotificationsForUser() {
     let notifications = await db.ref('/notifications').once('value')
     const uid = await this.user.getCurrentUserId()
-    let array = Object.keys(notifications.val()).map(key => {
+    let array = notifications.val()
+      ? Object.keys(notifications.val()).map(key => {
       return {'notification' : notifications.val()[key], 'key' : key}
-    })
+      })
+      : []
     const notificationsForUser = array.filter((x) => {
       if (x.notification.userToNotify === uid) return true
       return false

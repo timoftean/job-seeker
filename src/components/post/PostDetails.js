@@ -24,7 +24,7 @@ class PostDetails extends Component {
 			.then(res => {
 				this.setState({
 					user: res.user,
-					post: Object.assign(res.post,{id: this.state.id}),
+					post: res.post ? Object.assign(res.post,{id: this.state.id}) : null,
 					loggedUserId: res.loggedInUser,
 					loaded:true
 				})
@@ -71,7 +71,7 @@ class PostDetails extends Component {
 	}
 	
 	render() {
-		if (!this.state.loaded) return null
+		if (!this.state.loaded || !this.state.post) return null
 		return(
 			<Card  shadow={0} style={{width: '512px', margin: 'auto'}}>
 				<CardTitle style={{height: '70px'}}>

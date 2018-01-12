@@ -4,8 +4,6 @@ import Select from 'react-select'
 import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
 import PostItem from "./PostItem";
-import Accordion from 'react-responsive-accordion';
-import Collapsible from 'react-collapsible'
 import '../../assets/sass/main.scss'
 
 export default class PostList extends Component {
@@ -339,26 +337,7 @@ export default class PostList extends Component {
                             ]}
                         />
                     </div>
-
-//                 <Textfield
-//                     onChange={this.handleSearchChange}
-//                     label="Search"
-//                     style={{width: '80%'}}
-//                 />
-    
-//                 <Collapsible className="Collapsible" trigger="TEST">
-//                     <p>AAAAAAA</p>
-//                 </Collapsible>
-           
-
-//                 <div>
-//                     <Collapsible className="Collapsible" trigger="TEST2">
-//                         <p>AAAAAAA</p>
-//                     </Collapsible>
-//                 </div>
-
-//                 </div>
-
+                </div>
                 <div style={{float:'left'}}>
 
                     <List>

@@ -7,3 +7,7 @@ body {
 .seenBackground {
 	background-color: lightgrey;
 }
+
+input::placeholder {
+    color: #fff;
+}
