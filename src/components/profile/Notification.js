@@ -1,56 +1,22 @@
 import React, { Component } from 'react'
-import {List, ListItem} from 'react-mdl'
+import {List, ListItem, Card, CardTitle, CardText, CardActions, Button} from 'react-mdl'
 import { Post } from '../../controllers/Post'
 import PostItem from '../post/PostItem'
-
+import {db} from '../../config/constants'
 
 export default class Notification extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			allposts: null,
-			userposts: null,
-			matchingPosts: null
+			notifications: []
 		}
 		this.jobController = new Post()
 	}
 	
 	async componentDidMount() {
-		let posts
-		await this.jobController.getAllPosts().then(data => posts = data)
-		let postsArray = Object.keys(posts).map(function(key) {
-  		return {id: key, post: posts[key]}
-		});
-		this.setState({allposts : postsArray})
-
-		let userposts
-		let userPostsArray
-
-		await this.jobController.getUserPosts().then(data => userposts = data)
-		if (userposts) {
-				userPostsArray = Object.keys(userposts).map(function(key) {
-  			return userposts[key]
-			});
-			this.setState({userposts : userPostsArray})	
-		} else {
-			userposts = []
-		}
-		
-		let matchingPosts = []
-		for (var a in postsArray) {
-			for (var u in userPostsArray) {
-				if (postsArray[a].post.category === userPostsArray[u].category && postsArray[a].post.userId !== userPostsArray[u].userId) {
-					matchingPosts.push(postsArray[a])
-				}
-			}
-		}
-		this.setState({matchingPosts})
-		
-		let oldNr = localStorage.getItem("matchCount")
-		if (matchingPosts.length > oldNr)
-			this.notifyChange(matchingPosts.length - oldNr + " more posts have added!")
-		
-		localStorage.setItem("matchCount",matchingPosts.length)
+		const notifications = await this.jobController.getNotificationsForUser()
+		this.setState({notifications})
+		console.log(this.props)
 	}
 
 
@@ -61,16 +27,36 @@ export default class Notification extends Component {
 		});
 	}
 
+	async handleSeenPress(post) {
+		let notifRef = db.ref('/notifications/' + post.key + '/seen').set(true)
+		const notifications = await this.jobController.getNotificationsForUser()
+		this.setState({notifications})
+	}
+
   render() {
-	  if (!this.props.authed || !this.state.matchingPosts) return null
+  	if (!this.props.authed || !this.state.notifications) return null
     return (
     	<div>
-				<List>
-					{ this.state.matchingPosts.map(function(item, i){
-		  			return (<ListItem key={i}><PostItem id={item.id} post={item.post} /></ListItem>)
+    		<List>
+			{ this.state.notifications.map((item, i) => {
+		  		return (
+		  			<ListItem>
+		  			<Card shadow={5} style={{width: '512px', margin: 'auto'}} className={item.notification.seen ? "seenBackground" : ""}>
+    				<CardTitle style={{color: '#fff', height: '176px', background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'}}>
+    					{item.notification.job.title}
+    				</CardTitle>
+    				<CardText>
+    					{"Status: " + item.notification.jobStatus}
+    				</CardText>
+    				<CardActions border>
+        				<Button colored onClick={() => this.handleSeenPress(item)}>Mark as read</Button>
+    				</CardActions>
+    				</Card>
+    				</ListItem>
+		  				)
 					})}
-				</List>
-			</div>
+			</List>
+		</div>
     )
   }
 }

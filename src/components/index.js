@@ -48,13 +48,14 @@ export default class App extends Component {
 		  authed: false,
 		  loading: true,
       posts:{},
+      notificationCount: ''
 	  }
 	  this.postController = new Post()
     this.auth = new Auth()
   }
   
   async componentDidMount () {
-	  const posts = await this.postController.getAllPosts()
+	  const posts = await this.postController.getActivePosts();
 	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
@@ -70,10 +71,17 @@ export default class App extends Component {
         })
       }
     })
+    this.postController.getNotificationsForUserCount().then((data) => {
+      this.setState({notificationCount: data})
+    })
   }
   
   componentWillUnmount () {
     this.removeListener()
+  }
+
+  updateCount () {
+    console.log("FUUUCK")
   }
   
   renderRoutes = () => {
@@ -120,7 +128,7 @@ export default class App extends Component {
             <button
               style={{border: 'none', background: 'transparent'}}
               onClick={() => logout() }
-              className="mdl-button mdl-js-ripple-effect mdl-button--accent">Logout</button>
+              className="mdl-button mdl-button--accent">Logout</button>
           </a>
         </MenuItem>
       </div>
@@ -129,7 +137,6 @@ export default class App extends Component {
   
   renderNav = () => {
     const { authed } = this.state
-    
     return (
       <div>
         <Layout>
@@ -137,32 +144,45 @@ export default class App extends Component {
             <Navigation>
               {authed
                 ? <span>
-                  <Link to="/addPost" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
-                    <Tooltip label="Add Post">
-                      <Icon name="add" />
-                    </Tooltip>
-                  </Link>
+                    <span>
+                      <Link to="/addPost" className="mdl-button mdl-button--accent">
+                        <Tooltip label="Add Post">
+                          <Badge>
+                            <Icon name="add" />
+                          </Badge>
+                        </Tooltip>
+                      </Link>
+                    </span>
+                  <span>
+                    <Link to="/notifications" className="mdl-button mdl-button--accent">
+                      <Tooltip label="Notifications">
+                        <Badge text={this.state.notificationCount} overlap>
+                          <Icon name='notifications' />
+                        </Badge>
+                      </Tooltip>
+                    </Link>
+                  </span>
                 </span>
                 :null
               }
               <span>
-                <Link to="/" className="mdl-button mdl-js-ripple-effect mdl-button--accent">
+                <Link to="/" className="mdl-button mdl-button--accent">
                   <Tooltip label="Home">
                     <Icon name="home" />
                   </Tooltip>
                 </Link>
               </span>
-              <span >
+              <span>
                 <Badge>
-                  <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-js-ripple-effect mdl-button--accent"/>
+                  <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-button--accent"/>
                 </Badge>
                 <Menu target="menu-lower-right" align="right">
                   {
                     authed
                       ? this.renderAuthedMenu()
                       : <div>
-                        <a><Link to="/login" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Login</Link></a>
-                        <a><Link to="/register" className="mdl-button mdl-js-ripple-effect mdl-button--accent">Register</Link></a>
+                        <span><Link to="/login" className="mdl-button mdl-button--accent">Login</Link></span>
+                        <span><Link to="/register" className="mdl-button mdl-button--accent">Register</Link></span>
                       </div>
                       
                   }

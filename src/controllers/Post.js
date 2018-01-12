@@ -87,7 +87,10 @@ export class Post {
     const uid = user.info.uid;
     
 	  //assign the userId on the post
-	  Object.assign(post,{userId: uid})
+	  Object.assign(post, {
+	    userId: uid,
+      active: true
+    });
 
     //get from firebase the id for the post you want to add
     const newPostKey = db.ref().child('posts').push().key
@@ -102,10 +105,22 @@ export class Post {
     return db.ref().update(updates)
   }
 
+  async getActivePosts() {
+    let allPosts = await this.getAllPosts();
+    let activePosts = {};
+    for (const postKey in allPosts) {
+      let post = allPosts[postKey];
+      if (post.active) {
+        activePosts[postKey] = post;
+      }
+    }
+    return activePosts;
+  }
+
   async getAllPosts() {
-    console.log("APIURL",apiUrl)
-    const response = await fetch(`${apiUrl}/posts/`)
-    return await response.json()
+    console.log("APIURL",apiUrl);
+    const response = await fetch(`${apiUrl}/posts/`);
+    return await response.json();
   }
 	
 	async getUserPosts() {
@@ -137,16 +152,59 @@ export class Post {
   }
 
   acceptUserToPost(post, user) {
+    this.markPostAsInactive(post);
   	const updates = {};
     updates['/post-attendees/' + post.id + '/' + user.info.uid + '/status'] = "accepted";
     updates['/attendee-posts/' + user.info.uid + '/' + post.id + '/status'] = "accepted";
+    const notification = {
+      'jobStatus' : 'accepted',
+      'job' : post,
+      'seen' : false,
+      'userToNotify' : user.info.uid,
+    }
+    db.ref('/notifications').push(notification)
   	return db.ref().update(updates)
+  }
+
+  markPostAsInactive(post) {
+    Object.assign(post, {
+      active: false
+    });
+    this.editPost(post.id, post).then(_ => console.log('marked post as inactive'));
   }
 
   rejectUserToPost(post, user) {
     const updates = {};
     updates['/post-attendees/' + post.id + '/' + user.info.uid + '/status'] = "rejected";
     updates['/attendee-posts/' + user.info.uid + '/' + post.id  + '/status'] = "rejected";
+    const notification = {
+      'jobStatus' : 'rejected',
+      'job' : post,
+      'seen' : false,
+      'userToNotify' : user.info.uid,
+    }
+    db.ref('/notifications').push(notification)
     return db.ref().update(updates)
+  }
+
+  async getNotificationsForUser() {
+    let notifications = await db.ref('/notifications').once('value')
+    const uid = await this.user.getCurrentUserId()
+    let array = Object.keys(notifications.val()).map(key => {
+      return {'notification' : notifications.val()[key], 'key' : key}
+    })
+    const notificationsForUser = array.filter((x) => {
+      if (x.notification.userToNotify === uid) return true
+      return false
+    })
+    return notificationsForUser
+  }
+
+  async getNotificationsForUserCount() {
+    let notifications = await this.getNotificationsForUser()
+    let unseen = notifications.filter((x) => {
+      return x.notification.seen === true ? false : true
+    })
+    return unseen.length
   }
 }

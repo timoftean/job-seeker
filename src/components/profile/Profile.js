@@ -48,15 +48,19 @@ export default class Profile extends Component {
 				</div>
 				<div>
 					<List>
-                    {Object.keys(this.state.reviews).map((reviewKey) => {
-							return (
-                                <ListItem key={reviewKey}>
-                                    <ReviewItem description={this.state.reviews[reviewKey].description} 
-												rating={this.state.reviews[reviewKey].rating}
-												{...this.props}/>
-                                </ListItem>
-							)
-					})}
+						{ this.state.reviews
+							? Object.keys(this.state.reviews).map((reviewKey) => {
+                return (
+									<ListItem key={reviewKey}>
+										<ReviewItem description={this.state.reviews[reviewKey].description}
+																rating={this.state.reviews[reviewKey].rating}
+                                {...this.props}/>
+									</ListItem>
+                )
+              })
+							:null
+							
+						}
 					</List>
 				</div>
 			</div>
