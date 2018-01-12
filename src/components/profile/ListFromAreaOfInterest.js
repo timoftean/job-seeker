@@ -19,7 +19,7 @@ export default class ListFromAreaOfInterest extends Component {
 	
 	async componentDidMount() {
 		let posts
-		await this.jobController.getAllPosts().then(data => posts = data)
+		await this.jobController.getActivePosts().then(data => posts = data)
 		let postsArray = Object.keys(posts).map(function(key) {
   		return {id: key, post: posts[key]}
 		});

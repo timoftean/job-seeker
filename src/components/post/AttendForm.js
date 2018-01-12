@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Textfield, Snackbar } from 'react-mdl'
+import { Textfield, Snackbar, Button } from 'react-mdl'
 import { Post } from "../../controllers/Post";
 
 class AttendForm extends Component {
@@ -40,7 +40,11 @@ class AttendForm extends Component {
               style={{width: '500px'}}
               value={this.state.text}
             />
-            <button type="button" onClick={this.handleSubmit}>Send </button>
+            <Button type="button"
+                    onClick={this.handleSubmit}
+                    style={{marginTop: '10px'}}>
+              Send
+            </Button>
           </form>
         </div>
     );

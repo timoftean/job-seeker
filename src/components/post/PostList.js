@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import {Button, List, ListItem, Textfield,CardText,CardActions,CardTitle} from 'react-mdl'
+import {Button, List, ListItem, Textfield} from 'react-mdl'
 import Select from 'react-select'
-import Collapsible from 'react-collapsible'
 import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
 import PostItem from "./PostItem";
 import Accordion from 'react-responsive-accordion';
+import Collapsible from 'react-collapsible'
+import '../../assets/sass/main.scss'
 
 export default class PostList extends Component {
     constructor(props) {
@@ -81,7 +82,7 @@ export default class PostList extends Component {
     };
 
     async handleChange() {
-        let posts = await this.postController.getAllPosts();
+        let posts = await this.postController.getActivePosts();
         let key = this.state.searchKey;
         let selectedCategory = this.state.selectedCategory;
         let selectedMinNumHours = parseInt(this.state.selectedMinNumHours, 10);
@@ -339,7 +340,24 @@ export default class PostList extends Component {
                         />
                     </div>
 
-                </div>
+//                 <Textfield
+//                     onChange={this.handleSearchChange}
+//                     label="Search"
+//                     style={{width: '80%'}}
+//                 />
+    
+//                 <Collapsible className="Collapsible" trigger="TEST">
+//                     <p>AAAAAAA</p>
+//                 </Collapsible>
+           
+
+//                 <div>
+//                     <Collapsible className="Collapsible" trigger="TEST2">
+//                         <p>AAAAAAA</p>
+//                     </Collapsible>
+//                 </div>
+
+//                 </div>
 
                 <div style={{float:'left'}}>
 
