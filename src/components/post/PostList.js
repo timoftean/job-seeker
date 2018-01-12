@@ -50,6 +50,7 @@ export default class PostList extends Component {
         for (const postKey in posts) {
             this.state.locations.push(posts[postKey].location);
         }
+        this.state.locations.push("");
 
         this.postController = new Post();
     }
@@ -60,6 +61,7 @@ export default class PostList extends Component {
         categories = Object.keys(categories).map(function (key) {
             return categories[key]
         });
+        categories.push("");
         this.setState({categories})
     }
 
@@ -187,12 +189,13 @@ export default class PostList extends Component {
     };
 
     resetCategory = () => {
-        this.setState({selectedCategory: ''})
+        console.log("AICI");
+        this.setState({selectedCategory:"AAAA"})
         this.handleChange();
     };
 
     resetLocation = () => {
-        this.setState({selectedLocation: ''})
+        this.setState({selectedLocation:''})
         this.handleChange();
     };
 
@@ -262,7 +265,6 @@ export default class PostList extends Component {
                             return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>
                         })}
                     </SelectField>
-                    <Button raised colored onClick={this.resetCategory}>Reset Category</Button>
                 </div>
 
                 <div>
@@ -289,7 +291,6 @@ export default class PostList extends Component {
                             return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>
                         })}
                     </SelectField>
-                    <Button raised colored onClick={this.resetLocation}>Reset Location</Button>
                 </div>
                 <div>
                     <Textfield
