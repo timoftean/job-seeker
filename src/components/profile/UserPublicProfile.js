@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Card, CardTitle, CardText, Button, CardActions } from 'react-mdl'
+import { Card, CardTitle, CardText, Button, CardActions, List, ListItem } from 'react-mdl'
 import { User } from '../../controllers/User'
+import ReviewItem from "./ReviewItem";
 
 class UserPublicProfile extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class UserPublicProfile extends Component {
     this.state = {
       loaded: false,
       pictureUrl: null,
+	  reviews: null,
       user: this.props
     }
     this.userController = new User()
@@ -17,8 +19,11 @@ class UserPublicProfile extends Component {
     this.setState({user:nextProps.user})
   }
   
-  componentDidMount() {
+  async componentDidMount() {
     const { id } = this.props.match.params
+	const rev = await this.userController.getPublicUserReviews(id)
+	this.setState({reviews:rev})
+	// console.log(this.state.reviews)
     this.userController.getUserById(id)
       .then( user => {
         this.userController.getPictureByUserId(id)
@@ -74,6 +79,19 @@ class UserPublicProfile extends Component {
             {user.info.email}
           </div>
         </CardText>
+		<CardText>
+			<List>
+				{ this.state.reviews ? 
+					Object.keys(this.state.reviews).map((reviewKey) => {
+						return (<ListItem key={reviewKey}>
+								<ReviewItem description={this.state.reviews[reviewKey].description}
+											rating={this.state.reviews[reviewKey].rating}
+											{...this.props}/>
+								</ListItem>
+						)
+					}) :null }
+			</List>
+		</CardText>
         <CardActions>
           <a href={"mailto:?subject=JobSeeker - New user recommendation! &body=You have a new profile recommendation for: \n\n " + window.location.href}>
             <Button raised>

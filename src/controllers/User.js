@@ -99,6 +99,11 @@ export class User {
 		return reviews.val()
 	}
 	
+	async getPublicUserReviews(uid) {
+		let reviews = await db.ref(`user-reviews/${uid}`).once('value')
+		return reviews.val()
+	}
+	
 	async setUserReview(review, uid) {		
 		const updates = {}
 		const newReviewKey = db.ref().child('/user-reviews/' + uid).push().key

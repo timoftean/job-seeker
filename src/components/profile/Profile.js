@@ -10,8 +10,8 @@ export default class Profile extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-		  activeTab: 0,
-      user: {},
+			activeTab: 0,
+			user: {},
 			hasPosts:null,
 			posts: null,
 			loaded: false,
@@ -25,6 +25,7 @@ export default class Profile extends Component {
 		const user = await this.userController.getCurrentUser()
 		const posts = await this.jobController.getUserPosts()
 		const reviews = await this.userController.getUserReviews()
+		// console.log(reviews)
 		this.setState({
 			user: user,
 			hasPosts: (user && user.info ? user.info.hasPosts === 1 : false),
