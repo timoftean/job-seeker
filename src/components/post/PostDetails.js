@@ -85,8 +85,8 @@ class PostDetails extends Component {
 					<div>Posted by: { this.state.user.profile.firstName + " " + this.state.user.profile.lastName } </div>
 					<div>Category: { this.state.post.category }</div>
 					<div>Location: { this.state.post.location }</div>
-					<div>No of hours per week: { this.state.post.numHours }</div>
-					<div>Price(Lei): { this.state.post.price }</div>
+					<div>No of hours per { this.state.post.hourInterval } : { this.state.post.numHours }</div>
+					<div>Price(Lei) per { this.state.post.priceInterval }: { this.state.post.price }</div>
 					<div>Interval Time of day: { this.state.post.timeInterval }</div>
 				</CardText>
 				<CardActions border style={{height: '55px'}}>
