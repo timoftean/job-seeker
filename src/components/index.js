@@ -80,10 +80,6 @@ export default class App extends Component {
   componentWillUnmount () {
     this.removeListener()
   }
-
-  updateCount () {
-    console.log("FUUUCK")
-  }
   
   renderRoutes = () => {
     const { authed } = this.state
@@ -121,9 +117,8 @@ export default class App extends Component {
       <div>
         <MenuItem><Link to="/Profile" className="mdl-button--primary">Profile</Link></MenuItem>
         <MenuItem><Link to="/myPostsList" className="mdl-button--primary">My Posts</Link></MenuItem>
-        <MenuItem><Link to="/statusForJob" className="mdl-button--primary">From My Category</Link></MenuItem>
-        <MenuItem><Link to="/favouritesCategories" className="mdl-button--primary">Favourite Categories</Link></MenuItem>
-        <MenuItem><Link to="/notifications" className="mdl-button--primary">Notifications</Link></MenuItem>
+        <MenuItem><Link to="/statusForJob" className="mdl-button--primary">Matching posts</Link></MenuItem>
+        <MenuItem><Link to="/favouritesCategories" className="mdl-button--primary">Favourite</Link></MenuItem>
         <MenuItem>
           <a>
             <button
@@ -173,23 +168,25 @@ export default class App extends Component {
                   </Tooltip>
                 </Link>
               </span>
-              <span>
-                <Badge>
-                  <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-button--accent"/>
-                </Badge>
-                <Menu target="menu-lower-right" align="right">
-                  {
-                    authed
-                      ? this.renderAuthedMenu()
-                      : <div>
-                        <span><Link to="/login" className="mdl-button mdl-button--accent">Login</Link></span>
-                        <span><Link to="/register" className="mdl-button mdl-button--accent">Register</Link></span>
-                      </div>
-                      
-                  }
-                </Menu>
-              </span>
-
+              <Tooltip label="Account">
+                <span>
+                  <Badge>
+                    <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-button--accent"/>
+                  </Badge>
+                
+                  <Menu target="menu-lower-right" align="right">
+                    {
+                      authed
+                        ? this.renderAuthedMenu()
+                        : <div>
+                          <span><Link to="/login" className="mdl-button mdl-button--accent">Login</Link></span>
+                          <span><Link to="/register" className="mdl-button mdl-button--accent">Register</Link></span>
+                        </div>
+                        
+                    }
+                  </Menu>
+                </span>
+              </Tooltip>
             </Navigation>
           </Header>
         </Layout>

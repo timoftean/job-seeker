@@ -177,7 +177,7 @@ export default class PostForm extends Component {
           </SelectField>
 
           <style>{css}</style>
-          <SelectField label={'Select me'} value={this.state.category} onChange={this.handleSelectChange} style={{width: '49%'}}>
+          <SelectField label={'Category'} value={this.state.category} onChange={this.handleSelectChange} style={{width: '49%'}}>
             {this.state.categories.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
           </SelectField>
           <div>
