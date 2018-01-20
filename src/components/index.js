@@ -20,6 +20,7 @@ import { Auth } from '../controllers/Auth'
 import { firebaseAuth } from '../config/constants'
 import { Spinner, Footer, FooterSection, FooterLinkList, Layout, Header, Navigation, Badge, IconButton, Menu, MenuItem, Tooltip, Icon } from 'react-mdl'
 import UserPublicProfile from "./profile/UserPublicProfile";
+import '../assets/index.css'
 
 const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   return (
@@ -215,7 +216,9 @@ export default class App extends Component {
     return this.state.loading === true
       ? <Spinner />
       : (<BrowserRouter >
-          <div style={{background: 'url(./background2.jpg) center center', backgroundColor: 'rgba(0, 0, 0, 0.5)', backgroundRepeat: 'no-repeat',
+          <div
+            className="mainBackground"
+            style={{background: 'url(./background2.jpg) center center',  backgroundColor: 'rgba(0, 0, 0, 0.6)', backgroundRepeat: 'no-repeat',
             backgroundAttachment: 'fixed'}}>
             { this.renderNav() }
             <div className="container" style={{minHeight: '800px'}}>

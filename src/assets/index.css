@@ -8,6 +8,15 @@ body {
 	background-color: lightgrey;
 }
 
-input::placeholder {
-    color: #fff;
+.mdl-textfield__input {
+    color: white !important;
+    background-color: lightgrey;
+}
+
+.mdl-textfield__input::-moz-placeholder {  /* Firefox 19+ */
+    color: red !important;
+}
+
+.mdl-textfield__input::-webkit-input-placeholder {
+    color: red !important;
 }

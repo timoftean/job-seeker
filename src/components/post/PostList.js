@@ -5,6 +5,7 @@ import {Post} from '../../controllers/Post'
 import {Option, SelectField} from "react-mdl-selectfield";
 import PostItem from "./PostItem";
 import '../../assets/sass/main.scss'
+import '../../assets/index.css';
 
 export default class PostList extends Component {
     constructor(props) {
@@ -255,8 +256,8 @@ export default class PostList extends Component {
 
                     <Textfield
                         onChange={this.handleSearchChange}
+                        inputClassName="whiteInput"
                         label="Search"/>
-
                     <div>   
                         <SelectField label={'Category'} value={this.state.selectedCategory}
                                  onChange={this.handleCategoryChange}>
