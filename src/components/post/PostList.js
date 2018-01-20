@@ -56,7 +56,7 @@ export default class PostList extends Component {
 
     async componentDidMount() {
         let categories;
-        await this.postController.getCategories().then(data => categories = data)
+        await this.postController.getCategories().then(data => categories = data);
         categories = Object.keys(categories).map(function (key) {
             return categories[key]
         });

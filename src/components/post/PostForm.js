@@ -12,10 +12,10 @@ function setErrorMsg(error) {
 export default class PostForm extends Component {
   constructor(props) {
     super(props);
-    const { id, title, description, category, location, numHours, timeInterval, price, type } =
-      props.location.props ? props.location.props.post : ''
-    
-    this.state = {
+    const { id, title, description, category, location, numHours, hourInterval, timeInterval, price, priceInterval, type } =
+      props.location.props ? props.location.props.post : '';
+
+      this.state = {
       addPostError: null,
       id: id || '',
       title: title || '',
@@ -23,13 +23,19 @@ export default class PostForm extends Component {
       category: category || '',
       location: location || '',
       numHours: numHours || '',
+      hourInterval : hourInterval || '',
       timeInterval: timeInterval || '',
-      price: price ||  '',
+      price: price || '',
+      priceInterval: priceInterval || '',
       type: type || '',
-      categories: []
+      categories: [],
+      hoursDropdown : ["day", "week", "month", "total"],
+      priceDropdown : ["hour", "day", "week", "total"]
     };
     this.postController = new Post();
-    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleHoursSelectChange = this.handleHoursSelectChange.bind(this);
+    this.handlePriceSelectChange = this.handlePriceSelectChange.bind(this)
   }
 
   handleSubmit = (e) => {
@@ -45,11 +51,13 @@ export default class PostForm extends Component {
       category: this.state.category,
       location: this.state.location,
       numHours: this.state.numHours,
+      hourInterval: this.state.hourInterval,
       timeInterval: this.state.timeInterval,
       price: this.state.price,
+      priceInterval : this.state.priceInterval,
       type: this.state.type
     };
-    
+
     //if id exists, it means the post is edited, otherwise it`s added
     if (this.state.id) {
       this.postController.editPost(this.state.id, post)
@@ -69,6 +77,7 @@ export default class PostForm extends Component {
   verifyInput() {
     return this.state.title && this.state.description && this.state.category && this.state.location
         && this.state.numHours && this.state.timeInterval && this.state.price && this.state.type
+        && this.state.priceInterval && this.state.hourInterval
   }
 
   async componentDidMount() {
@@ -82,6 +91,14 @@ export default class PostForm extends Component {
 
   handleSelectChange(e) {
     this.setState({category: e})
+  }
+
+  handleHoursSelectChange(e) {
+      this.setState({hourInterval: e})
+  }
+
+  handlePriceSelectChange(e) {
+      this.setState({priceInterval: e})
   }
 
   render() {
@@ -128,10 +145,15 @@ export default class PostForm extends Component {
             onChange={e => this.setState({numHours: e.target.value})}
             pattern="[0-9]*(\.[0-9]+)?"
             error="Invalid number of hours!"
-            label="No. hours/week"
+            label="No. hours"
             style={{width: '49%', paddingLeft: '1%'}}
             value={this.state.numHours}
           />
+
+          <SelectField label={'Period'} value={this.state.hoursDropdown} onChange={this.handleHoursSelectChange} style={{width: '49%'}}>
+              {this.state.hoursDropdown.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
+          </SelectField>
+
           <Textfield
             onChange={e => this.setState({timeInterval: e.target.value})}
             pattern="[0-2][0-9]:[0-5][0-9](\s)*-(\s)*[0-2][0-9]:[0-5][0-9]"
@@ -148,6 +170,12 @@ export default class PostForm extends Component {
             style={{width: '49%', paddingLeft: '1%'}}
             value={this.state.price}
           />
+
+          <style>{css}</style>
+          <SelectField label={'Period'} value={this.state.priceDropdown} onChange={this.handlePriceSelectChange} style={{width: '49%'}}>
+              {this.state.priceDropdown.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
+          </SelectField>
+
           <style>{css}</style>
           <SelectField label={'Select me'} value={this.state.category} onChange={this.handleSelectChange} style={{width: '49%'}}>
             {this.state.categories.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
