@@ -94,6 +94,7 @@ export default class PostForm extends Component {
   }
 
   handleHoursSelectChange(e) {
+    console.log(22, e)
       this.setState({hourInterval: e})
   }
 
@@ -102,6 +103,7 @@ export default class PostForm extends Component {
   }
 
   render() {
+    console.log(11, this.state.category, this.state.hoursDropdown)
     const css = `
     .mdl-textfield {
         width: 95%;
@@ -150,7 +152,7 @@ export default class PostForm extends Component {
             value={this.state.numHours}
           />
 
-          <SelectField label={'Period'} value={this.state.hoursDropdown} onChange={this.handleHoursSelectChange} style={{width: '49%'}}>
+          <SelectField label={'Period'} value={this.state.hourInterval} onChange={this.handleHoursSelectChange} style={{width: '49%'}}>
               {this.state.hoursDropdown.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
           </SelectField>
 
@@ -172,7 +174,7 @@ export default class PostForm extends Component {
           />
 
           <style>{css}</style>
-          <SelectField label={'Period'} value={this.state.priceDropdown} onChange={this.handlePriceSelectChange} style={{width: '49%'}}>
+          <SelectField label={'Period'} value={this.state.priceInterval} onChange={this.handlePriceSelectChange} style={{width: '49%'}}>
               {this.state.priceDropdown.map((cat, idx) => {return <Option value={cat} key={idx} style={{width: '49%'}}>{cat}</Option>})}
           </SelectField>
 

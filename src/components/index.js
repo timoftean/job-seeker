@@ -168,25 +168,23 @@ export default class App extends Component {
                   </Tooltip>
                 </Link>
               </span>
-              <Tooltip label="Account">
-                <span>
-                  <Badge>
-                    <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-button--accent"/>
-                  </Badge>
-                
-                  <Menu target="menu-lower-right" align="right">
-                    {
-                      authed
-                        ? this.renderAuthedMenu()
-                        : <div>
-                          <span><Link to="/login" className="mdl-button mdl-button--accent">Login</Link></span>
-                          <span><Link to="/register" className="mdl-button mdl-button--accent">Register</Link></span>
-                        </div>
-                        
-                    }
-                  </Menu>
-                </span>
-              </Tooltip>
+              <span>
+                <Badge>
+                  <IconButton name="account_box" id="menu-lower-right" className="mdl-button mdl-button--accent"/>
+                </Badge>
+              
+                <Menu target="menu-lower-right" align="right">
+                  {
+                    authed
+                      ? this.renderAuthedMenu()
+                      : <div>
+                        <span><Link to="/login" className="mdl-button mdl-button--accent">Login</Link></span>
+                        <span><Link to="/register" className="mdl-button mdl-button--accent">Register</Link></span>
+                      </div>
+                      
+                  }
+                </Menu>
+              </span>
             </Navigation>
           </Header>
         </Layout>
